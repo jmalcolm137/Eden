@@ -69,11 +69,12 @@ the upstream `Usage.md`.
 Generate a signing key (once):
 
 ```
-./cbuild keygen oasis-local
+./cbuild keygen
 ```
 
-This writes `etc/keys/oasis-local.rsa{,.pub}` and is already wired up in
-`etc/config.ini`.
+With the key name already configured in `etc/config.ini`, this writes
+`etc/keys/oasis-local.rsa{,.pub}`. (`./cbuild keygen PREFIX` is different: it
+forces a timestamped key name and overrides the configured path.)
 
 ## Create the build environment
 
@@ -83,11 +84,11 @@ Assembles `bldroot/` from Chimera binary packages, without rebuilding the 175
 templates:
 
 ```
-./cbuild bootstrap
+tools/bootstrap.sh
 ```
 
-Use this for day-to-day package building. The local bootstrap templates are
-not used.
+(equivalently `./cbuild bootstrap`, after a key exists). Use this for
+day-to-day package building; the local bootstrap templates are not rebuilt.
 
 ### Minimal source bootstrap
 
