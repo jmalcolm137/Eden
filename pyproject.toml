@@ -1,0 +1,56 @@
+[tool.black]
+line-length = 80
+target-version = ['py312']
+
+[tool.ruff]
+line-length = 80
+target-version = 'py312'
+builtins = ['custom_target', 'self', 'subpackage']
+
+[tool.ruff.lint]
+extend-select = [
+    'C4',
+    'E',
+    'RUF',
+    'UP',
+    'W',
+    'ISC001',
+    'ISC002',
+]
+ignore = [
+    # no
+    'C417',
+    # long source lines
+    'E501',
+    # unsorted imports, don't care
+    'I001',
+    # percent format: fuck you i won't do what you tell me
+    'UP031',
+    # edontcare
+    'RUF012',
+    'RUF015',
+    'RUF059',
+    # unlogged exception, shut up
+    'S110',
+    # they dislike nested if/with statements
+    'SIM102',
+    'SIM117',
+    # sometimes uncombined if branches are more readable
+    'SIM114',
+    # open without context manager: we only have a few and all are fine
+    'SIM115',
+    # exception catchall
+    'BLE001',
+    # datetime without tz; we only use it in the logger and it's fine
+    'DTZ005',
+    'DTZ006',
+    # use f-string instead of string join: unimportant, subjective
+    'FLY002',
+    # for loop .write()
+    'FURB122',
+    # they dislike 'return None'
+    'RET501',
+    'PLR1711',
+    # i will not create my own exception
+    'TRY002',
+]

@@ -1,0 +1,11 @@
+*~
+*.o
+__pycache__
+/bldroot*
+/cbuild_cache
+/sources*
+/packages*
+/pkgstage*
+/etc/keys
+void-*.tar.xz
+.tmp.*
