@@ -15,4 +15,5 @@ Then build with:
 ```
 
 See the upstream `Packaging.md` for the template API. This category is empty
-on purpose: the tree only carries the minimal bootstrap closure in `main/`.
+on purpose: `main/` only carries the 66 templates needed for
+`./cbuild source-bootstrap`.

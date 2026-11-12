@@ -1,1 +1,0 @@
-pkgname = "sphinxcontrib_applehelp"

@@ -1,28 +1,50 @@
-# Oasis minimal cports
+# Oasis minimal source-bootstrap cports
 
-A trimmed [`cports`](https://github.com/chimera-linux/cports) tree containing
-only:
+A trimmed [`cports`](https://github.com/chimera-linux/cports) tree that
+contains exactly the source templates needed to run:
 
-- the `cbuild` engine (Python), and
-- the **exact dependency closure of `main/base-cbuild`** — the minimum package
-  set cbuild considers necessary to build and run its own build environment —
-  plus an empty `user/` category for local packages.
+```
+./cbuild source-bootstrap
+```
 
-Nothing else from Chimera's 2,000+ package tree is included.
+That is the point of this tree: a Linux system with the bootstrap host tools
+can build the cbuild bootstrap environment from source, then start adding
+packages.
+
+## The package list
+
+`main/` contains **66 source templates**: the stage 0 + stage 1 dependency
+closure of `main/base-cbuild`, as computed by cbuild. Stage 1 and stage 2 have
+the same dependency set.
+
+This is deliberately not the 175-template closure you get from
+`print-build-graph` on an unmodified tree. That graph includes the stage-3
+`ccache` dependency that upstream `base-cbuild` adds at `stage > 2`. ccache's
+runtime closure pulls in `elfutils -> libmicrohttpd -> gnutls -> unbound ->
+protobuf -> boost`, plus `util-linux`, `trousers`, and friends. None of that
+is needed to bootstrap.
+
+This tree applies one local patch (`patches/0001-base-cbuild-drop-ccache.patch`)
+that removes that optional stage-3 ccache dependency. With it, stages 0–3 all
+need the same 66 templates, and `boost`, `util-linux`, `doxygen`, `gtest`,
+`protobuf`, `abseil-cpp`, Sphinx, and DocBook tooling are absent.
 
 ## What is in here
 
 | Path | Purpose |
 |---|---|
 | `cbuild`, `src/` | cbuild itself (imported from upstream cports) |
-| `main/` | 175 bootstrap templates and their subpackage symlinks |
+| `main/` | 66 source-bootstrap templates + subpackage symlinks |
 | `user/` | empty category for packages you add |
-| `bootstrap-packages.txt` | pinned manifest of the `main/` closure |
+| `bootstrap-packages.txt` | pinned manifest of the 66 templates |
+| `patches/` | local template patches (ccache removal) |
 | `etc/build_profiles/` | architecture profiles |
 | `etc/apk/` | Chimera repository definitions and signing keys |
 | `etc/config.ini` | minimal local config (`categories = main user`) |
-| `tools/import-bootstrap-closure.sh` | refresh engine + closure from a cports checkout |
-| `tools/verify-bootstrap-closure.sh` | check manifest ↔ directories ↔ cbuild graph |
+| `tools/import-bootstrap-closure.sh` | re-import engine, templates, patches |
+| `tools/verify-bootstrap-closure.sh` | verify manifest ↔ template graph |
+| `tools/compute-bootstrap-closure.py` | recompute the stage 0/1 closure |
+| `tools/bootstrap.sh` | optional binary bldroot shortcut |
 
 ## Provenance
 
@@ -35,93 +57,66 @@ halcyon-extra/samurai: new package
 2026-11-12
 ```
 
-The closure was computed from that checkout with:
+## Host requirements
 
-```
-./cbuild print-build-graph main/base-cbuild
-```
+`source-bootstrap` stage 0 runs on the host, so the host must already have the
+initial toolchain:
 
-and includes build, runtime, and (because checks are enabled by default)
-check dependencies. It is pinned in `bootstrap-packages.txt`; upstream changes
-to `base-cbuild`'s dependencies will change the graph, so re-import when you
-want to track them.
+- Python 3.12+, `apk-tools` 3.x, `bubblewrap`, `git`, `openssl`
+- `clang` with `lld`, `libc++`, `compiler-rt`, LLVM `libunwind`
+- GNU `make` as `make`, GNU `m4` as `m4`
+- `cmake`, `meson`, `ninja`, `pkg-config`
+- `byacc` (or `bison` with a `yacc` symlink), `flex`, `perl`
+- `strip`
+- Linux kernel headers for userland
 
-## Requirements
-
-Same as cbuild:
-
-- Python 3.12+
-- `apk-tools` 3.x
-- `bubblewrap` (`bwrap`)
-- `git`
-- `openssl` (key generation)
-- Linux 3.8+ with namespaces (`USER_NS`, `PID_NS`, `NET_NS`, `UTS_NS`,
-  `IPC_NS`) and cgroups
-- a normal user (never root) and not a chroot
-
-For a **source** bootstrap you additionally need GNU make as `make` and GNU
-m4 as `m4` (plus clang/lld/libc++/compiler-rt/libunwind, cmake, meson,
-pkg-config, ninja, strip, yacc, flex, perl, and Linux kernel headers). See
-the upstream `Usage.md`.
+A musl-based host is required. On Chimera, this is the
+`base-cbuild-bootstrap` metapackage. On Oasis, provide these via pkgsrc or
+equivalent.
 
 ## First-time setup
-
-Generate a signing key (once):
 
 ```
 ./cbuild keygen
 ```
 
-With the key name already configured in `etc/config.ini`, this writes
-`etc/keys/oasis-local.rsa{,.pub}`. (`./cbuild keygen PREFIX` is different: it
-forces a timestamped key name and overrides the configured path.)
+This writes `etc/keys/oasis-local.rsa{,.pub}`, matching `etc/config.ini`.
 
-## Create the build environment
-
-### Fast path: binary bootstrap
-
-Assembles `bldroot/` from Chimera binary packages, without rebuilding the 175
-templates:
-
-```
-tools/bootstrap.sh
-```
-
-(equivalently `./cbuild bootstrap`, after a key exists). Use this for
-day-to-day package building; the local bootstrap templates are not rebuilt.
-
-### Minimal source bootstrap
-
-Builds only the 175-package closure in `main/`, through cbuild's four stages:
+## Build the bootstrap from source
 
 ```
 ./cbuild source-bootstrap
 ```
 
-This is the "bare minimum from source" path. It is slow (it includes LLVM,
-clang, musl, apk-tools, Python, etc.) and is much less frequently tested
-upstream than the binary bootstrap. All artifacts stay in this directory:
-`bldroot-stage{0,1,2}`, `packages-stage*`, `sources/`, `cbuild_cache/`.
+This builds stages 0–3 using only the 66 templates in `main/`. It is long
+(LLVM, clang, musl, Python, etc.) and writes `bldroot-stage*`,
+`packages-stage*`, and finally `bldroot/`.
 
-You can stop after a given stage with e.g. `./cbuild source-bootstrap 0`.
-
-## Build packages
-
-Included bootstrap packages can be built directly:
+You can stop after a specific stage:
 
 ```
-./cbuild pkg main/lz4
+./cbuild source-bootstrap 0
 ```
 
-For your own packages, create `user/<name>/template.py` and run:
+## Add packages
+
+Put a template in `user/<name>/` and build it:
 
 ```
 ./cbuild pkg user/<name>
 ```
 
-The resulting signed packages go to `packages/`, and are usable as an apk
-repository (add the architecture subdirectory, e.g. `packages/user/x86_64`,
-to `/etc/apk/repositories.d/` and install the public key in `/etc/apk/keys`).
+Included templates can also be built directly, e.g. `./cbuild pkg main/lz4`.
+
+If a package needs a dependency that is not in `main/`, either add that
+template to `user/` or (for the binary path) rely on the remote repository.
+
+## Optional: binary build environment
+
+If you do not want to wait for a source bootstrap, `tools/bootstrap.sh`
+assembles `bldroot/` from binary Chimera `base-cbuild` packages. That is a
+shortcut for building packages immediately; it is not part of the 66-template
+source bootstrap.
 
 ## Verify the tree
 
@@ -129,52 +124,22 @@ to `/etc/apk/repositories.d/` and install the public key in `/etc/apk/keys`).
 tools/verify-bootstrap-closure.sh
 ```
 
-It checks that every manifest entry exists, that the manifest is sorted and
-unique, and that the graph produced by the local cbuild matches the manifest
-exactly. If you add templates to `main/`, the graph check will still pass;
-extra templates are intentionally ignored. If you add a package that
-`base-cbuild` does not depend on, put it in `user/` instead.
+It checks the manifest is sorted and unique, every template exists, `main/`
+has no templates outside the manifest, subpackage symlinks resolve, every
+template parses and lints, and the local build graph matches the 66-entry
+manifest exactly. The graph check also proves the ccache/boost/util-linux
+branch has not come back.
 
 ## Refresh from upstream
-
-The tree was imported from a local cports checkout. To pull a newer engine and
-the same pinned closure:
 
 ```
 tools/import-bootstrap-closure.sh /path/to/cports
 ```
 
-The import script only writes inside this directory. It materializes symlinked
-patch directories (`cp -aL`) so the tree stays self-contained, then recreates
-subpackage symlinks with `./cbuild relink-subpkgs`.
+The import script clears `main/`, copies exactly the manifest, applies
+`patches/*.patch`, and recreates subpackage symlinks. It only writes inside
+this directory. To recompute the closure from an upstream checkout:
 
-To update the closure itself, regenerate `bootstrap-packages.txt` from the
-upstream checkout using the graph command above, then re-run the import
-script and the verifier.
-
-## Validation performed
-
-- `tools/verify-bootstrap-closure.sh` — passes; the locally computed graph
-  matches the 175-entry manifest exactly.
-- `./cbuild bootstrap` — succeeded; 58 binary packages installed into
-  `bldroot/` (561 MiB).
-- `./cbuild pkg main/lz4` — succeeded; signed `lz4` and its subpackages were
-  written to `packages/main/{,debug/}x86_64/`.
-
-The source bootstrap path has not been executed end-to-end here (it builds
-LLVM/clang/musl/Python from source and takes a long time), but its template
-closure and dependency graph are verified.
-
-## Notes and limits
-
-- `main/` is not a general-purpose package repository. If you want a package
-  outside the closure, import its template (and its dependencies) or use the
-  upstream tree.
-- `base-cbuild` intentionally contains the full toolchain, so the closure is
-  large (LLVM/clang, musl, apk-tools, Python, and their build dependencies).
-  That is the minimum cbuild itself declares, not an arbitrary subset.
-- Check dependencies are part of the closure because `check` is enabled by
-  default. Building a subset with checks disabled does not automatically
-  shrink cbuild's dependency graph.
-- The `user/` category is scanned even when empty; it is where local work
-  belongs.
+```
+tools/compute-bootstrap-closure.py /path/to/cports 0 1
+```

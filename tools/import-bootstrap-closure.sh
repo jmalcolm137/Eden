@@ -1,5 +1,5 @@
 #!/bin/sh
-# Import the cbuild engine and the minimal bootstrap template closure from an
+# Import the cbuild engine and the source-bootstrap template set from an
 # existing cports checkout.
 #
 # This only ever writes inside this tree. The upstream checkout is read-only.
@@ -53,9 +53,14 @@ if [ -f "$upstream/pyproject.toml" ]; then
     cp -a "$upstream/pyproject.toml" "$here/pyproject.toml"
 fi
 
-echo "importing $(grep -cv '^[[:space:]]*\(#\|$\)' "$manifest") template directories"
+count=$(grep -cv '^[[:space:]]*\(#\|$\)' "$manifest" || true)
+echo "importing $count template directories"
 
 mkdir -p "$here/main"
+
+# main/ is a generated import target. Clear it, then copy exactly the
+# manifest; this prunes templates from a previous, larger import.
+find "$here/main" -mindepth 1 -maxdepth 1 -exec rm -rf -- {} +
 
 while IFS= read -r p; do
     [ -n "$p" ] || continue
@@ -75,12 +80,24 @@ while IFS= read -r p; do
     cp -aL "$upstream/main/$p" "$here/main/$p"
 done < "$manifest"
 
-# Subpackage directories in cports are symlinks to their parent template.
-# Recreate them for everything we imported.
-if git -C "$here" rev-parse --is-inside-work-tree >/dev/null 2>&1; then
-    "$here/cbuild" relink-subpkgs
+if [ "$count" -eq 0 ]; then
+    # Keep the empty category present in git and on disk.
+    : > "$here/main/.gitkeep"
+    echo "note: empty manifest; no local main templates imported"
 else
-    echo "note: not a git repository; run ./cbuild relink-subpkgs after git init"
+    # Apply local modifications after copying pristine upstream templates.
+    for p in "$here"/patches/*.patch; do
+        [ -e "$p" ] || continue
+        patch -s -p1 -d "$here" < "$p"
+    done
+
+    # Subpackage directories in cports are symlinks to their parent template.
+    # Recreate them for everything we imported.
+    if git -C "$here" rev-parse --is-inside-work-tree >/dev/null 2>&1; then
+        "$here/cbuild" relink-subpkgs
+    else
+        echo "note: not a git repository; run ./cbuild relink-subpkgs after git init"
+    fi
 fi
 
 echo "done"

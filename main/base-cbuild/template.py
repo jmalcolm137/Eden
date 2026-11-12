@@ -37,8 +37,9 @@ if self.stage > 0:
         "tzdb",
     ]
 
-if self.stage > 2:
-    depends += ["ccache"]
+# Local patch: ccache is optional and pulls a large stage-3-only dependency
+# branch (elfutils, gnutls, unbound, protobuf, boost, util-linux, ...).
+# It is not needed to bootstrap, so it is omitted here.
 
 
 def build(self):
