@@ -1,14 +1,13 @@
 #!/bin/sh
-# Verify the self-hosting package list and the local template tree.
+# Verify the local Oasis-composed cbuild template set.
 #
 # Checks:
 #   1. manifest is sorted, unique, and every entry has main/<name>/template.py
 #   2. main/ contains no templates outside the manifest
 #   3. every subpackage symlink points at a manifest template
 #   4. every local template parses and lints
-#   5. bldroot is present and carries base-cbuild (informational)
-#
-# This verifier does not contact the network and does not rebuild anything.
+#   5. the composed base-cbuild has the intended Oasis/Chimera split
+#   6. base-files carries the account files cbuild reads
 
 set -eu
 
@@ -79,28 +78,13 @@ for el in main/*; do
     fi
 done
 
-# Parse every local template (also catches broken imports).
+# Parse every local template.
 if ! ./cbuild dump > /dev/null; then
     echo "error: cbuild failed to parse the local template tree" >&2
     fail=1
 fi
 
-# The local graph must be exactly the source-bootstrap closure. This also
-# catches the stage-3 ccache branch (and its boost/util-linux tree) coming
-# back, e.g. if the local base-cbuild patch was not applied.
-if ./cbuild print-build-graph main/base-cbuild \
-        | sed 's/^ *//' \
-        | sort -u > "$tmp/graph"; then
-    if ! diff -u "$tmp/manifest" "$tmp/graph"; then
-        echo "error: local build graph does not match the manifest" >&2
-        fail=1
-    fi
-else
-    echo "error: cbuild failed to produce the bootstrap build graph" >&2
-    fail=1
-fi
-
-# Lint the self-hosting set itself.
+# Lint the local set.
 while IFS= read -r p; do
     if ! ./cbuild lint "main/$p" > /dev/null 2>&1; then
         echo "error: lint failed: main/$p" >&2
@@ -108,24 +92,55 @@ while IFS= read -r p; do
     fi
 done < "$tmp/manifest"
 
-if [ -f bldroot/.cbuild_chroot_init ]; then
-    if [ -x bldroot/usr/bin/apk.static ]; then
-        barch=$(cat bldroot/.cbuild_chroot_init)
-        if bldroot/usr/bin/apk.static --root bldroot --arch "$barch" \
-                info base-cbuild > /dev/null 2>&1; then
-            :
-        else
-            echo "warning: bldroot exists but base-cbuild is not installed" >&2
-        fi
+# Composition checks: Oasis userland in, Chimera base userland out.
+for p in linux-personality oksh pigz sbase ubase gmake; do
+    if ! grep -q "\"$p\"" main/base-cbuild/template.py; then
+        echo "error: base-cbuild does not depend on $p" >&2
+        fail=1
     fi
+done
+
+for p in chimerautils chimerautils-extra ccache; do
+    if grep -q "\"$p\"" main/base-cbuild/template.py; then
+        echo "error: base-cbuild still depends on $p" >&2
+        fail=1
+    fi
+done
+
+# The local gmake must not install /usr/bin/make; sbase owns that name.
+if grep -q 'install_link("usr/bin/gmake", "make")' main/gmake/template.py; then
+    echo "error: local gmake would overwrite the Oasis /usr/bin/make" >&2
+    fail=1
+fi
+if ! grep -q 'rename("usr/bin/make", "usr/bin/gmake"' \
+        main/gmake/template.py; then
+    echo "error: local gmake does not rename make to gmake" >&2
+    fail=1
+fi
+
+# cbuild must invoke gmake, not the Oasis make.
+if ! grep -q '("make_cmd", "gmake"' src/cbuild/core/template.py; then
+    echo "error: cbuild make_cmd is not gmake" >&2
+    fail=1
+fi
+
+for f in main/base-files/files/etc/passwd main/base-files/files/etc/group; do
+    if [ ! -f "$f" ]; then
+        echo "error: missing account file: $f" >&2
+        fail=1
+    fi
+done
+
+if [ -f bldroot/.cbuild_chroot_init ]; then
+    echo "note: bldroot exists"
 else
-    echo "note: no bldroot; run ./cbuild source-bootstrap" \
-        "(or tools/bootstrap.sh for the binary shortcut)"
+    echo "note: no bldroot; run tools/bootstrap.sh" \
+        "(temporary Chimera root) or tools/bootstrap-oasis.sh"
 fi
 
 if [ "$fail" -ne 0 ]; then
     exit 1
 fi
 
-echo "ok: $(wc -l < "$tmp/manifest") source templates;" \
-    "source-bootstrap graph matches manifest"
+echo "ok: $(wc -l < "$tmp/manifest") local templates;" \
+    "Oasis-composed base-cbuild is consistent"

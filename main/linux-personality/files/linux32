@@ -1,0 +1,18 @@
+#!/bin/sh
+# See linux64. A native 32-bit build would need PER_LINUX32, but the shim
+# keeps cbuild functional on the native architecture.
+while [ "$#" -gt 0 ]; do
+    case "$1" in
+        --)
+            shift
+            break
+            ;;
+        -*)
+            shift
+            ;;
+        *)
+            break
+            ;;
+    esac
+done
+exec "$@"

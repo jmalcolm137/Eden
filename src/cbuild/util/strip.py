@@ -33,7 +33,7 @@ def strip_attach(pkg, strip_list, no_split=None):
 
     # invoke
     pkg.rparent.do(
-        "make",
+        "gmake",
         "--silent",
         "--no-print-directory",
         f"-j{pkg.rparent.conf_jobs}",

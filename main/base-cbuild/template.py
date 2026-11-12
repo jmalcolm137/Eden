@@ -1,19 +1,23 @@
 pkgname = "base-cbuild"
 pkgver = "0.1"
-pkgrel = 13
+pkgrel = 14
 build_style = "meta"
 # musl must be built first to provide shlibs for later packages during stage 0
 depends = [
     "apk-tools",
-    "chimerautils-extra",
+    "base-files",
     "clang",
     "fakeroot-core",
     "gmake",
     "libarchive-progs",
+    "linux-personality",
     "lld",
     "llvm",
     "musl-devel",
-    "ncurses",
+    "oksh",
+    "pigz",
+    "sbase",
+    "ubase",
     self.with_pkgver("base-cbuild-progs"),
 ]
 # bootstrap-llvm is temporary until next llvm release, don't feel like rebuild
@@ -22,24 +26,19 @@ provides = [
     "bootstrap:llvm=9999-r0",
 ]
 replaces = ["apk-tools"]
-replaces_priority = 100
-pkgdesc = "Core package set for cbuild containers"
+replaces_priority = 1000
+pkgdesc = "Minimal Oasis-composed cbuild container"
 license = "custom:meta"
-url = "https://chimera-linux.org"
+url = "https://oasislinux.org"
 options = ["bootstrap", "brokenlinks"]
 
 if self.stage > 0:
-    depends += [
-        "apk-tools-static-bin",
-        "bc-gh",
-        "resolvconf",
-        "resolvconf-none",
-        "tzdb",
-    ]
+    depends += ["apk-tools-static-bin"]
 
-# Local patch: ccache is optional and pulls a large stage-3-only dependency
-# branch (elfutils, gnutls, unbound, protobuf, boost, util-linux, ...).
-# It is not needed to bootstrap, so it is omitted here.
+# Local fork: Chimera supplies the toolchain (clang/llvm/lld, gmake, musl),
+# Oasis supplies the userland (sbase, ubase, oksh, base-files).
+# ccache and the Chimera-only extras (chimerautils, ncurses, resolvconf,
+# tzdb, bc) are intentionally omitted.
 
 
 def build(self):

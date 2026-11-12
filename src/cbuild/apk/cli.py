@@ -143,11 +143,17 @@ def call(
     cmd += crepos
 
     if chroot:
+        # The minimal Oasis bldroot may not have hashed cert symlinks in
+        # /etc/ssl/certs; point apk at the bundle explicitly.
+        cenv = {"SSL_CERT_FILE": "/etc/ssl/certs/ca-certificates.crt"}
+        if env:
+            cenv.update(env)
         retv = cbroot.enter(
             "apk",
             *cmd,
             *args,
             capture_output=capture_output,
+            env=cenv,
             fakeroot=True,
             mount_binpkgs=True,
             mount_cbuild_cache=subcmd

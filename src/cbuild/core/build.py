@@ -828,7 +828,7 @@ def _build_locked(
         mkf.close()
         pkg.log("generating packages...")
         mkcmd = [
-            "make",
+            "gmake",
             "--no-print-directory",
             f"-j{pkg.conf_jobs}",
             "-C",

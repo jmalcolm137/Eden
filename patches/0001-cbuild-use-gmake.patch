@@ -1,0 +1,53 @@
+--- a/src/cbuild/core/template.py
++++ b/src/cbuild/core/template.py
+@@ -435,7 +435,7 @@
+     ("configure_script", "configure", str, False, False, False),
+     ("configure_env", {}, dict, False, False, False),
+     ("configure_gen", [], list, False, False, False),
+-    ("make_cmd", "make", str, False, False, False),
++    ("make_cmd", "gmake", str, False, False, False),
+     ("make_dir", ".", str, False, False, False),
+     ("make_env", {}, dict, False, False, False),
+     ("make_wrapper", [], list, False, False, False),
+--- a/src/cbuild/core/build.py
++++ b/src/cbuild/core/build.py
+@@ -828,7 +828,7 @@
+         mkf.close()
+         pkg.log("generating packages...")
+         mkcmd = [
+-            "make",
++            "gmake",
+             "--no-print-directory",
+             f"-j{pkg.conf_jobs}",
+             "-C",
+--- a/src/cbuild/util/strip.py
++++ b/src/cbuild/util/strip.py
+@@ -33,7 +33,7 @@
+ 
+     # invoke
+     pkg.rparent.do(
+-        "make",
++        "gmake",
+         "--silent",
+         "--no-print-directory",
+         f"-j{pkg.rparent.conf_jobs}",
+--- a/src/cbuild/build_style/u_boot.py
++++ b/src/cbuild/build_style/u_boot.py
+@@ -14,7 +14,7 @@
+         "-u",
+         "LDFLAGS",
+         "--",
+-        "make",
++        "gmake",
+         f"{cfgname}_defconfig",
+         f"CROSS_COMPILE={self.env['U_BOOT_TRIPLET']}-",
+         f"CC={self.env['U_BOOT_TRIPLET']}-gcc",
+@@ -35,7 +35,7 @@
+         "LDFLAGS",
+         "--",
+         *self.make_build_wrapper,
+-        "make",
++        "gmake",
+         f"-j{self.make_jobs}",
+         f"EXTRAVERSION=-{self.pkgrel}",
+         f"CROSS_COMPILE={self.env['U_BOOT_TRIPLET']}-",

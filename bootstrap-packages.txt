@@ -1,81 +1,17 @@
-# Source templates required by `./cbuild source-bootstrap`.
+# Local Oasis-composed cbuild environment.
 #
-# This is the stage 0 + stage 1 dependency closure of main/base-cbuild, with
-# stage 1 and stage 2 having the same dependency set. It is what cbuild
-# actually needs to build the bootstrap environment from source.
+# These are the only local source templates. They are maintained directly in
+# this tree, not imported from Chimera.
 #
-# It deliberately excludes stage-3-only convenience dependencies. In
-# particular, upstream base-cbuild adds `ccache` at stage > 2; ccache's
-# runtime closure pulls elfutils -> libmicrohttpd -> gnutls -> unbound ->
-# protobuf -> boost, plus util-linux, trousers, etc. Those are not needed to
-# bootstrap, so this tree applies a local patch dropping that one dependency
-# (see patches/). With it, stages 0-3 need the same 66 templates.
-#
-# Keep this sorted. One source template directory name per line, relative to
-# main/.
-acl
-apk-tools
-attr
-autoconf
-autoconf-archive
-automake
+# Chimera provides binary packages for the toolchain (clang/llvm/lld, gmake,
+# musl) and the low-level cbuild dependencies (apk-tools, fakeroot-core,
+# libarchive-progs). Oasis provides the userland. Host tools such as Python,
+# git, and openssl come from pkgsrc.
 base-cbuild
 base-files
-bc-gh
-bluez-headers
-byacc
-bzip2
-ca-certificates
-chimerautils
-cmake
-debianutils
-fakeroot
-flex
-fortify-headers
-gm4
 gmake
-help2man
-libarchive
-libatomic-chimera
-libcap
-libedit
-libexpat
-libffi8
-libtool
-libxo
-linux-headers
-llvm
-llvm-bootstrap
-lua5.4
-lua5.4-zlib
-lz4
-meson
-musl
-musl-bsd-headers
-ncurses
-ninja
-openresolv
-openssl3
-perl
-perl-locale-gettext
-pkgconf
-python
-python-build
-python-flit_core
-python-installer
-python-packaging
-python-pyparsing
-python-pyproject_hooks
-python-setuptools
-python-wheel
-resolvconf
-scdoc
-sd-tools
-slibtool
-sqlite
-texinfo
-tzdb
-ugetopt
-xz
-zlib-ng-compat
-zstd
+linux-personality
+oksh
+pigz
+sbase
+ubase
