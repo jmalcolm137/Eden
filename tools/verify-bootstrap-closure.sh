@@ -93,7 +93,7 @@ while IFS= read -r p; do
 done < "$tmp/manifest"
 
 # Composition checks: Oasis userland in, Chimera base userland out.
-for p in linux-personality oksh pigz sbase ubase gmake; do
+for p in awk bearssl diffutils grep linux-personality oksh patch pigz sbase sed ubase gmake; do
     if ! grep -q "\"$p\"" main/base-cbuild/template.py; then
         echo "error: base-cbuild does not depend on $p" >&2
         fail=1
@@ -131,11 +131,12 @@ for f in main/base-files/files/etc/passwd main/base-files/files/etc/group; do
     fi
 done
 
-if [ -f bldroot/.cbuild_chroot_init ]; then
+if [ -f bldroot-oasis/.cbuild_chroot_init ]; then
+    echo "note: bldroot-oasis exists"
+elif [ -f bldroot/.cbuild_chroot_init ]; then
     echo "note: bldroot exists"
 else
-    echo "note: no bldroot; run tools/bootstrap.sh" \
-        "(temporary Chimera root) or tools/bootstrap-oasis.sh"
+    echo "note: no bldroot; run tools/bootstrap-oasis.sh"
 fi
 
 if [ "$fail" -ne 0 ]; then

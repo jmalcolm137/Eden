@@ -1,17 +1,33 @@
-# Local Oasis-composed cbuild environment.
+# Local cports templates.
 #
-# These are the only local source templates. They are maintained directly in
-# this tree, not imported from Chimera.
+# Policy: Oasis first, pkgsrc second, Chimera only when neither provides what
+# is needed. Binary Chimera packages are used for the toolchain/remaining
+# runtime pieces; these templates are the packages we build from source.
 #
-# Chimera provides binary packages for the toolchain (clang/llvm/lld, gmake,
-# musl) and the low-level cbuild dependencies (apk-tools, fakeroot-core,
-# libarchive-progs). Oasis provides the userland. Host tools such as Python,
-# git, and openssl come from pkgsrc.
+# Keep this sorted. One source template directory name per line, relative to
+# main/.
+acl
+awk
 base-cbuild
 base-files
+bearssl
+bzip2
+ca-certificates
+diffutils
 gmake
+grep
+libedit
+libffi8
 linux-personality
+lz4
+musl
+ncurses
 oksh
+patch
 pigz
 sbase
+sed
 ubase
+xz
+zlib-ng-compat
+zstd

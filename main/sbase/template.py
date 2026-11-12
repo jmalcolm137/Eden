@@ -1,6 +1,6 @@
 pkgname = "sbase"
 pkgver = "0.1"
-pkgrel = 0
+pkgrel = 1
 build_style = "makefile"
 make_build_args = ["MANPREFIX=/usr/share/man"]
 make_install_args = ["MANPREFIX=/usr/share/man"]
@@ -17,14 +17,21 @@ options = ["!check", "bootstrap"]
 
 def post_install(self):
     self.install_license("LICENSE")
+    # Many upstream Makefiles invoke plain `install`; sbase calls it xinstall.
+    self.install_link("usr/bin/install", "xinstall")
     # Keep the Oasis make at /usr/bin/make. cbuild is patched to use
     # /usr/bin/gmake for GNU make. Drop the sbase tools that conflict with
     # hard requirements: Chimera musl provides getconf, llvm-binutils
-    # provides strings/strip/objcopy, and bsdtar is needed to extract
-    # compressed sources (sbase tar does not auto-decompress).
+    # provides strings/strip/objcopy, bsdtar is needed for compressed
+    # sources, and autoconf rejects sbase grep/sed in favour of GNU ones.
     for f in [
+        "usr/bin/cmp",
+        "usr/bin/egrep",
+        "usr/bin/fgrep",
         "usr/bin/getconf",
+        "usr/bin/grep",
+        "usr/bin/sed",
         "usr/bin/strings",
         "usr/bin/tar",
     ]:
-        self.uninstall(f)
+        self.uninstall(f, missing_ok=True)

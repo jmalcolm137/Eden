@@ -40,6 +40,11 @@ fi
 # gmake is first: once base-cbuild is built it pulls in the Oasis userland,
 # which intentionally does not provide everything autoconf expects.
 for p in \
+    awk \
+    grep \
+    sed \
+    diffutils \
+    patch \
     gmake \
     base-files \
     linux-personality \
@@ -47,6 +52,18 @@ for p in \
     pigz \
     sbase \
     ubase \
+    ca-certificates \
+    zlib-ng-compat \
+    xz \
+    bzip2 \
+    lz4 \
+    zstd \
+    acl \
+    libffi8 \
+    ncurses \
+    libedit \
+    bearssl \
+    musl \
     base-cbuild
 do
     echo "==> building main/$p"

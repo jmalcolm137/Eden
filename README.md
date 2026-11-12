@@ -1,98 +1,106 @@
 # Oasis-composed cbuild environment
 
 A minimal local [`cports`](https://github.com/chimera-linux/cports) tree that
-builds an Oasis-flavoured cbuild environment:
+assembles an Oasis-flavoured cbuild environment.
 
-- **Chimera** supplies the toolchain and low-level build packages:
-  `clang`/`llvm`/`lld`, `gmake`, `musl`, `apk-tools`, `fakeroot-core`,
-  `libarchive-progs` (bsdtar), and their runtime dependencies.
-- **Oasis** supplies the userland: `sbase`, `ubase`, `oksh`, `pigz`,
-  `base-files`, and a small personality shim.
-- **pkgsrc** is expected to supply host-side tools for running cbuild itself
-  (`python`, `git`, `openssl`, `bubblewrap`, etc.).
+**Policy:** Oasis first, pkgsrc second, Chimera only when neither provides what
+is needed. Chimera is currently used for the compiler toolchain, musl recipe,
+GNU make naming, bsdtar/libarchive, fakeroot, apk-tools, and the OpenSSL
+libraries apk-tools links against.
 
-The result is a working `bldroot-oasis` without `chimerautils`.
+## Local templates (25)
 
-## Local templates
+Oasis / local:
 
-Only eight source templates are maintained here:
+```
+acl          awk           base-cbuild     base-files     bearssl
+bzip2        ca-certificates diffutils     gmake          grep
+libedit      libffi8       linux-personality lz4          musl
+ncurses      oksh          patch           pigz           sbase
+sed          ubase         xz              zlib-ng-compat zstd
+```
 
-| Template | Role |
-|---|---|
-| `base-cbuild` | local meta package: Chimera toolchain + Oasis userland |
-| `base-files` | minimal filesystem and `/etc/passwd`/`group` for the bldroot |
-| `gmake` | GNU make, exposed only as `/usr/bin/gmake` |
-| `linux-personality` | `linux64`/`linux32` shims used by cbuild's sandbox |
-| `oksh` | Oasis `/bin/sh` |
-| `pigz` | `gzip`/`gunzip`/`zcat` provider |
-| `sbase` | Oasis core utilities, including `/usr/bin/make` |
-| `ubase` | Oasis base utilities |
+The current bottom layer of the bldroot is built from these templates.
 
-Everything else is installed as a binary package from the Chimera repository.
+## Current bldroot
 
-## Conflict policy
+`bldroot-oasis` has 54 packages. The following are now source-built from the
+local templates:
 
-Oasis tools are preferred where they work. The exceptions are deliberate:
+```
+acl awk base-cbuild base-files bearssl bzip2 ca-certificates diffutils
+gmake grep libedit libffi8 lz4 musl musl-devel musl-ldso musl-progs
+ncurses-libs oksh patch pigz sbase sed ubase xz zlib-ng-compat zstd
+zstd-progs
+```
 
-| Conflict | Winner | Why |
+Still binary from Chimera:
+
+```
+apk-tools apk-tools-static-bin clang clang-cpp-libs clang-libs
+clang-rt-devel fakeroot-core fortify-headers libarchive-progs
+libatomic-chimera libatomic-chimera-devel libcxx libcxxabi libcxxabi-devel
+libcxx-devel libunwind libunwind-devel lld llvm llvm-binutils llvm-libs
+llvm-linker-tools llvm-runtime openssl3-libs
+```
+
+No `chimerautils`, no `debianutils`, no OpenSSL CLI.
+
+## Deliberate exceptions
+
+| Item | Choice | Reason |
 |---|---|---|
-| libc / getconf | **Chimera musl** | requested explicitly; musl-progs provides getconf |
-| make | **both** | Oasis `make` stays `/usr/bin/make`; Chimera `gmake` is `/usr/bin/gmake`, and cbuild is patched to invoke `gmake` |
-| tar | **Chimera bsdtar** | sbase tar does not auto-decompress `.gz`/`.xz`/`.zst` |
-| strings | **Chimera llvm-binutils** | the same package must provide `strip`, `objcopy`, `readelf`, etc. |
-| gzip | **Oasis pigz** | provides gzip-compatible names |
-| debianutils | **transitive** | pulled by Chimera `ca-certificates`/`apk-tools`; sbase/ubase cover the commands we use |
+| libc | Chimera musl recipe | requested; local template is Chimera's musl |
+| make | Oasis `make`, Chimera `gmake` | cbuild uses gmake explicitly; `/usr/bin/make` stays sbase |
+| tar | Chimera bsdtar | sbase tar does not auto-decompress `.gz`/`.xz`/`.zst` |
+| strings/getconf | Chimera llvm-binutils/musl | same packages provide required strip/objcopy and musl ABI |
+| grep/sed/diff/patch | pkgsrc-version GNU tools | sbase grep/sed are rejected by autoconf; GNU diff/patch required |
+| OpenSSL | Chimera `openssl3-libs` | apk-tools links `libcrypto.so.3` and `libssl.so.3` |
+| ncurses | Chimera `ncurses-libs` for now | netbsd-curses is Oasis's preference, but Chimera libedit/LLVM link `libncursesw.so.6`; swapping needs those rebuilt against netbsd-curses |
 
 ## Layout
 
 | Path | Purpose |
 |---|---|
-| `cbuild`, `src/` | cbuild engine, with local patches |
-| `main/` | the eight local templates and their subpackage symlinks |
+| `cbuild`, `src/` | cbuild engine plus local patches |
+| `main/` | 25 local templates and subpackage symlinks |
 | `user/` | add your own package templates here |
-| `patches/` | local engine patches (gmake, apk TLS cert path) |
+| `patches/` | engine patches: gmake invocation, apk TLS cert path |
 | `etc/build_profiles/` | architecture profiles |
-| `etc/apk/` | Chimera repo definitions, Chimera keys, local public key |
+| `etc/apk/` | Chimera repo config, Chimera keys, local public key |
 | `etc/config.ini` | local config (`categories = main user`) |
-| `tools/bootstrap-oasis.sh` | build the whole environment |
-| `tools/sync-engine.sh` | refresh engine/profiles/repo config from a cports checkout |
-| `tools/verify-bootstrap-closure.sh` | verify templates, composition, engine patches |
-| `bootstrap-packages.txt` | manifest of the local templates |
+| `tools/bootstrap-oasis.sh` | build environment in a temporary Chimera root |
+| `tools/sync-engine.sh` | refresh engine/profiles/repo config from cports |
+| `tools/verify-bootstrap-closure.sh` | verify templates, composition, patches |
+| `bootstrap-packages.txt` | manifest of local templates |
 
-## Build the environment
+## Build
 
 ```
 ./cbuild keygen          # once
 tools/bootstrap-oasis.sh
 ```
 
-The script:
+The script creates a temporary Chimera root (`bldroot-chimera`), builds all
+local templates into `.bootstrap-repo` in dependency order (with
+`base-cbuild` last), then creates `bldroot-oasis`.
 
-1. creates `bldroot-chimera` from binary Chimera `base-cbuild`, with its
-   complete Chimerautils userland (needed to build gmake/autoconf),
-2. builds the local templates into `.bootstrap-repo`, starting with `gmake`,
-3. assembles `bldroot-oasis` from the local `base-cbuild`.
+Important: build environment packages in `bldroot-chimera`, not in
+`bldroot-oasis`. `sbase`'s install script needs `awk`; rebuilding it inside
+the Oasis root after its own tools were removed produces an empty package.
 
 Then build packages with:
 
 ```
-./cbuild -b bldroot-oasis pkg user/<name>
-```
-
-or use the included templates:
-
-```
-./cbuild -b bldroot-oasis pkg main/ubase
+./cbuild -r .bootstrap-repo -b bldroot-oasis pkg user/<name>
 ```
 
 ## Engine patches
 
-- `patches/0001-cbuild-use-gmake.patch`: default `make_cmd` is `gmake`, and
-  cbuild's generated packaging Makefiles, strip helper, and u-boot style use
-  `gmake`. This lets Oasis `make` remain `/usr/bin/make`.
-- `patches/0002-cbuild-ssl-cert-env.patch`: set `SSL_CERT_FILE` for apk
-  invocations inside the bldroot. The minimal `base-files` does not ship
-  hashed cert symlinks, but does provide the CA bundle.
+- `patches/0001-cbuild-use-gmake.patch`: cbuild uses `gmake` for GNU make,
+  while Oasis `make` remains `/usr/bin/make`.
+- `patches/0002-cbuild-ssl-cert-env.patch`: set `SSL_CERT_FILE` for apk inside
+  the bldroot, using the static Oasis CA bundle.
 
 Refresh the engine with:
 
@@ -100,7 +108,7 @@ Refresh the engine with:
 tools/sync-engine.sh /path/to/cports
 ```
 
-The script reapplies every patch and never touches `main/` or `user/`.
+The script reapplies all patches and never touches `main/` or `user/`.
 
 ## Verify
 
@@ -108,26 +116,22 @@ The script reapplies every patch and never touches `main/` or `user/`.
 tools/verify-bootstrap-closure.sh
 ```
 
-Checks the manifest, template directories, subpackage symlinks, parsing,
-linting, the Oasis/Chimera split in `base-cbuild`, the gmake rename, and the
-engine's `make_cmd`.
+Checks manifest ↔ template directories, subpackage symlinks, parsing, linting,
+the Oasis/Chimera split in `base-cbuild`, the gmake rename, and the engine's
+`make_cmd`.
 
 ## Validated
 
 - `tools/bootstrap-oasis.sh` completes from a clean state.
-- `bldroot-oasis` has 50 packages, no `chimerautils`.
-- `make` is sbase; `gmake` is GNU make; `tar` handles `.xz` and `.zst`.
-- `./cbuild -b bldroot-oasis pkg main/ubase` builds and packages successfully.
+- `bldroot-oasis` builds and contains the 54 packages above.
+- All bottom-layer packages are source-built and selected over the Chimera
+  binaries.
+- `./cbuild -r .bootstrap-repo -b bldroot-oasis pkg main/ubase` succeeds.
+- `make`, `gmake`, `awk`, `grep`, `sed`, `diff`, `cmp`, `patch`, `cut`, `tar`,
+  and `gzip` all resolve inside the bldroot.
 
-## Known gap
+## Next
 
-The Oasis userland is intentionally small. Some autoconf-based packages
-reject sbase `grep`, and sbase does not provide `awk` or `patch`. The
-temporary Chimera root covers this while building the environment, but
-building arbitrary autoconf packages in `bldroot-oasis` may require adding a
-small compatibility layer (GNU grep, one-true-awk, patch) or selectively
-using Chimera packages for those tools.
-
-`./cbuild source-bootstrap` is not used here: it would rebuild the whole
-Chimera bootstrap chain, including `chimerautils`, which defeats the purpose
-of this fork.
+Move up from the bottom layer: `apk-tools`, `fakeroot`, `libarchive`,
+`libatomic-chimera`, `fortify-headers`, then the LLVM/clang stack. OpenSSL and
+the ncurses ABI remain the main deliberate binary dependencies.
