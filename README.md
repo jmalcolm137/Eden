@@ -30,7 +30,7 @@ The `main` entry enables the remote Chimera binary repository.
 acl apk-tools argp-standalone attr awk base-cbuild base-files bearssl byacc bzip2 ca-certificates cmake curl diffutils elfutils fakeroot fortify-headers git gmake libarchive libatomic-chimera libedit libffi8 linux-headers linux-personality llvm llvm-bootstrap lz4 m4 mandoc muon musl musl-bsd-headers musl-fts musl-obstack nasm netbsd-curses oksh patch perl pigz pkgconf python samurai sbase sed ubase ugetopt unzip xz zlib-ng-compat zlib-static zstd
 ```
 
-### oasis templates (78)
+### oasis templates (82)
 
 ```
 adobe-source-fonts atinout bc cacert cmark
@@ -41,14 +41,15 @@ libdrm-devel libdrm-devel-static libevdev libevdev-devel libevdev-devel-static
 libevent libevent-devel libevent-devel-static libffi libgpiod
 libgpiod-devel libjpeg-turbo libnl libnl-devel libpciaccess
 libpciaccess-devel libpng libtermkey libtls-bearssl libxkbcommon
-lpeg lua man-pages-posix mtdev mtdev-devel
-ncompress netsurf opus opus-devel opus-devel-static
-pciutils pciutils-devel pcre pcre-devel pcre-devel-static
-pdpmake perp pixman pwgen qbe
-sdhcp sinit skeleton syslogd texi2mdoc
-tinyalsa tinyalsa-devel tinyalsa-devel-static u-config usbids
-utf8proc util-linux util-linux-devel util-linux-devel-static velox
-vis wayland yt-dlp
+lpeg lua man-pages-posix mblaze mtdev
+mtdev-devel ncompress netsurf opus opus-devel
+opus-devel-static pax pciutils pciutils-devel pcre
+pcre-devel pcre-devel-static pdpmake perp pixman
+pwgen qbe sdhcp sfeed sinit
+skeleton syslogd texi2mdoc tinyalsa tinyalsa-devel
+tinyalsa-devel-static u-config usbids utf8proc util-linux
+util-linux-devel util-linux-devel-static velox vis wayland
+wayland-protocols yt-dlp
 ```
 
 ### scaffolded Oasis packages (110)
