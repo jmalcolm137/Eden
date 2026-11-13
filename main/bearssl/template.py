@@ -1,8 +1,13 @@
 pkgname = "bearssl"
 pkgver = "0.6"
-pkgrel = 0
+pkgrel = 4
 build_style = "makefile"
-make_build_args = ["build/libbearssl.a", "build/libbearssl.so"]
+make_build_args = [
+    "build/libbearssl.a",
+    "build/libbearssl.so",
+    "LDDLLFLAGS=-shared -Wl,-soname,libbearssl.so",
+]
+hostmakedepends = ["pkgconf"]
 pkgdesc = "BearSSL TLS and crypto library"
 license = "MIT"
 url = "https://bearssl.org"
@@ -20,12 +25,13 @@ def install(self):
     self.install_dir("usr/include")
     for h in (self.cwd / "inc").glob("*.h"):
         self.install_file(h, "usr/include")
+    self.install_file(self.files_path / "bearssl.pc", "usr/lib/pkgconfig")
     self.install_license("LICENSE.txt")
 
 
 @subpackage("bearssl-devel")
 def _(self):
-    return ["usr/include"]
+    return ["usr/include", "usr/lib/pkgconfig"]
 
 
 @subpackage("bearssl-devel-static")

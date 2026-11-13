@@ -1,6 +1,6 @@
 pkgname = "sbase"
 pkgver = "0.1"
-pkgrel = 1
+pkgrel = 2
 build_style = "makefile"
 make_build_args = ["MANPREFIX=/usr/share/man"]
 make_install_args = ["MANPREFIX=/usr/share/man"]
@@ -23,13 +23,10 @@ def post_install(self):
     # /usr/bin/gmake for GNU make. Drop the sbase tools that conflict with
     # hard requirements: Chimera musl provides getconf, llvm-binutils
     # provides strings/strip/objcopy, bsdtar is needed for compressed
-    # sources, and autoconf rejects sbase grep/sed in favour of GNU ones.
+    # sources, and autoconf rejects sbase sed in favour of GNU sed.
     for f in [
         "usr/bin/cmp",
-        "usr/bin/egrep",
-        "usr/bin/fgrep",
         "usr/bin/getconf",
-        "usr/bin/grep",
         "usr/bin/sed",
         "usr/bin/strings",
         "usr/bin/tar",

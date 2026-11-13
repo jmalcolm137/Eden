@@ -13,11 +13,11 @@ libraries apk-tools links against.
 Oasis / local:
 
 ```
-acl          awk           base-cbuild     base-files     bearssl
-bzip2        ca-certificates diffutils     gmake          grep
-libedit      libffi8       linux-personality lz4          musl
-ncurses      oksh          patch           pigz           sbase
-sed          ubase         xz              zlib-ng-compat zstd
+acl          apk-tools     awk             base-cbuild     base-files
+bearssl      bzip2         ca-certificates diffutils       gmake
+libedit      libffi8       linux-personality lz4           musl
+ncurses      oksh          patch           pigz            sbase
+sed          ubase         xz              zlib-ng-compat  zstd
 ```
 
 The current bottom layer of the bldroot is built from these templates.
@@ -37,12 +37,21 @@ zstd-progs
 Still binary from Chimera:
 
 ```
-apk-tools apk-tools-static-bin clang clang-cpp-libs clang-libs
-clang-rt-devel fakeroot-core fortify-headers libarchive-progs
-libatomic-chimera libatomic-chimera-devel libcxx libcxxabi libcxxabi-devel
-libcxx-devel libunwind libunwind-devel lld llvm llvm-binutils llvm-libs
+clang clang-cpp-libs clang-libs clang-rt-devel fakeroot-core
+fortify-headers libarchive-progs libatomic-chimera
+libatomic-chimera-devel libcxx libcxxabi libcxxabi-devel libcxx-devel
+libunwind libunwind-devel lld llvm llvm-binutils llvm-libs
 llvm-linker-tools llvm-runtime openssl3-libs
 ```
+
+`apk-tools` is now source-built with its **BearSSL crypto backend**. It still
+links OpenSSL for `libfetch` TLS; that is the remaining OpenSSL dependency in
+apk-tools.
+
+`libatomic-chimera` is a Chimera runtime shim providing `libatomic.so.1` for
+compiler-generated atomic builtins. It is pulled in by clang; cbuild itself
+does not call it directly. The `-devel` package is only needed for static
+builds.
 
 No `chimerautils`, no `debianutils`, no OpenSSL CLI.
 
@@ -135,11 +144,9 @@ the Oasis/Chimera split in `base-cbuild`, the gmake rename, and the engine's
 Move up from the bottom layer: `apk-tools`, `fakeroot`, `libarchive`,
 `libatomic-chimera`, `fortify-headers`, then the LLVM/clang stack.
 
-`apk-tools` is the main OpenSSL blocker. Its crypto is abstracted by
-`src/apk_crypto.h` and currently has `crypto_openssl.c` and
-`crypto_mbedtls.c`. A `crypto_bearssl.c` backend is feasible (BearSSL provides
-SHA-1/256/512 and RSA PKCS#1 sign/verify), but requires implementing key
-loading (PKCS#1/PKCS#8/SPKI DER handling), the `apk_digest_*` context API, and
-sign/verify, plus a meson backend option. Until that backend is tested,
-`openssl3-libs` remains the one deliberate OpenSSL dependency.
+`apk-tools` now builds with a local `crypto_bearssl.c` backend (SHA-1/256/512,
+RSA PKCS#1 sign/verify, PKCS#8/SPKI key loading, key IDs). Its remaining
+OpenSSL use is `libfetch`; fully removing OpenSSL requires porting libfetch to
+BearSSL/libtls-bearssl or switching to the wget backend with a BearSSL-based
+fetch tool.
 

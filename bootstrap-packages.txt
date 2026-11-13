@@ -7,6 +7,7 @@
 # Keep this sorted. One source template directory name per line, relative to
 # main/.
 acl
+apk-tools
 awk
 base-cbuild
 base-files
@@ -15,7 +16,6 @@ bzip2
 ca-certificates
 diffutils
 gmake
-grep
 libedit
 libffi8
 linux-personality

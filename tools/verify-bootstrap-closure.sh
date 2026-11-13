@@ -93,7 +93,7 @@ while IFS= read -r p; do
 done < "$tmp/manifest"
 
 # Composition checks: Oasis userland in, Chimera base userland out.
-for p in awk bearssl diffutils grep linux-personality oksh patch pigz sbase sed ubase gmake; do
+for p in awk bearssl diffutils linux-personality oksh patch pigz sbase sed ubase gmake; do
     if ! grep -q "\"$p\"" main/base-cbuild/template.py; then
         echo "error: base-cbuild does not depend on $p" >&2
         fail=1

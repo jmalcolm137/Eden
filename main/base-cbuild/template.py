@@ -12,7 +12,6 @@ depends = [
     "diffutils",
     "fakeroot-core",
     "gmake",
-    "grep",
     "libarchive-progs",
     "linux-personality",
     "lld",

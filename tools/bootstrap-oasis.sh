@@ -41,7 +41,6 @@ fi
 # which intentionally does not provide everything autoconf expects.
 for p in \
     awk \
-    grep \
     sed \
     diffutils \
     patch \
@@ -64,6 +63,7 @@ for p in \
     libedit \
     bearssl \
     musl \
+    apk-tools \
     base-cbuild
 do
     echo "==> building main/$p"

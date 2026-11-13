@@ -1,0 +1,14 @@
+--- a/meson.build
++++ b/meson.build
+@@ -34,6 +34,11 @@
+ 
+ apk_deps = [ crypto_dep, zlib_dep, libzstd_dep ]
+ 
++if get_option('url_backend') == 'libfetch'
++	# interim: libfetch still uses OpenSSL for TLS
++	apk_deps += [ dependency('openssl') ]
++endif
++
+ add_project_arguments('-D_GNU_SOURCE', language: 'c')
+ 
+ # Needed for 64-bit off_t and friends on glibc.
