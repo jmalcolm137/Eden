@@ -18,6 +18,7 @@ pixman
 qbe
 sinit
 utf8proc
+velox
 vis
 wayland
 zlib-static

@@ -33,12 +33,12 @@ libedit libffi8 linux-personality lz4 muon musl netbsd-curses oksh
 patch pigz pkgconf samurai sbase sed ubase xz zlib-ng-compat zstd
 ```
 
-### oasis templates (22)
+### oasis templates (23)
 
 ```
 adobe-source-fonts cproc curl expat freetype libffi libjpeg-turbo
 libpng libtermkey libtls-bearssl libxkbcommon lpeg lua netsurf perp
-pixman qbe sinit utf8proc vis wayland zlib-static
+pixman qbe sinit utf8proc velox vis wayland zlib-static
 ```
 
 ## Current bldroot
@@ -222,6 +222,14 @@ matching the Oasis package layout.
 `pkg/sinit/src` submodule. It uses Oasis's `config.h` and `shutdown.c`
 overrides, installs `sinit` plus the `/usr/bin/init` link, and puts the shutdown
 helper in `/usr/lib/sinit/shutdown`.
+
+## velox
+
+`oasis/velox` packages the Oasis Wayland compositor at the commit pinned by
+the Oasis `pkg/velox/src` submodule. It builds the compositor itself and
+installs the sample configuration; its `swc`, `wld`, `libinput`, `libdrm`,
+`libevdev`, `mtdev`, `fontconfig`, and `util-linux` dependencies still need to
+be ported from Oasis before it can be built in this tree.
 
 ## Next
 
