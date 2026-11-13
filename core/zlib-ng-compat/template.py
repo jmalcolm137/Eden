@@ -34,3 +34,8 @@ def _(self):
     self.renames = [f"zlib-devel={_cver}-r99"]
 
     return self.default_devel()
+
+
+@subpackage("zlib-ng-compat-devel-static")
+def _(self):
+    return ["usr/lib/*.a"]

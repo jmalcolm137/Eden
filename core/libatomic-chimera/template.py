@@ -17,3 +17,8 @@ if self.profile.arch == "aarch64":
 @subpackage("libatomic-chimera-devel")
 def _(self):
     return self.default_devel()
+
+
+@subpackage("libatomic-chimera-devel-static")
+def _(self):
+    return ["usr/lib/*.a"]
