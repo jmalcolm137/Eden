@@ -68,6 +68,8 @@ for p in \
     libarchive \
     bearssl \
     musl \
+    samurai \
+    muon \
     apk-tools \
     base-cbuild
 do

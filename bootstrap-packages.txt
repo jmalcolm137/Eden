@@ -24,12 +24,14 @@ libedit
 libffi8
 linux-personality
 lz4
+muon
 musl
 netbsd-curses
 oksh
 patch
 pigz
 pkgconf
+samurai
 sbase
 sed
 ubase
