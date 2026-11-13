@@ -10,7 +10,7 @@ configure_args = [
     "-Dhelp=disabled",
 ]
 make_check_env = {"APK_CONFIG": "/dev/null"}
-hostmakedepends = ["meson", "ninja", "pkgconf"]
+hostmakedepends = ["muon", "samurai", "pkgconf"]
 makedepends = ["bearssl-devel", "zlib-ng-compat-devel"]
 pkgdesc = "Alpine package manager with BearSSL"
 license = "GPL-2.0-only"
@@ -67,7 +67,7 @@ def post_build(self):
     if self.stage == 0:
         return
 
-    self.do("ninja", f"-j{self.make_jobs}", "-C", "build-static", "src/apk")
+    self.do("samu", f"-j{self.make_jobs}", "-C", "build-static", "src/apk")
 
 
 def post_install(self):

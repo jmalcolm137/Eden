@@ -41,15 +41,16 @@ libtls-bearssl
 
 ## Current bldroot
 
-`bldroot-oasis` has 54 packages. The following are now source-built from the
+`bldroot-oasis` has 66 packages. The following are now source-built from the
 local templates:
 
 ```
 acl apk-tools apk-tools-static-bin awk base-cbuild base-files bearssl
 bzip2 ca-certificates diffutils fakeroot-core fortify-headers gmake
 libarchive-progs libatomic-chimera libatomic-chimera-devel libedit
-libffi8 lz4 musl musl-devel musl-ldso musl-progs netbsd-curses oksh
-patch pigz pkgconf sbase sed ubase xz zlib-ng-compat zstd zstd-progs
+libffi8 lz4 muon musl musl-devel musl-ldso musl-progs netbsd-curses
+oksh patch pigz pkgconf samurai sbase sed ubase xz zlib-ng-compat zstd
+zstd-progs
 ```
 
 Still binary from Chimera:
@@ -63,6 +64,11 @@ llvm-libs llvm-linker-tools llvm-runtime
 
 `apk-tools` is now source-built with **BearSSL for both crypto and libfetch
 TLS**; no OpenSSL packages remain in the bldroot.
+
+All Meson-style packages are built with Oasis **muon** and **samurai**; the
+engine no longer invokes `meson` or `ninja`. `muon` carries one local patch so
+that `library()` with `default_library=both` does not link `link_whole`
+dependencies twice.
 
 `libatomic-chimera` is a Chimera runtime shim providing `libatomic.so.1` for
 compiler-generated atomic builtins. It is pulled in by clang; cbuild itself
@@ -96,7 +102,7 @@ No `chimerautils`, no `debianutils`, no OpenSSL CLI.
 | `core/` | core templates and subpackage symlinks |
 | `oasis/` | Oasis system packages (`libtls-bearssl`) |
 | `pkgsrc/`, `extra/` | ported/local package repositories |
-| `patches/` | engine patches: gmake, apk TLS cert path, core category |
+| `patches/` | engine patches: gmake, apk TLS cert path, core category, muon/samurai |
 | `etc/build_profiles/` | architecture profiles |
 | `etc/apk/` | Chimera repo config, Chimera keys, local public key |
 | `etc/config.ini` | local config (`categories = core oasis pkgsrc extra main user`) |
@@ -136,6 +142,9 @@ Then build packages with:
   the bldroot, using the static Oasis CA bundle.
 - `patches/0004-cbuild-core-category.patch`: use `core/` for the hardcoded
   `base-files` and `base-cbuild` paths.
+- `patches/0005-cbuild-use-muon-samurai.patch`: invoke `muon` instead of
+  `meson`, `samu` instead of `ninja`, and translate meson-only build options
+  and dependency names (`meson` -> `muon`, `ninja` -> `samurai`).
 
 Refresh the engine with:
 

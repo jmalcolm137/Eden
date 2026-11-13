@@ -1,11 +1,11 @@
 pkgname = "muon"
-pkgver = "0.7.0"
+pkgver = "0.7.1"
 pkgrel = 0
 pkgdesc = "Meson-compatible build system from Oasis"
 license = "GPL-3.0-only AND Apache-2.0 AND MIT AND Unlicense"
 url = "https://muon.build"
 source = f"https://git.sr.ht/~lattis/muon/archive/{pkgver}.tar.gz"
-sha256 = "e7095741dc11338f5ed8e0aa02e993fc34df4295dad4296127bbb212bcf56e07"
+sha256 = "967a99ade648a850807d5637c80d55043ded34556e9dcbfec8736d6de52f96c5"
 # no tests during bootstrap package builds
 options = ["!check", "bootstrap"]
 

@@ -89,6 +89,9 @@ def setup_depends(pkg, only_names=False):
     rdeps = []
 
     pkg.resolve_depends()
+    pkg.hostmakedepends = [template.map_tool_dep(x) for x in pkg.hostmakedepends]
+    pkg.makedepends = [template.map_tool_dep(x) for x in pkg.makedepends]
+    pkg.checkdepends = [template.map_tool_dep(x) for x in pkg.checkdepends]
 
     crdeps = [(pkg.pkgname, x) for x in pkg.depends]
 

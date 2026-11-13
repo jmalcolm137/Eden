@@ -718,6 +718,24 @@ class AstValidatorVisitor(ast.NodeVisitor):
         ast.NodeVisitor.generic_visit(self, node)
 
 
+_TOOL_DEP_ALIASES = {
+    "meson": "muon",
+    "ninja": "samurai",
+}
+
+
+def map_tool_dep(dep):
+    if dep.startswith("!"):
+        return "!" + map_tool_dep(dep[1:])
+    for old, new in _TOOL_DEP_ALIASES.items():
+        if dep == old:
+            return new
+        for sep in "=<>~":
+            if dep.startswith(old + sep):
+                return new + dep[len(old):]
+    return dep
+
+
 class Template(Package):
     _tmpl_dict = {}
 
@@ -1448,7 +1466,7 @@ class Template(Package):
 
         def _resolve_dep(depv):
             if isinstance(depv, str):
-                return depv
+                return map_tool_dep(depv)
             elif hasattr(depv, "pkgname_ver"):
                 return depv.pkgname_ver
             else:

@@ -56,16 +56,53 @@ endian = '{pkg.profile.endian}'
     return cfpath
 
 
+# muon does not implement every meson built-in option; silently drop the
+# ones it rejects instead of failing the whole configure step.
+_MUON_UNSUPPORTED_OPTS = (
+    "pkgconfig.relocatable",
+)
+
+
+def _muon_arg(arg):
+    # translate meson-style long options into muon's -D form
+    if arg.startswith("--") and "=" in arg:
+        name, _, val = arg[2:].partition("=")
+        if name == "cross-file":
+            return "-pcross:" + val
+        return f"-D{name.replace('-', '_')}={val}"
+    if arg.startswith("-D") and "=" in arg:
+        name = arg[2:].split("=", 1)[0]
+        if name in _MUON_UNSUPPORTED_OPTS:
+            return None
+    return arg
+
+
 def configure(pkg, build_dir, meson_dir=None, extra_args=None, env=None):
     if not meson_dir:
         meson_dir = "."
+
+    # muon misdetects an explicitly-set $AR as ar-solaris, which drops the
+    # input/output arguments from its archiver rule. An empty value makes it
+    # fall back to the compiler's preferred (posix) archiver.
+    env = dict(env or {})
+    env.setdefault("AR", "")
+    env.setdefault("AR_FOR_BUILD", "")
+
+    # muon's native setup takes a single build directory; its meson
+    # compatibility layer is needed when a source subdirectory is requested.
+    if meson_dir and meson_dir != ".":
+        setup = ["muon", "meson", "setup"]
+        setup_dirs = [meson_dir, build_dir]
+    else:
+        setup = ["muon", "setup"]
+        setup_dirs = [build_dir]
 
     cfp = _make_crossfile(pkg, build_dir)
 
     cargs = []
     if cfp:
         cargs = [
-            "--cross-file=" + str(pkg.chroot_cwd / cfp.relative_to(pkg.cwd))
+            "-pcross:" + str(pkg.chroot_cwd / cfp.relative_to(pkg.cwd))
         ]
 
     if pkg.has_lto():
@@ -79,40 +116,46 @@ def configure(pkg, build_dir, meson_dir=None, extra_args=None, env=None):
         cargs.append("-Db_lto=false")
 
     pkg.do(
-        "meson",
-        "setup",
-        "--prefix=/usr",
-        "--libdir=/usr/lib",
-        "--libexecdir=/usr/lib",
-        "--bindir=/usr/bin",
-        "--sbindir=/usr/bin",
-        "--includedir=/usr/include",
-        "--datadir=/usr/share",
-        "--mandir=/usr/share/man",
-        "--infodir=/usr/share/info",
-        "--sysconfdir=/etc",
-        "--localstatedir=/var",
-        "--sharedstatedir=/var/lib",
-        "--buildtype=plain",
-        "--auto-features=auto",
-        "--wrap-mode=nodownload",
+        *setup,
+        "-Dprefix=/usr",
+        "-Dlibdir=/usr/lib",
+        "-Dlibexecdir=/usr/lib",
+        "-Dbindir=/usr/bin",
+        "-Dsbindir=/usr/bin",
+        "-Dincludedir=/usr/include",
+        "-Ddatadir=/usr/share",
+        "-Dmandir=/usr/share/man",
+        "-Dinfodir=/usr/share/info",
+        "-Dsysconfdir=/etc",
+        "-Dlocalstatedir=/var",
+        "-Dsharedstatedir=/var/lib",
+        "-Dbuildtype=plain",
+        "-Dauto_features=auto",
+        "-Dwrap_mode=nodownload",
         "-Ddefault_library=both",
         "-Dwerror=false",
         "-Db_staticpic=true",
-        "-Dpkgconfig.relocatable=false",
         "-Dpython.bytecompile=0",
         *cargs,
-        *(extra_args or []),
-        meson_dir,
-        build_dir,
+        *_muon_extra_args(extra_args),
+        *setup_dirs,
         env=env,
     )
+
+
+def _muon_extra_args(extra_args):
+    args = []
+    for arg in extra_args or []:
+        marg = _muon_arg(arg)
+        if marg is not None:
+            args.append(marg)
+    return args
 
 
 def invoke(pkg, command, build_dir, extra_args=None, env=None, wrapper=None):
     pkg.do(
         *(wrapper or []),
-        "meson",
+        "muon",
         command,
         *(extra_args or []),
         wrksrc=build_dir,
@@ -128,7 +171,7 @@ def install(pkg, build_dir, extra_args=None, env=None, wrapper=None):
         pkg,
         "install",
         build_dir,
-        ["--no-rebuild", *(extra_args or [])],
+        [*(extra_args or [])],
         renv,
         wrapper,
     )
@@ -140,9 +183,8 @@ def test(pkg, build_dir, extra_args=None, env=None, wrapper=None):
         "test",
         build_dir,
         [
-            "--no-rebuild",
-            "--print-errorlogs",
-            "--num-processes",
+            "-R",
+            "-j",
             str(pkg.make_jobs),
             *(extra_args or []),
         ],

@@ -1,0 +1,290 @@
+diff --git a/src/cbuild/build_style/cmake.py b/src/cbuild/build_style/cmake.py
+index bc789f1..bfc30b7 100644
+--- a/src/cbuild/build_style/cmake.py
++++ b/src/cbuild/build_style/cmake.py
+@@ -8,7 +8,7 @@ def configure(self):
+         self.cmake_dir,
+         self.configure_args,
+         self.configure_env,
+-        "Ninja" if self.make_cmd == "ninja" else "Unix Makefiles",
++        "Ninja" if self.make_cmd == "samu" else "Unix Makefiles",
+     )
+ 
+ 
+@@ -76,7 +76,7 @@ def use(tmpl):
+     tmpl.install = install
+ 
+     tmpl.build_style_defaults = [
+-        ("make_cmd", "ninja"),
++        ("make_cmd", "samu"),
+         ("make_dir", "build"),
+         ("make_check_target", ""),
+     ]
+diff --git a/src/cbuild/build_style/meson.py b/src/cbuild/build_style/meson.py
+index 04ae011..d279cb7 100644
+--- a/src/cbuild/build_style/meson.py
++++ b/src/cbuild/build_style/meson.py
+@@ -14,19 +14,19 @@ def configure(self):
+ def build(self):
+     renv = dict(self.make_env)
+     renv.update(self.make_build_env)
+-    eargs = []
+-    if self.verbose:
+-        eargs += ["--verbose"]
++    # samurai has no verbose switch; it already prints failing commands
++    # muon's samurai backend does not provide meson's phony "all" target
++    targs = []
++    if self.make_build_target and self.make_build_target != "all":
++        targs.append(self.make_build_target)
++    targs.extend(self.make_build_args)
+     self.do(
+         *self.make_wrapper,
+         *self.make_build_wrapper,
+         self.make_cmd,
+         "-j",
+         str(self.make_jobs),
+-        *eargs,
+-        self.make_build_target,
+-        *self.make_build_args,
+-        "meson-test-prereq",
++        *targs,
+         wrksrc=self.make_dir,
+         env=renv,
+     )
+@@ -65,5 +65,5 @@ def use(tmpl):
+     tmpl.build_style_defaults = [
+         ("make_build_target", "all"),
+         ("make_dir", "build"),
+-        ("make_cmd", "ninja"),
++        ("make_cmd", "samu"),
+     ]
+diff --git a/src/cbuild/core/dependencies.py b/src/cbuild/core/dependencies.py
+index 1975f30..2d14f4d 100644
+--- a/src/cbuild/core/dependencies.py
++++ b/src/cbuild/core/dependencies.py
+@@ -89,6 +89,9 @@ def setup_depends(pkg, only_names=False):
+     rdeps = []
+ 
+     pkg.resolve_depends()
++    pkg.hostmakedepends = [template.map_tool_dep(x) for x in pkg.hostmakedepends]
++    pkg.makedepends = [template.map_tool_dep(x) for x in pkg.makedepends]
++    pkg.checkdepends = [template.map_tool_dep(x) for x in pkg.checkdepends]
+ 
+     crdeps = [(pkg.pkgname, x) for x in pkg.depends]
+ 
+diff --git a/src/cbuild/core/template.py b/src/cbuild/core/template.py
+index c48107c..bee85ec 100644
+--- a/src/cbuild/core/template.py
++++ b/src/cbuild/core/template.py
+@@ -718,6 +718,24 @@ class AstValidatorVisitor(ast.NodeVisitor):
+         ast.NodeVisitor.generic_visit(self, node)
+ 
+ 
++_TOOL_DEP_ALIASES = {
++    "meson": "muon",
++    "ninja": "samurai",
++}
++
++
++def map_tool_dep(dep):
++    if dep.startswith("!"):
++        return "!" + map_tool_dep(dep[1:])
++    for old, new in _TOOL_DEP_ALIASES.items():
++        if dep == old:
++            return new
++        for sep in "=<>~":
++            if dep.startswith(old + sep):
++                return new + dep[len(old):]
++    return dep
++
++
+ class Template(Package):
+     _tmpl_dict = {}
+ 
+@@ -1448,7 +1466,7 @@ class Template(Package):
+ 
+         def _resolve_dep(depv):
+             if isinstance(depv, str):
+-                return depv
++                return map_tool_dep(depv)
+             elif hasattr(depv, "pkgname_ver"):
+                 return depv.pkgname_ver
+             else:
+diff --git a/src/cbuild/util/make.py b/src/cbuild/util/make.py
+index b33f88a..1f6a6e5 100644
+--- a/src/cbuild/util/make.py
++++ b/src/cbuild/util/make.py
+@@ -88,7 +88,7 @@ class Make:
+         argsbase = []
+ 
+         if default_args:
+-            if self.command == "ninja":
++            if self.command == "samu":
+                 args_use_env = True
+             if not args_use_env:
+                 argsbase.append("DESTDIR=" + str(pkg.chroot_destdir))
+diff --git a/src/cbuild/util/meson.py b/src/cbuild/util/meson.py
+index b1c7814..96be283 100644
+--- a/src/cbuild/util/meson.py
++++ b/src/cbuild/util/meson.py
+@@ -56,16 +56,53 @@ endian = '{pkg.profile.endian}'
+     return cfpath
+ 
+ 
++# muon does not implement every meson built-in option; silently drop the
++# ones it rejects instead of failing the whole configure step.
++_MUON_UNSUPPORTED_OPTS = (
++    "pkgconfig.relocatable",
++)
++
++
++def _muon_arg(arg):
++    # translate meson-style long options into muon's -D form
++    if arg.startswith("--") and "=" in arg:
++        name, _, val = arg[2:].partition("=")
++        if name == "cross-file":
++            return "-pcross:" + val
++        return f"-D{name.replace('-', '_')}={val}"
++    if arg.startswith("-D") and "=" in arg:
++        name = arg[2:].split("=", 1)[0]
++        if name in _MUON_UNSUPPORTED_OPTS:
++            return None
++    return arg
++
++
+ def configure(pkg, build_dir, meson_dir=None, extra_args=None, env=None):
+     if not meson_dir:
+         meson_dir = "."
+ 
++    # muon misdetects an explicitly-set $AR as ar-solaris, which drops the
++    # input/output arguments from its archiver rule. An empty value makes it
++    # fall back to the compiler's preferred (posix) archiver.
++    env = dict(env or {})
++    env.setdefault("AR", "")
++    env.setdefault("AR_FOR_BUILD", "")
++
++    # muon's native setup takes a single build directory; its meson
++    # compatibility layer is needed when a source subdirectory is requested.
++    if meson_dir and meson_dir != ".":
++        setup = ["muon", "meson", "setup"]
++        setup_dirs = [meson_dir, build_dir]
++    else:
++        setup = ["muon", "setup"]
++        setup_dirs = [build_dir]
++
+     cfp = _make_crossfile(pkg, build_dir)
+ 
+     cargs = []
+     if cfp:
+         cargs = [
+-            "--cross-file=" + str(pkg.chroot_cwd / cfp.relative_to(pkg.cwd))
++            "-pcross:" + str(pkg.chroot_cwd / cfp.relative_to(pkg.cwd))
+         ]
+ 
+     if pkg.has_lto():
+@@ -79,40 +116,46 @@ def configure(pkg, build_dir, meson_dir=None, extra_args=None, env=None):
+         cargs.append("-Db_lto=false")
+ 
+     pkg.do(
+-        "meson",
+-        "setup",
+-        "--prefix=/usr",
+-        "--libdir=/usr/lib",
+-        "--libexecdir=/usr/lib",
+-        "--bindir=/usr/bin",
+-        "--sbindir=/usr/bin",
+-        "--includedir=/usr/include",
+-        "--datadir=/usr/share",
+-        "--mandir=/usr/share/man",
+-        "--infodir=/usr/share/info",
+-        "--sysconfdir=/etc",
+-        "--localstatedir=/var",
+-        "--sharedstatedir=/var/lib",
+-        "--buildtype=plain",
+-        "--auto-features=auto",
+-        "--wrap-mode=nodownload",
++        *setup,
++        "-Dprefix=/usr",
++        "-Dlibdir=/usr/lib",
++        "-Dlibexecdir=/usr/lib",
++        "-Dbindir=/usr/bin",
++        "-Dsbindir=/usr/bin",
++        "-Dincludedir=/usr/include",
++        "-Ddatadir=/usr/share",
++        "-Dmandir=/usr/share/man",
++        "-Dinfodir=/usr/share/info",
++        "-Dsysconfdir=/etc",
++        "-Dlocalstatedir=/var",
++        "-Dsharedstatedir=/var/lib",
++        "-Dbuildtype=plain",
++        "-Dauto_features=auto",
++        "-Dwrap_mode=nodownload",
+         "-Ddefault_library=both",
+         "-Dwerror=false",
+         "-Db_staticpic=true",
+-        "-Dpkgconfig.relocatable=false",
+         "-Dpython.bytecompile=0",
+         *cargs,
+-        *(extra_args or []),
+-        meson_dir,
+-        build_dir,
++        *_muon_extra_args(extra_args),
++        *setup_dirs,
+         env=env,
+     )
+ 
+ 
++def _muon_extra_args(extra_args):
++    args = []
++    for arg in extra_args or []:
++        marg = _muon_arg(arg)
++        if marg is not None:
++            args.append(marg)
++    return args
++
++
+ def invoke(pkg, command, build_dir, extra_args=None, env=None, wrapper=None):
+     pkg.do(
+         *(wrapper or []),
+-        "meson",
++        "muon",
+         command,
+         *(extra_args or []),
+         wrksrc=build_dir,
+@@ -128,7 +171,7 @@ def install(pkg, build_dir, extra_args=None, env=None, wrapper=None):
+         pkg,
+         "install",
+         build_dir,
+-        ["--no-rebuild", *(extra_args or [])],
++        [*(extra_args or [])],
+         renv,
+         wrapper,
+     )
+@@ -140,9 +183,8 @@ def test(pkg, build_dir, extra_args=None, env=None, wrapper=None):
+         "test",
+         build_dir,
+         [
+-            "--no-rebuild",
+-            "--print-errorlogs",
+-            "--num-processes",
++            "-R",
++            "-j",
+             str(pkg.make_jobs),
+             *(extra_args or []),
+         ],
+diff --git a/src/runner.py b/src/runner.py
+index 9b3d33d..17efc3e 100644
+--- a/src/runner.py
++++ b/src/runner.py
+@@ -739,11 +739,9 @@ def bootstrap(tgt):
+             "clang",
+             "lld",
+             "cmake",
+-            "meson",
+             "patch",
+             "pkg-config",
+             "make",
+-            "ninja",
+             "strip",
+             "yacc",
+             "flex",

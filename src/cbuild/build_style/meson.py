@@ -14,19 +14,19 @@ def configure(self):
 def build(self):
     renv = dict(self.make_env)
     renv.update(self.make_build_env)
-    eargs = []
-    if self.verbose:
-        eargs += ["--verbose"]
+    # samurai has no verbose switch; it already prints failing commands
+    # muon's samurai backend does not provide meson's phony "all" target
+    targs = []
+    if self.make_build_target and self.make_build_target != "all":
+        targs.append(self.make_build_target)
+    targs.extend(self.make_build_args)
     self.do(
         *self.make_wrapper,
         *self.make_build_wrapper,
         self.make_cmd,
         "-j",
         str(self.make_jobs),
-        *eargs,
-        self.make_build_target,
-        *self.make_build_args,
-        "meson-test-prereq",
+        *targs,
         wrksrc=self.make_dir,
         env=renv,
     )
@@ -65,5 +65,5 @@ def use(tmpl):
     tmpl.build_style_defaults = [
         ("make_build_target", "all"),
         ("make_dir", "build"),
-        ("make_cmd", "ninja"),
+        ("make_cmd", "samu"),
     ]

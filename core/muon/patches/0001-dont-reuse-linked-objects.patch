@@ -1,0 +1,13 @@
+diff --git a/src/functions/kernel/build_target.c b/src/functions/kernel/build_target.c
+index 2e3ee5c..184c2c4 100644
+--- a/src/functions/kernel/build_target.c
++++ b/src/functions/kernel/build_target.c
+@@ -1328,7 +1328,7 @@ tgt_common(struct workspace *wk, obj *res, enum tgt_type type, enum tgt_type arg
+ 				// previous target
+ 
+ 				obj objects;
+-				if (!build_target_extract_all_objects(wk, an[0].node, tgt, &objects, true)) {
++				if (!build_target_extract_all_objects(wk, an[0].node, tgt, &objects, false)) {
+ 					return false;
+ 				}
+ 

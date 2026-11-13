@@ -8,7 +8,7 @@ def configure(self):
         self.cmake_dir,
         self.configure_args,
         self.configure_env,
-        "Ninja" if self.make_cmd == "ninja" else "Unix Makefiles",
+        "Ninja" if self.make_cmd == "samu" else "Unix Makefiles",
     )
 
 
@@ -76,7 +76,7 @@ def use(tmpl):
     tmpl.install = install
 
     tmpl.build_style_defaults = [
-        ("make_cmd", "ninja"),
+        ("make_cmd", "samu"),
         ("make_dir", "build"),
         ("make_check_target", ""),
     ]
