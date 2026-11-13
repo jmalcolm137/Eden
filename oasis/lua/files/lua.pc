@@ -1,0 +1,10 @@
+prefix=/usr
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: lua
+Description: Lua scripting language
+Version: 5.5.0
+Libs: -L${libdir} -llua -lm -ldl
+Cflags: -I${includedir}

@@ -1,4 +1,4 @@
-# Oasis-composed cbuild environment
+# Linux Eden Project
 
 A minimal local [`cports`](https://github.com/chimera-linux/cports) tree that
 assembles an Oasis-flavoured cbuild environment.
@@ -33,10 +33,12 @@ libedit libffi8 linux-personality lz4 muon musl netbsd-curses oksh
 patch pigz pkgconf samurai sbase sed ubase xz zlib-ng-compat zstd
 ```
 
-### oasis templates (1)
+### oasis templates (22)
 
 ```
-libtls-bearssl
+adobe-source-fonts cproc curl expat freetype libffi libjpeg-turbo
+libpng libtermkey libtls-bearssl libxkbcommon lpeg lua netsurf perp
+pixman qbe sinit utf8proc vis wayland zlib-static
 ```
 
 ## Current bldroot
@@ -100,7 +102,7 @@ No `chimerautils`, no `debianutils`, no OpenSSL CLI.
 |---|---|
 | `cbuild`, `src/` | cbuild engine plus local patches |
 | `core/` | core templates and subpackage symlinks |
-| `oasis/` | Oasis system packages (`libtls-bearssl`) |
+| `oasis/` | Oasis system packages and their Oasis-sourced dependencies |
 | `pkgsrc/`, `extra/` | ported/local package repositories |
 | `patches/` | engine patches: gmake, apk TLS cert path, core category, muon/samurai |
 | `etc/build_profiles/` | architecture profiles |
@@ -180,6 +182,46 @@ the Oasis/Chimera split in `base-cbuild`, the gmake rename, and the engine's
 shared library needs only `libbearssl.so` and `libc.so`; it does not need
 OpenSSL or libbsd. It is built in the `oasis` repository and is not part of the
 core bldroot.
+
+## cproc and qbe
+
+`oasis/qbe` and `oasis/cproc` package the compiler pair used by Oasis. The
+sources are pinned to the commits in the Oasis `pkg/cproc/src` and
+`pkg/qbe/src` submodules, and `oasis/cproc/files/config.h` is Oasis's target
+configuration. The preprocessor is set to `clang-cpp` because Chimera's clang
+package does not install `/usr/bin/cpp`. Assembly and linking use clang's
+integrated assembler and `ld.lld` instead of GNU binutils, so `cproc` depends
+on `clang`, `lld`, `musl-devel`, and `qbe`.
+
+## vis
+
+`oasis/vis` packages the `vis` editor at the commit pinned by the Oasis
+`pkg/vis/src` submodule. It is built against Oasis's Lua 5.5, lpeg, and
+libtermkey, all linked statically, with `netbsd-curses` providing the terminal
+interface. The two Oasis patches are applied: the wide-string workaround for
+`vis-digraph` and Lua 5.5 support.
+
+## netsurf
+
+`oasis/netsurf` packages the Oasis NetSurf fork with its tiny Wayland
+frontend. The build bundles Oasis's pinned versions of libcss, libdom,
+libhubbub, libnsbmp, libnsgif, libnsutils, libparserutils, libsvgtiny, and
+libwapcaplet, and applies the Oasis patches to them. The system libraries it
+needs are also Oasis ports: `curl`, `expat`, `freetype`, `libffi`,
+`libjpeg-turbo`, `libpng`, `libxkbcommon`, `pixman`, `utf8proc`, `wayland`,
+and `zlib-static`. At runtime it also needs the Adobe Source fonts (packaged as
+`adobe-source-fonts`), xkeyboard-config data, and a Wayland compositor.
+
+## perp and sinit
+
+`oasis/perp` packages the Oasis process supervision suite with Oasis's five
+fixup patches applied. All commands and runtools are installed in `/usr/bin`,
+matching the Oasis package layout.
+
+`oasis/sinit` packages the Oasis init at the commit pinned by the
+`pkg/sinit/src` submodule. It uses Oasis's `config.h` and `shutdown.c`
+overrides, installs `sinit` plus the `/usr/bin/init` link, and puts the shutdown
+helper in `/usr/lib/sinit/shutdown`.
 
 ## Next
 

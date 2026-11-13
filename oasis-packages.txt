@@ -1,2 +1,23 @@
 # Oasis repository: packages required for a full OASIS system.
+adobe-source-fonts
+cproc
+curl
+expat
+freetype
+libffi
+libjpeg-turbo
+libpng
+libtermkey
 libtls-bearssl
+libxkbcommon
+lpeg
+lua
+netsurf
+perp
+pixman
+qbe
+sinit
+utf8proc
+vis
+wayland
+zlib-static

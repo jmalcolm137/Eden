@@ -1,0 +1,10 @@
+prefix=/usr
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: lpeg
+Description: Parsing Expression Grammars for Lua
+Version: 1.1.0
+Libs: -L${libdir} -llpeg -lm
+Cflags: -I${includedir}
