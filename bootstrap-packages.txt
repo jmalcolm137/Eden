@@ -52,6 +52,7 @@ samurai
 sbase
 sed
 ubase
+ugetopt
 unzip
 xz
 zlib-ng-compat
