@@ -41,6 +41,7 @@ musl
 musl-bsd-headers
 musl-fts
 musl-obstack
+nasm
 netbsd-curses
 oksh
 patch
