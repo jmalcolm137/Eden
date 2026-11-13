@@ -11,7 +11,7 @@ configure_args = [
 ]
 make_check_env = {"APK_CONFIG": "/dev/null"}
 hostmakedepends = ["meson", "ninja", "pkgconf"]
-makedepends = ["bearssl-devel", "openssl3-devel", "zlib-ng-compat-devel"]
+makedepends = ["bearssl-devel", "zlib-ng-compat-devel"]
 pkgdesc = "Alpine package manager with BearSSL"
 license = "GPL-2.0-only"
 url = "http://git.alpinelinux.org/cgit/apk-tools"
@@ -28,7 +28,6 @@ if self.stage > 0:
         "libunwind-devel-static",
         "linux-headers",
         "musl-devel-static",
-        "openssl3-devel-static",
         "zlib-ng-compat-devel-static",
         "zstd-devel-static",
     ]
@@ -40,6 +39,8 @@ else:
 
 def pre_configure(self):
     self.cp(self.files_path / "crypto_bearssl.c", "src")
+    self.cp(self.files_path / "bearssl_tls.c", "libfetch")
+    self.cp(self.files_path / "bearssl_tls.h", "libfetch")
 
 
 def post_configure(self):

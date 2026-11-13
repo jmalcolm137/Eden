@@ -16,6 +16,10 @@ bzip2
 ca-certificates
 diffutils
 gmake
+fakeroot
+fortify-headers
+libarchive
+libatomic-chimera
 libedit
 libffi8
 linux-personality

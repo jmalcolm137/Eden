@@ -61,6 +61,10 @@ for p in \
     libffi8 \
     netbsd-curses \
     libedit \
+    fortify-headers \
+    libatomic-chimera \
+    fakeroot \
+    libarchive \
     bearssl \
     musl \
     apk-tools \

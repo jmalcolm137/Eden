@@ -14,10 +14,11 @@ Oasis / local:
 
 ```
 acl          apk-tools     awk             base-cbuild     base-files
-bearssl      bzip2         ca-certificates diffutils       gmake
-libedit      libffi8       linux-personality lz4           musl
-netbsd-curses oksh         patch           pigz            sbase
-sed          ubase         xz              zlib-ng-compat  zstd
+bearssl      bzip2         ca-certificates diffutils       fakeroot
+fortify-headers libarchive  libatomic-chimera libedit       libffi8
+linux-personality lz4        musl            netbsd-curses   oksh
+patch        pigz          sbase           sed              ubase
+xz           zlib-ng-compat zstd
 ```
 
 The current bottom layer of the bldroot is built from these templates.
@@ -28,25 +29,24 @@ The current bottom layer of the bldroot is built from these templates.
 local templates:
 
 ```
-acl awk base-cbuild base-files bearssl bzip2 ca-certificates diffutils
-gmake grep libedit libffi8 lz4 musl musl-devel musl-ldso musl-progs
-netbsd-curses oksh patch pigz sbase sed ubase xz zlib-ng-compat zstd
-zstd-progs
+acl apk-tools apk-tools-static-bin awk base-cbuild base-files bearssl
+bzip2 ca-certificates diffutils fakeroot-core fortify-headers gmake
+libarchive-progs libatomic-chimera libatomic-chimera-devel libedit
+libffi8 lz4 musl musl-devel musl-ldso musl-progs netbsd-curses oksh
+patch pigz sbase sed ubase xz zlib-ng-compat zstd zstd-progs
 ```
 
 Still binary from Chimera:
 
 ```
-clang clang-cpp-libs clang-libs clang-rt-devel fakeroot-core
-fortify-headers libarchive-progs libatomic-chimera
-libatomic-chimera-devel libcxx libcxxabi libcxxabi-devel libcxx-devel
-libunwind libunwind-devel lld llvm llvm-binutils llvm-libs
-llvm-linker-tools llvm-runtime openssl3-libs
+clang clang-cpp-libs clang-libs clang-rt-devel
+libcxx libcxxabi libcxxabi-devel libcxx-devel
+libunwind libunwind-devel lld llvm llvm-binutils
+llvm-libs llvm-linker-tools llvm-runtime
 ```
 
-`apk-tools` is now source-built with its **BearSSL crypto backend**. It still
-links OpenSSL for `libfetch` TLS; that is the remaining OpenSSL dependency in
-apk-tools.
+`apk-tools` is now source-built with **BearSSL for both crypto and libfetch
+TLS**; no OpenSSL packages remain in the bldroot.
 
 `libatomic-chimera` is a Chimera runtime shim providing `libatomic.so.1` for
 compiler-generated atomic builtins. It is pulled in by clang; cbuild itself
@@ -69,7 +69,7 @@ No `chimerautils`, no `debianutils`, no OpenSSL CLI.
 | tar | Chimera bsdtar | sbase tar does not auto-decompress `.gz`/`.xz`/`.zst` |
 | strings/getconf | Chimera llvm-binutils/musl | same packages provide required strip/objcopy and musl ABI |
 | grep/sed/diff/patch | pkgsrc-version GNU tools | GNU sed passes autoconf's non-truncation test (sbase sed truncates); GNU diff/patch are required. GNU grep is kept for reliability; sbase grep passes the test in isolation |
-| OpenSSL | Chimera `openssl3-libs` | apk-tools has only OpenSSL/mbedTLS crypto backends; a BearSSL backend needs to be written |
+| OpenSSL | **removed** | apk-tools uses BearSSL for crypto and libfetch TLS; no OpenSSL packages remain |
 | ncurses | **removed** | libedit is rebuilt against static Oasis netbsd-curses, so it no longer links `libncursesw.so.6`; the bldroot carries no ncurses |
 
 ## Layout
@@ -146,13 +146,10 @@ the Oasis/Chimera split in `base-cbuild`, the gmake rename, and the engine's
 
 ## Next
 
-Move up from the bottom layer: `fakeroot`, `libarchive`, `libatomic-chimera`,
-`fortify-headers`, then the LLVM/clang stack. The LLVM source template should
-link against the local `libedit` built with netbsd-curses.
+The remaining binary set is the LLVM/clang stack. Add an LLVM source template
+that links against the local `libedit` built with netbsd-curses and produces
+clang, lld, libcxx, libunwind, llvm-binutils, and the rest.
 
-`apk-tools` now builds with a local `crypto_bearssl.c` backend (SHA-1/256/512,
-RSA PKCS#1 sign/verify, PKCS#8/SPKI key loading, key IDs). Its remaining
-OpenSSL use is `libfetch`; fully removing OpenSSL requires porting libfetch to
-BearSSL/libtls-bearssl or switching to the wget backend with a BearSSL-based
-fetch tool.
+`apk-tools` builds with a local BearSSL crypto backend plus a BearSSL-based
+`libfetch` TLS client. OpenSSL is no longer a dependency of the bldroot.
 
