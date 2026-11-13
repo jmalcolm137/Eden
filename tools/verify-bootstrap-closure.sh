@@ -2,8 +2,8 @@
 # Verify the local Oasis-composed cbuild template set.
 #
 # Checks:
-#   1. manifest is sorted, unique, and every entry has main/<name>/template.py
-#   2. main/ contains no templates outside the manifest
+#   1. manifest is sorted, unique, and every entry has core/<name>/template.py
+#   2. core/ contains no templates outside the manifest
 #   3. every subpackage symlink points at a manifest template
 #   4. every local template parses and lints
 #   5. the composed base-cbuild has the intended Oasis/Chimera split
@@ -39,16 +39,16 @@ if uniq -d "$tmp/manifest" | grep -q .; then
 fi
 
 while IFS= read -r p; do
-    if [ ! -f "main/$p/template.py" ]; then
-        echo "error: missing template directory: main/$p" >&2
+    if [ ! -f "core/$p/template.py" ]; then
+        echo "error: missing template directory: core/$p" >&2
         fail=1
     fi
 done < "$tmp/manifest"
 
-for el in main/*; do
+for el in core/*; do
     [ -e "$el" ] || [ -L "$el" ] || continue
 
-    base=${el#main/}
+    base=${el#core/}
 
     if [ -L "$el" ]; then
         target=$(readlink "$el")
@@ -61,7 +61,7 @@ for el in main/*; do
     fi
 
     if [ ! -d "$el" ]; then
-        echo "error: unexpected file in main/: $el" >&2
+        echo "error: unexpected file in core/: $el" >&2
         fail=1
         continue
     fi
@@ -73,7 +73,7 @@ for el in main/*; do
     fi
 
     if ! grep -qxF "$base" "$tmp/manifest"; then
-        echo "error: template not in manifest: main/$base" >&2
+        echo "error: template not in manifest: core/$base" >&2
         fail=1
     fi
 done
@@ -86,34 +86,34 @@ fi
 
 # Lint the local set.
 while IFS= read -r p; do
-    if ! ./cbuild lint "main/$p" > /dev/null 2>&1; then
-        echo "error: lint failed: main/$p" >&2
+    if ! ./cbuild lint "core/$p" > /dev/null 2>&1; then
+        echo "error: lint failed: core/$p" >&2
         fail=1
     fi
 done < "$tmp/manifest"
 
 # Composition checks: Oasis userland in, Chimera base userland out.
 for p in awk bearssl diffutils linux-personality oksh patch pigz sbase sed ubase gmake; do
-    if ! grep -q "\"$p\"" main/base-cbuild/template.py; then
+    if ! grep -q "\"$p\"" core/base-cbuild/template.py; then
         echo "error: base-cbuild does not depend on $p" >&2
         fail=1
     fi
 done
 
 for p in chimerautils chimerautils-extra ccache; do
-    if grep -q "\"$p\"" main/base-cbuild/template.py; then
+    if grep -q "\"$p\"" core/base-cbuild/template.py; then
         echo "error: base-cbuild still depends on $p" >&2
         fail=1
     fi
 done
 
 # The local gmake must not install /usr/bin/make; sbase owns that name.
-if grep -q 'install_link("usr/bin/gmake", "make")' main/gmake/template.py; then
+if grep -q 'install_link("usr/bin/gmake", "make")' core/gmake/template.py; then
     echo "error: local gmake would overwrite the Oasis /usr/bin/make" >&2
     fail=1
 fi
 if ! grep -q 'rename("usr/bin/make", "usr/bin/gmake"' \
-        main/gmake/template.py; then
+        core/gmake/template.py; then
     echo "error: local gmake does not rename make to gmake" >&2
     fail=1
 fi
@@ -124,12 +124,55 @@ if ! grep -q '("make_cmd", "gmake"' src/cbuild/core/template.py; then
     fail=1
 fi
 
-for f in main/base-files/files/etc/passwd main/base-files/files/etc/group; do
+for f in core/base-files/files/etc/passwd core/base-files/files/etc/group; do
     if [ ! -f "$f" ]; then
         echo "error: missing account file: $f" >&2
         fail=1
     fi
 done
+
+# Additional repositories (oasis, pkgsrc, extra).
+for pair in "oasis:oasis-packages.txt" "pkgsrc:pkgsrc-packages.txt" "extra:extra-packages.txt"; do
+    cat=${pair%%:*}
+    man=${pair#*:}
+    grep -v '^[[:space:]]*\(#\|$\)' "$man" | sort > "$tmp/$cat"
+
+    while IFS= read -r p; do
+        [ -n "$p" ] || continue
+        if [ ! -f "$cat/$p/template.py" ]; then
+            echo "error: missing $cat template: $cat/$p" >&2
+            fail=1
+        fi
+    done < "$tmp/$cat"
+
+    for el in "$cat"/*; do
+        [ -e "$el" ] || [ -L "$el" ] || continue
+        base=${el#*/}
+        if [ -L "$el" ]; then
+            target=$(readlink "$el")
+            if ! grep -qxF "$target" "$tmp/$cat"; then
+                echo "error: $cat symlink $el -> $target not in $man" >&2
+                fail=1
+            fi
+            continue
+        fi
+        [ -d "$el" ] || continue
+        [ -f "$el/template.py" ] || continue
+        if ! grep -qxF "$base" "$tmp/$cat"; then
+            echo "error: $cat template not in $man: $cat/$base" >&2
+            fail=1
+        fi
+    done
+
+    while IFS= read -r p; do
+        [ -n "$p" ] || continue
+        if ! ./cbuild lint "$cat/$p" > /dev/null 2>&1; then
+            echo "error: lint failed: $cat/$p" >&2
+            fail=1
+        fi
+    done < "$tmp/$cat"
+done
+
 
 if [ -f bldroot-oasis/.cbuild_chroot_init ]; then
     echo "note: bldroot-oasis exists"

@@ -756,7 +756,7 @@ def bootstrap(tgt):
         rp = None
         try:
             rp = template.Template(
-                "main/base-cbuild",
+                "core/base-cbuild",
                 None,
                 False,
                 False,
@@ -793,7 +793,7 @@ def bootstrap(tgt):
         # make sure to reset chroot_ready when the bldroot is reinited
         chroot.chroot_check(True)
         try:
-            do_pkg("pkg", "main/base-cbuild", False, False, stage=1)
+            do_pkg("pkg", "core/base-cbuild", False, False, stage=1)
         except template.SkipPackage:
             pass
         # go back to stage 1
@@ -816,7 +816,7 @@ def bootstrap(tgt):
         paths.reinit_buildroot(oldmdir, 1)
         chroot.chroot_check(True)
         try:
-            do_pkg("pkg", "main/base-cbuild", False, False, stage=2)
+            do_pkg("pkg", "core/base-cbuild", False, False, stage=2)
         except template.SkipPackage:
             pass
         # go back to stage 2
@@ -835,7 +835,7 @@ def bootstrap(tgt):
         paths.reinit_buildroot(oldmdir, 2)
         chroot.chroot_check(True)
         try:
-            do_pkg("pkg", "main/base-cbuild", False, stage=3)
+            do_pkg("pkg", "core/base-cbuild", False, stage=3)
         except template.SkipPackage:
             pass
         # go back to stage 3
@@ -1990,8 +1990,8 @@ def _bulkpkg(pkgs, statusf, do_build, do_raw, version):
         if do_raw:
             return True
         # add base-cbuild "dependency" for correct implicit sorting
-        if not cbinit and pn not in cbvisit and pn != "main/base-cbuild":
-            depg.add(pn, "main/base-cbuild")
+        if not cbinit and pn not in cbvisit and pn != "core/base-cbuild":
+            depg.add(pn, "core/base-cbuild")
         # now add the rest of the stuff
         return _add_deps_graph(
             pn,
@@ -2016,9 +2016,9 @@ def _bulkpkg(pkgs, statusf, do_build, do_raw, version):
     # first add base-cbuild, since that's an "implicit" dependency
     # of whatever we add in the transaction (other than cycles)
     handle_recdeps(
-        "main/base-cbuild",
+        "core/base-cbuild",
         template.Template(
-            "main/base-cbuild",
+            "core/base-cbuild",
             tarch,
             True,
             False,

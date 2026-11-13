@@ -1,4 +1,4 @@
-# Local cports templates.
+# Core cports templates (source-bootstrap bldroot).
 #
 # Policy: Oasis first, pkgsrc second, Chimera only when neither provides what
 # is needed. Binary Chimera packages are used for the toolchain/remaining
@@ -29,6 +29,7 @@ netbsd-curses
 oksh
 patch
 pigz
+pkgconf
 sbase
 sed
 ubase

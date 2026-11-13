@@ -82,7 +82,7 @@ def _subst_in(pat, rep, src, dest=None):
 
 
 def _prepare_etc():
-    bfp = paths.distdir() / "main/base-files/files"
+    bfp = paths.distdir() / "core/base-files/files"
     tfp = paths.bldroot() / "etc"
 
     shutil.copy(bfp / "etc/passwd", tfp)
@@ -379,7 +379,7 @@ def _setup_dummy(rootp, archn):
 
     def _get_ver(pkgn):
         tobj = template.Template(
-            f"main/{pkgn}",
+            f"core/{pkgn}",
             archn,
             True,
             False,

@@ -21,6 +21,7 @@ depends = [
     "oksh",
     "patch",
     "pigz",
+    "pkgconf",
     "sbase",
     "sed",
     "ubase",

@@ -44,6 +44,7 @@ for p in \
     sed \
     diffutils \
     patch \
+    pkgconf \
     gmake \
     base-files \
     linux-personality \
@@ -70,8 +71,8 @@ for p in \
     apk-tools \
     base-cbuild
 do
-    echo "==> building main/$p"
-    ./cbuild -r "$tmp_repo" -b "$tmp_root" -f pkg "main/$p"
+    echo "==> building core/$p"
+    ./cbuild -r "$tmp_repo" -b "$tmp_root" -f pkg "core/$p"
 done
 
 echo "==> creating bldroot-oasis from the local base-cbuild"

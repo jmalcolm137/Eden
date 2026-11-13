@@ -1,0 +1,1 @@
+# pkgsrc repository: pkgsrc-ported packages not belonging in core or oasis.
