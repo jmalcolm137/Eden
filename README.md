@@ -30,12 +30,15 @@ The `main` entry enables the remote Chimera binary repository.
 acl apk-tools argp-standalone attr awk base-cbuild base-files bearssl byacc bzip2 ca-certificates cmake curl diffutils elfutils fakeroot fortify-headers git gmake libarchive libatomic-chimera libedit libffi8 linux-headers linux-personality llvm llvm-bootstrap lz4 m4 mandoc muon musl musl-bsd-headers musl-fts musl-obstack nasm netbsd-curses oksh patch perl pigz pkgconf python samurai sbase sed ubase ugetopt unzip xz zlib-ng-compat zlib-static zstd
 ```
 
-### oasis templates (21)
+### oasis templates (26)
 
 ```
-adobe-source-fonts cproc expat freetype libffi libjpeg-turbo
-libpng libtermkey libtls-bearssl libxkbcommon lpeg lua netsurf perp
-pixman qbe sinit utf8proc velox vis wayland
+adobe-source-fonts cproc expat freetype hyx
+libffi libjpeg-turbo libpng libtermkey libtls-bearssl
+libxkbcommon lpeg lua ncompress netsurf
+perp pixman pwgen qbe sdhcp
+sinit u-config utf8proc velox vis
+wayland
 ```
 
 ### scaffolded Oasis packages (110)

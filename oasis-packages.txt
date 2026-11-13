@@ -3,6 +3,7 @@ adobe-source-fonts
 cproc
 expat
 freetype
+hyx
 libffi
 libjpeg-turbo
 libpng
@@ -11,11 +12,15 @@ libtls-bearssl
 libxkbcommon
 lpeg
 lua
+ncompress
 netsurf
 perp
 pixman
+pwgen
 qbe
+sdhcp
 sinit
+u-config
 utf8proc
 velox
 vis
