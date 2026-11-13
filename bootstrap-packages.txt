@@ -9,10 +9,12 @@
 acl
 apk-tools
 argp-standalone
+attr
 awk
 base-cbuild
 base-files
 bearssl
+byacc
 bzip2
 ca-certificates
 cmake
@@ -33,6 +35,7 @@ llvm
 llvm-bootstrap
 lz4
 m4
+mandoc
 muon
 musl
 musl-bsd-headers
