@@ -1,0 +1,10 @@
+# Oasis package source metadata
+
+origin = oasislinux/oasis
+package = farbfeld
+version = 4
+release = r0
+kind = git-submodule
+url = git://git.suckless.org/farbfeld
+commit = ab5e3dfc9cdb476218538c6687df9f44826d8f11
+shallow = true

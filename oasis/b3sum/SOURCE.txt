@@ -1,0 +1,10 @@
+# Oasis package source metadata
+
+origin = oasislinux/oasis
+package = b3sum
+version = 1.5.0
+release = r0
+kind = git-submodule
+url = https://git.sr.ht/~mcf/b3sum
+commit = d995c3d31b42d09a568a0a658bcbcd3814164ca9
+shallow = true

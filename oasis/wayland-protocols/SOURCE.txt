@@ -1,0 +1,10 @@
+# Oasis package source metadata
+
+origin = oasislinux/oasis
+package = wayland-protocols
+version = 1.31
+release = r0
+kind = git-submodule
+url = https://gitlab.freedesktop.org/wayland/wayland-protocols.git
+commit = 4624cfaaf563cd7be5e2e2087c8de6d3a48ea867
+shallow = true

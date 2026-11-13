@@ -1,0 +1,9 @@
+# Oasis package source metadata
+
+origin = oasislinux/oasis
+package = rc
+version = 1884d8fe62
+kind = git-submodule
+url = https://github.com/oasislinux/rc.git
+commit = 1884d8fe62c22b3bb0676f570c25473faa340c3c
+shallow = true

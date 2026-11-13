@@ -1,0 +1,9 @@
+# Oasis package source metadata
+
+origin = oasislinux/oasis
+package = openssh
+version = 10.6p2
+kind = git-submodule
+url = https://github.com/oasislinux/openssh.git
+commit = 7753ab8b186dceff3d8f59d22b0d151463f1d6e4
+shallow = true

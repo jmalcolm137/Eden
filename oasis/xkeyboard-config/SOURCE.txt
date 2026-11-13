@@ -1,0 +1,10 @@
+# Oasis package source metadata
+
+origin = oasislinux/oasis
+package = xkeyboard-config
+version = 2.36
+release = r0
+kind = git-submodule
+url = https://gitlab.freedesktop.org/xkeyboard-config/xkeyboard-config.git
+commit = 60d5dd7bf463e5754f047cb98b17102e524e8f16
+shallow = true

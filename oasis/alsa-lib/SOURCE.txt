@@ -1,0 +1,10 @@
+# Oasis package source metadata
+
+origin = oasislinux/oasis
+package = alsa-lib
+version = 1.2.11
+release = r1
+kind = git-submodule
+url = https://github.com/alsa-project/alsa-lib.git
+commit = 7e3a3c2b0a092d0f568ba3c98365030dd91cc877
+shallow = true

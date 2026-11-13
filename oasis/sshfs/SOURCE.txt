@@ -1,0 +1,10 @@
+# Oasis package source metadata
+
+origin = oasislinux/oasis
+package = sshfs
+version = 3.6.0
+release = r0
+kind = git-submodule
+url = https://github.com/libfuse/sshfs.git
+commit = a1e5f12c530ccf59434a7d59a34a049f160b3559
+shallow = true

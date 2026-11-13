@@ -1,0 +1,9 @@
+# Oasis package source metadata
+
+origin = oasislinux/oasis
+package = yt-dlp
+version = 2026.10.21
+release = r0
+kind = tarball
+url = https://github.com/yt-dlp/yt-dlp/releases/download/2026.10.21/yt-dlp.tar.gz
+sha256 = 5f1e419f76e49c996061511ef9eacce50d4aa4959c34480539562e9e1295708d  yt-dlp.tar.gz

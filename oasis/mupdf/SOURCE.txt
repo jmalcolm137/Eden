@@ -1,0 +1,10 @@
+# Oasis package source metadata
+
+origin = oasislinux/oasis
+package = mupdf
+version = 1.18.0
+release = r1
+kind = git-submodule
+url = https://github.com/oasislinux/mupdf.git
+commit = 90fd87f204511be0b290a1b54a33443a20630d5f
+shallow = true

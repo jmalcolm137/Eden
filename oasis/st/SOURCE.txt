@@ -1,0 +1,10 @@
+# Oasis package source metadata
+
+origin = oasislinux/oasis
+package = st
+version = c63a87cd93
+release = r7
+kind = git-submodule
+url = git://git.suckless.org/st
+commit = c63a87cd936c1eeef14c4c21572e5b782d3df4bc
+shallow = true

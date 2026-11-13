@@ -1,0 +1,10 @@
+# Oasis package source metadata
+
+origin = oasislinux/oasis
+package = pwgen
+version = 2.08
+release = r0
+kind = git-submodule
+url = https://github.com/tytso/pwgen.git
+commit = c25787fce93b2c99efd87219585c0531e80b6d1c
+shallow = true

@@ -1,0 +1,10 @@
+# Oasis package source metadata
+
+origin = oasislinux/oasis
+package = acpid
+version = 2.0.34-2-g81df3ad695
+release = r0
+kind = git-submodule
+url = https://git.code.sf.net/p/acpid2/code
+commit = 81df3ad69585629f952972228d7edb6da0596b94
+shallow = true

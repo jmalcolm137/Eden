@@ -1,0 +1,6 @@
+# Oasis package source metadata
+
+origin = oasislinux/oasis
+package = skeleton
+kind = local
+note = recipe builds files shipped in this directory

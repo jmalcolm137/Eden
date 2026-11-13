@@ -1,0 +1,8 @@
+# Oasis package source metadata
+
+origin = oasislinux/oasis
+package = elftoolchain
+version = ce6d62aaba
+release = r1
+kind = git-submodule
+commit = f7e9afc6f9ad0d84ea73b4659c5d6d13275d2306

@@ -1,0 +1,9 @@
+# Oasis package source metadata
+
+origin = oasislinux/oasis
+package = nginx
+version = 1.31.0
+kind = git-submodule
+url = https://github.com/nginx/nginx.git
+commit = e8053c867f9ab14f323e3019ccab585d857abb66
+shallow = true

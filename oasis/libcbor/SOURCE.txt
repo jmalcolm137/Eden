@@ -1,0 +1,10 @@
+# Oasis package source metadata
+
+origin = oasislinux/oasis
+package = libcbor
+version = 0.9.0
+release = r0
+kind = git-submodule
+url = https://github.com/PJK/libcbor.git
+commit = 58b3319b8c3ec15171cb00f01a3a1e9d400899e1
+shallow = true

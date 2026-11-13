@@ -1,0 +1,10 @@
+# Oasis package source metadata
+
+origin = oasislinux/oasis
+package = swc
+version = 19893a5ca3
+release = r0
+kind = git-submodule
+url = https://github.com/michaelforney/swc.git
+commit = 19893a5ca3239082b904a04fdb9ac7c3a1fb62e2
+shallow = true

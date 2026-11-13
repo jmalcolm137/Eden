@@ -1,0 +1,10 @@
+# Oasis package source metadata
+
+origin = oasislinux/oasis
+package = e2fsprogs
+version = 1.46.4
+release = r2
+kind = git-submodule
+url = https://git.kernel.org/pub/scm/fs/ext2/e2fsprogs.git
+commit = 2dfad18d8b5c5afa76001ef6a25700dcf2b7411f
+shallow = true

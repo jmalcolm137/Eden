@@ -1,0 +1,8 @@
+# Oasis package source metadata
+
+origin = oasislinux/oasis
+package = pdpmake
+version = 2.0.4
+kind = git-submodule
+url = https://github.com/rmyorston/pdpmake.git
+commit = 0faaf258c9b3eaa9f5e4f6842e2484cbea6f23f8

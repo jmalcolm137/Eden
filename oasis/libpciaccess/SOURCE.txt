@@ -1,0 +1,10 @@
+# Oasis package source metadata
+
+origin = oasislinux/oasis
+package = libpciaccess
+version = 0.18
+release = r0
+kind = git-submodule
+url = https://gitlab.freedesktop.org/xorg/lib/libpciaccess.git
+commit = 04271a93ed65bfde82469509120214424eb918d0
+shallow = true

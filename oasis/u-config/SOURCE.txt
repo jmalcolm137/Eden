@@ -1,0 +1,10 @@
+# Oasis package source metadata
+
+origin = oasislinux/oasis
+package = u-config
+version = 0.34.0
+release = r1
+kind = git-submodule
+url = https://github.com/skeeto/u-config.git
+commit = e57b719b709f9112b2570a914e5efef7faf0ff03
+shallow = true

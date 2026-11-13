@@ -1,0 +1,10 @@
+# Oasis package source metadata
+
+origin = oasislinux/oasis
+package = mgba
+version = 0.8.4
+release = r0
+kind = git-submodule
+url = https://github.com/mgba-emu/mgba.git
+commit = 545a76f876af47671c8089b1ee09bf1d4a55f47e
+shallow = true

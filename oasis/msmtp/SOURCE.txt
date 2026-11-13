@@ -1,0 +1,10 @@
+# Oasis package source metadata
+
+origin = oasislinux/oasis
+package = msmtp
+version = 1.8.22
+release = r0
+kind = git-submodule
+url = https://github.com/marlam/msmtp-mirror.git
+commit = 8ee1b0e42f4a735c547caed35775cfe858e69d40
+shallow = true

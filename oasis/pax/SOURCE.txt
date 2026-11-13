@@ -1,0 +1,9 @@
+# Oasis package source metadata
+
+origin = oasislinux/oasis
+package = pax
+version = c2a77c3ea3
+kind = git-submodule
+url = https://git.sr.ht/~mcf/pax
+commit = c2a77c3ea3d60ee11373d47560a4f7c41af832a5
+shallow = true

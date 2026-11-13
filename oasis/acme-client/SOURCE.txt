@@ -1,0 +1,7 @@
+# Oasis package source metadata
+
+origin = oasislinux/oasis
+package = acme-client
+kind = source-package
+source-package = openbsd
+source-path = src/usr.sbin/acme-client

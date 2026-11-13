@@ -1,0 +1,10 @@
+# Oasis package source metadata
+
+origin = oasislinux/oasis
+package = the_silver_searcher
+version = 2.2.0
+release = r3
+kind = git-submodule
+url = https://github.com/ggreer/the_silver_searcher.git
+commit = 520ff29c528503668020c8cbedb5b03bccf4c7e0
+shallow = true

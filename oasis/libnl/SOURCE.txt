@@ -1,0 +1,10 @@
+# Oasis package source metadata
+
+origin = oasislinux/oasis
+package = libnl
+version = 3.5.0
+release = r2
+kind = git-submodule
+url = https://github.com/thom311/libnl.git
+commit = 7b167ef85f6eb4d7faca349302478b2dc121e309
+shallow = true

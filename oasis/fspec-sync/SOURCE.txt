@@ -1,0 +1,10 @@
+# Oasis package source metadata
+
+origin = oasislinux/oasis
+package = fspec-sync
+version = a79592936c
+release = r0
+kind = git-submodule
+url = https://github.com/oasislinux/fspec-sync.git
+commit = a79592936c865e001ac3003dddc5f60f0bada97e
+shallow = true

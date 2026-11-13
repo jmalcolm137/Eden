@@ -1,0 +1,10 @@
+# Oasis package source metadata
+
+origin = oasislinux/oasis
+package = libliftoff
+version = 0.5.0
+release = 0
+kind = git-submodule
+url = https://gitlab.freedesktop.org/emersion/libliftoff.git
+commit = 8b08dc1c14fd019cc90ddabe34ad16596b0691f4
+shallow = true

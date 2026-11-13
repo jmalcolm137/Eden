@@ -1,0 +1,10 @@
+# Oasis package source metadata
+
+origin = oasislinux/oasis
+package = libfido2
+version = 1.9.0
+release = r0
+kind = git-submodule
+url = https://github.com/oasislinux/libfido2.git
+commit = 328395f410034d93d806bd36c9aa1584d802cd2e
+shallow = true

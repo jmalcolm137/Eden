@@ -1,0 +1,10 @@
+# Oasis package source metadata
+
+origin = oasislinux/oasis
+package = wireguard-tools
+version = 1.0.20260223
+release = r1
+kind = git-submodule
+url = https://git.zx2c4.com/wireguard-tools
+commit = 49ce333da02056ae7b22ee2aeb6afe8aaed79b19
+shallow = true

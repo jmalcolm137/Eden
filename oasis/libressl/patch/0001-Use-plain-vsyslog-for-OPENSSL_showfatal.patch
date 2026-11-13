@@ -1,0 +1,31 @@
+From 08eee219f4fa095dcafdea8b0d8eee6da8fe87db Mon Sep 17 00:00:00 2001
+From: Michael Forney <mforney@mforney.org>
+Date: Wed, 24 Apr 2019 00:07:34 -0700
+Subject: [PATCH] Use plain vsyslog for OPENSSL_showfatal
+
+The compat version just ignores the second argument anyway, and
+patching it out allows us to continue to ignore the compat functions.
+---
+ crypto/crypto_legacy.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
+
+diff --git a/crypto/crypto_legacy.c b/crypto/crypto_legacy.c
+index dcaa632..3c63111 100644
+--- a/crypto/crypto_legacy.c
++++ b/crypto/crypto_legacy.c
+@@ -316,11 +316,10 @@ LCRYPTO_ALIAS(OPENSSL_cpu_caps);
+ static void
+ OPENSSL_showfatal(const char *fmta, ...)
+ {
+-	struct syslog_data sdata = SYSLOG_DATA_INIT;
+ 	va_list ap;
+ 
+ 	va_start(ap, fmta);
+-	vsyslog_r(LOG_CONS|LOG_LOCAL2, &sdata, fmta, ap);
++	vsyslog(LOG_CONS|LOG_LOCAL2, fmta, ap);
+ 	va_end(ap);
+ }
+ 
+-- 
+2.49.0
+

@@ -1,0 +1,10 @@
+# Oasis package source metadata
+
+origin = oasislinux/oasis
+package = libevent
+version = 2.1.12
+release = r0
+kind = git-submodule
+url = https://github.com/libevent/libevent.git
+commit = 5df3037d10556bfcb675bc73e516978b75fc7bc7
+shallow = true

@@ -1,0 +1,10 @@
+# Oasis package source metadata
+
+origin = oasislinux/oasis
+package = wl9
+version = de70033524
+release = r0
+kind = git-submodule
+url = https://git.sr.ht/~mcf/wl9
+commit = de70033524ef21dd01bde1d5d66a4679c8f34311
+shallow = true

@@ -1,0 +1,9 @@
+# Oasis package source metadata
+
+origin = oasislinux/oasis
+package = libressl
+version = 4.3.1
+release = r1
+kind = tarball
+url = https://cdn.openbsd.org/pub/OpenBSD/LibreSSL/libressl-4.3.1.tar.gz
+sha256 = c2db42ace14e7d5419826fab35a742ec6e4d12725a051a51d0cea3c10ba0fa50  libressl-4.3.1.tar.gz

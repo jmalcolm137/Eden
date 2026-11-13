@@ -1,0 +1,10 @@
+# Oasis package source metadata
+
+origin = oasislinux/oasis
+package = fuse
+version = 3.10.5
+release = r2
+kind = git-submodule
+url = https://github.com/libfuse/libfuse.git
+commit = d709c24cbd9e1041264c551c2a4445e654eaf429
+shallow = true

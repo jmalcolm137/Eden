@@ -1,0 +1,10 @@
+# Oasis package source metadata
+
+origin = oasislinux/oasis
+package = ncompress
+version = 5.0
+release = r1
+kind = git-submodule
+url = https://github.com/vapier/ncompress.git
+commit = e77a84ca5a69f01ccfe149e48d10ac563e6c375b
+shallow = true

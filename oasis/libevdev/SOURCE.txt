@@ -1,0 +1,10 @@
+# Oasis package source metadata
+
+origin = oasislinux/oasis
+package = libevdev
+version = 1.12.0
+release = r0
+kind = git-submodule
+url = https://gitlab.freedesktop.org/libevdev/libevdev.git
+commit = 69403a63ed29a1ee62edb8d0885fa770dd9a53cf
+shallow = true

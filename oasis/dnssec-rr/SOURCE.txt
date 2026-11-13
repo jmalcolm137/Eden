@@ -1,0 +1,10 @@
+# Oasis package source metadata
+
+origin = oasislinux/oasis
+package = dnssec-rr
+version = 0.2
+release = r0
+kind = git-submodule
+url = https://git.sr.ht/~mcf/dnssec-rr
+commit = 1c9796ac0b00d786a86dfcb4bd3f5e310e75b324
+shallow = true

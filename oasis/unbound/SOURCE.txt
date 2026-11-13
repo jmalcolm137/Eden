@@ -1,0 +1,10 @@
+# Oasis package source metadata
+
+origin = oasislinux/oasis
+package = unbound
+version = 1.14.0
+release = r0
+kind = git-submodule
+url = https://github.com/NLnetlabs/unbound.git
+commit = 919c8c9527281a7289415c00f8f2aed12b17a9aa
+shallow = true

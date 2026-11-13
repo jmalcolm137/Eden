@@ -1,0 +1,10 @@
+# Oasis package source metadata
+
+origin = oasislinux/oasis
+package = hotplugd
+version = c15eea9bde
+release = r0
+kind = git-submodule
+url = https://github.com/oasislinux/hotplugd.git
+commit = c15eea9bdeb974f828b6eda37f5f24a2420bd7e1
+shallow = true

@@ -1,0 +1,10 @@
+# Oasis package source metadata
+
+origin = oasislinux/oasis
+package = ffmpeg
+version = 7.0.2
+release = r1
+kind = git-submodule
+url = https://github.com/ffmpeg/ffmpeg.git
+commit = e3a61e91030696348b56361bdf80ea358aef4a19
+shallow = true

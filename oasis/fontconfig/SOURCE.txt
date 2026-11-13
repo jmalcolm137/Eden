@@ -1,0 +1,9 @@
+# Oasis package source metadata
+
+origin = oasislinux/oasis
+package = fontconfig
+version = 2.13.1
+release = r1
+kind = tarball
+url = https://www.freedesktop.org/software/fontconfig/release/fontconfig-2.13.1.tar.gz
+sha256 = 9f0d852b39d75fc655f9f53850eb32555394f36104a044bb2b2fc9e66dbbfa7f  fontconfig-2.13.1.tar.gz

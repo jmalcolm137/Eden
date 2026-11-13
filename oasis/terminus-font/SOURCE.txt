@@ -1,0 +1,9 @@
+# Oasis package source metadata
+
+origin = oasislinux/oasis
+package = terminus-font
+version = 4.49.1
+release = r0
+kind = tarball
+url = http://downloads.sourceforge.net/project/terminus-font/terminus-font-4.49/terminus-font-4.49.1.tar.gz
+sha256 = d961c1b781627bf417f9b340693d64fc219e0113ad3a3af1a3424c7aa373ef79  terminus-font-4.49.1.tar.gz

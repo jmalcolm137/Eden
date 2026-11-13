@@ -1,0 +1,10 @@
+# Oasis package source metadata
+
+origin = oasislinux/oasis
+package = snes9x
+version = 32e556249e
+release = r0
+kind = git-submodule
+url = https://github.com/libretro/snes9x2010.git
+commit = 32e556249e39ecd9fbff7ef1d1297ffa152cbbe1
+shallow = true

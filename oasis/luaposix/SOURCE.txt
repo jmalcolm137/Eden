@@ -1,0 +1,10 @@
+# Oasis package source metadata
+
+origin = oasislinux/oasis
+package = luaposix
+version = 36.2.1
+release = r0
+kind = git-submodule
+url = https://github.com/luaposix/luaposix.git
+commit = 5a8d8c768fc3c51f42cb591e9523a60399efc6a1
+shallow = true

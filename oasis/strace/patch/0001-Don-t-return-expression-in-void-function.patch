@@ -1,0 +1,25 @@
+From 31ffe0d9dfed05dd5524a91a6f0125c87f3d626c Mon Sep 17 00:00:00 2001
+From: Michael Forney <mforney@mforney.org>
+Date: Fri, 5 Jul 2019 20:52:24 -0700
+Subject: [PATCH] Don't return expression in void function
+
+---
+ src/defs.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/defs.h b/src/defs.h
+index a22f1c99a..47e1c71f6 100644
+--- a/src/defs.h
++++ b/src/defs.h
+@@ -838,7 +838,7 @@ extern bool pathtrace_match_set(struct tcb *, struct path_set *,
+ static inline void
+ pathtrace_select(const char *path)
+ {
+-	return pathtrace_select_set(path, &global_path_set);
++	pathtrace_select_set(path, &global_path_set);
+ }
+ 
+ static inline bool
+-- 
+2.49.0
+

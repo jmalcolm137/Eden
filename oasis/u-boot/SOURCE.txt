@@ -1,0 +1,9 @@
+# Oasis package source metadata
+
+origin = oasislinux/oasis
+package = u-boot
+version = 2021.04
+release = r3
+kind = tarball
+url = ftp://ftp.denx.de/pub/u-boot/u-boot-2021.04.tar.bz2
+sha256 = 0d438b1bb5cceb57a18ea2de4a0d51f7be5b05b98717df05938636e0aadfe11a  u-boot-2021.04.tar.bz2

@@ -1,0 +1,10 @@
+# Oasis package source metadata
+
+origin = oasislinux/oasis
+package = jbig2dec
+version = 0.19
+release = r0
+kind = git-submodule
+url = git://git.ghostscript.com/jbig2dec.git
+commit = 1c336b8ab44524dc56ea837e2211ff4207704cdd
+shallow = true

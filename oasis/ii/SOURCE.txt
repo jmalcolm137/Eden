@@ -1,0 +1,10 @@
+# Oasis package source metadata
+
+origin = oasislinux/oasis
+package = ii
+version = 1.9
+release = r0
+kind = git-submodule
+url = git://git.suckless.org/ii
+commit = 01537d014b9c7d4a534244531b5230d0d415d396
+shallow = true

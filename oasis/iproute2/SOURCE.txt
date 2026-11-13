@@ -1,0 +1,10 @@
+# Oasis package source metadata
+
+origin = oasislinux/oasis
+package = iproute2
+version = 6.8.0
+release = r1
+kind = git-submodule
+url = https://git.kernel.org/pub/scm/linux/kernel/git/shemminger/iproute2.git
+commit = e5fd785830671180e934a84a44da93c51cce839d
+shallow = true

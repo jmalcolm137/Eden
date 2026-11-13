@@ -1,0 +1,10 @@
+# Oasis package source metadata
+
+origin = oasislinux/oasis
+package = tinyalsa
+version = 2.0.0-45-g4fbaeef
+release = r1
+kind = git-submodule
+url = https://github.com/tinyalsa/tinyalsa.git
+commit = 4fbaeef03cd1cb216e0f356c0433ca70f8b9c464
+shallow = true

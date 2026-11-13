@@ -1,0 +1,25 @@
+From eb6d8858f8dd92400efaa08680d28515270d4c35 Mon Sep 17 00:00:00 2001
+From: Michael Forney <mforney@mforney.org>
+Date: Tue, 10 Apr 2018 16:03:44 -0700
+Subject: [PATCH] m4: Use _Noreturn instead of __dead
+
+---
+ usr.bin/m4/extern.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/usr.bin/m4/extern.h b/usr.bin/m4/extern.h
+index c7defe46c2c..de03e51995e 100644
+--- a/usr.bin/m4/extern.h
++++ b/usr.bin/m4/extern.h
+@@ -112,7 +112,7 @@ extern void	usage(void);
+ extern void	resizedivs(int);
+ extern size_t	buffer_mark(void);
+ extern void	dump_buffer(FILE *, size_t);
+-extern void	__dead m4errx(int, const char *, ...);
++extern void	_Noreturn m4errx(int, const char *, ...);
+ 
+ extern int	obtain_char(struct input_file *);
+ extern void	set_input(struct input_file *, FILE *, const char *);
+-- 
+2.49.0
+

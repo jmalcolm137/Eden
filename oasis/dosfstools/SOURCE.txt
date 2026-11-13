@@ -1,0 +1,10 @@
+# Oasis package source metadata
+
+origin = oasislinux/oasis
+package = dosfstools
+version = 4.2
+release = r1
+kind = git-submodule
+url = https://github.com/dosfstools/dosfstools.git
+commit = 697f7692c951173c1b732901e13f72bd3182d575
+shallow = true

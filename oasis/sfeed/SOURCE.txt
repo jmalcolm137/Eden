@@ -1,0 +1,9 @@
+# Oasis package source metadata
+
+origin = oasislinux/oasis
+package = sfeed
+version = 2.4
+release = r0
+kind = git-submodule
+url = git://git.codemadness.org/sfeed
+commit = d90b3e86029ea0c6d3f1e41055cc6efd8c974f49

@@ -38,6 +38,19 @@ libpng libtermkey libtls-bearssl libxkbcommon lpeg lua netsurf perp
 pixman qbe sinit utf8proc velox vis wayland
 ```
 
+### scaffolded Oasis packages (110)
+
+The remaining Oasis `pkg/` entries are scaffolded under `oasis/<name>/` with
+their Oasis recipe metadata (`gen.lua`, `ver`, `config.h`, patches, helper
+files) and a `SOURCE.txt` recording the upstream source URL/commit. They do
+not have a `template.py` yet, so cbuild does not treat them as buildable
+packages. See [`oasis/SCAFFOLDING.md`](oasis/SCAFFOLDING.md) for the full
+list and source references.
+
+When a scaffolded package is ported, add its `template.py`, verify it lints
+and builds, then add it to `oasis-packages.txt` and remove it from the
+scaffolding list.
+
 ## Current bldroot
 
 `bldroot-oasis` is built from the Oasis-composed `base-cbuild`. The following

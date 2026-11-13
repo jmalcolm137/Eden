@@ -1,0 +1,10 @@
+# Oasis package source metadata
+
+origin = oasislinux/oasis
+package = openbsd
+version = 8.0
+kind = tarball
+url = https://cloudflare.cdn.openbsd.org/pub/OpenBSD/8.0/src.tar.gz
+url = https://cloudflare.cdn.openbsd.org/pub/OpenBSD/8.0/sys.tar.gz
+sha256 = 9984c74ff875b5ff041e4676a7f3e4e1ead2cc47a284d705eb9f37cbec4fe795  src.tar.gz
+sha256 = 964b1aed7839b86f4e010a0fdd03dcd409e6f569e69fe85f95e5fceb740c2aaf  sys.tar.gz

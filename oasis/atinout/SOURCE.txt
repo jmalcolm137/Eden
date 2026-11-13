@@ -1,0 +1,10 @@
+# Oasis package source metadata
+
+origin = oasislinux/oasis
+package = atinout
+version = 0.9.1
+release = r0
+kind = git-submodule
+url = https://git.code.sf.net/p/atinout/code
+commit = 0ee0208c9821a7a0d1f2fb5bd91770be76699d2f
+shallow = true

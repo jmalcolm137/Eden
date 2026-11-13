@@ -1,0 +1,10 @@
+# Oasis package source metadata
+
+origin = oasislinux/oasis
+package = blind
+version = 1.1
+release = r4
+kind = git-submodule
+url = git://git.suckless.org/blind
+commit = da24af3ae9984b04347ee8c8dc964a79a15d05bf
+shallow = true

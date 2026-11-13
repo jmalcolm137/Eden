@@ -1,0 +1,10 @@
+# Oasis package source metadata
+
+origin = oasislinux/oasis
+package = usbids
+version = 2020.08.26
+release = r0
+kind = git-submodule
+url = https://github.com/usbids/usbids.git
+commit = 075e753cd7d7784f597b998f97c056bbc3472f9b
+shallow = true

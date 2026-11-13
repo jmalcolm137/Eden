@@ -1,0 +1,10 @@
+# Oasis package source metadata
+
+origin = oasislinux/oasis
+package = x509cert
+version = 0.4
+release = r0
+kind = git-submodule
+url = https://git.sr.ht/~mcf/x509cert
+commit = f25cb85dc71dce619c3fbb9e4aa28e3e9beba1ff
+shallow = true

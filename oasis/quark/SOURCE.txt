@@ -1,0 +1,10 @@
+# Oasis package source metadata
+
+origin = oasislinux/oasis
+package = quark
+version = 5ad0df9175
+release = r0
+kind = git-submodule
+url = git://git.suckless.org/quark
+commit = 5ad0df91757fbc577ffceeca633725e962da345d
+shallow = true

@@ -1,0 +1,10 @@
+# Oasis package source metadata
+
+origin = oasislinux/oasis
+package = libass
+version = 0.14.0
+release = r1
+kind = git-submodule
+url = https://github.com/libass/libass.git
+commit = 73284b676b12b47e17af2ef1b430527299e10c17
+shallow = true

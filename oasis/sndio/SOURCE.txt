@@ -1,0 +1,9 @@
+# Oasis package source metadata
+
+origin = oasislinux/oasis
+package = sndio
+version = 1.9.0
+release = r1
+kind = git-submodule
+url = https://github.com/ratchov/sndio.git
+commit = 584d41515a981818f6f60e9d9dca97af3657a640

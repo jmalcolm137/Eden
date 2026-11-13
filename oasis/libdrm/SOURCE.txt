@@ -1,0 +1,10 @@
+# Oasis package source metadata
+
+origin = oasislinux/oasis
+package = libdrm
+version = 2.4.120
+release = r0
+kind = git-submodule
+url = https://gitlab.freedesktop.org/mesa/drm.git
+commit = 6bfcfc725fbe0ece0918535556d61ee567b1ffff
+shallow = true

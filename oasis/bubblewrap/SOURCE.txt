@@ -1,0 +1,10 @@
+# Oasis package source metadata
+
+origin = oasislinux/oasis
+package = bubblewrap
+version = 0.11.0
+release = r2
+kind = git-submodule
+url = https://github.com/containers/bubblewrap.git
+commit = 9ca3b05ec787acfb4b17bed37db5719fa777834f
+shallow = true

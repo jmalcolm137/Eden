@@ -1,0 +1,9 @@
+# Oasis package source metadata
+
+origin = oasislinux/oasis
+package = tz
+version = 2026b
+kind = git-submodule
+url = https://github.com/eggert/tz.git
+commit = 48c25a1ba86cb602990c0573aba7795417931bb4
+shallow = true

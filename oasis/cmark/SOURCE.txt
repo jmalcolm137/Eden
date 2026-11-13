@@ -1,0 +1,10 @@
+# Oasis package source metadata
+
+origin = oasislinux/oasis
+package = cmark
+version = 0.31.2
+release = r0
+kind = git-submodule
+url = https://github.com/commonmark/cmark.git
+commit = eec0eeba6d31189fd828314576494566d539b1e3
+shallow = true

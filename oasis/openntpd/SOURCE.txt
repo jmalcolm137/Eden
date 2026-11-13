@@ -1,0 +1,9 @@
+# Oasis package source metadata
+
+origin = oasislinux/oasis
+package = openntpd
+version = 6.8p1
+release = r0
+kind = tarball
+url = https://cdn.openbsd.org/pub/OpenBSD/OpenNTPD/openntpd-6.8p1.tar.gz
+sha256 = 8582db838a399153d4a17f2a76518b638cc3020f58028575bf54127518f55a46  openntpd-6.8p1.tar.gz

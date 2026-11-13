@@ -1,0 +1,9 @@
+# Oasis package source metadata
+
+origin = oasislinux/oasis
+package = tinyemu
+version = 20191221
+release = r2
+kind = tarball
+url = https://bellard.org/tinyemu/tinyemu-2019-12-21.tar.gz
+sha256 = be8351f2121819b3172fcedce5cb1826fa12c87da1b7ed98f269d3e802a05555  tinyemu-2019-12-21.tar.gz

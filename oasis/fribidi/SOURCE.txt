@@ -1,0 +1,10 @@
+# Oasis package source metadata
+
+origin = oasislinux/oasis
+package = fribidi
+version = 1.0.11
+release = r0
+kind = git-submodule
+url = https://github.com/fribidi/fribidi.git
+commit = 247fddc3599e3fe7b1b5cc21020c9eb51e662637
+shallow = true

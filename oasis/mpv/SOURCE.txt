@@ -1,0 +1,10 @@
+# Oasis package source metadata
+
+origin = oasislinux/oasis
+package = mpv
+version = 0.38.0
+release = r1
+kind = git-submodule
+url = https://github.com/mpv-player/mpv.git
+commit = 02254b92dd237f03aa0a151c2a68778c4ea848f9
+shallow = true

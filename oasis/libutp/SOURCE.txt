@@ -1,0 +1,10 @@
+# Oasis package source metadata
+
+origin = oasislinux/oasis
+package = libutp
+version = 996ad97f18
+release = r0
+kind = git-submodule
+url = https://github.com/oasislinux/libutp.git
+commit = 996ad97f18a09a2f3d38cb210a44014eaf089df5
+shallow = true

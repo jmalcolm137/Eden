@@ -1,0 +1,9 @@
+# Oasis package source metadata
+
+origin = oasislinux/oasis
+package = sdhcp
+version = 5f9956c870
+release = r0
+kind = git-submodule
+url = https://github.com/michaelforney/sdhcp.git
+commit = 5f9956c8706215f8b8887c0beb77ed7d1810ec7a

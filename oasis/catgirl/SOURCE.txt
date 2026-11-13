@@ -1,0 +1,9 @@
+# Oasis package source metadata
+
+origin = oasislinux/oasis
+package = catgirl
+version = 2.2a
+kind = git-submodule
+url = https://git.causal.agency/catgirl
+commit = 492b7f7b9406b8e460c4a64aed45c70a8a8e152d
+shallow = true

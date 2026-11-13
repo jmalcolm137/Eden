@@ -1,0 +1,10 @@
+# Oasis package source metadata
+
+origin = oasislinux/oasis
+package = libinput
+version = 1.19.3
+release = r0
+kind = git-submodule
+url = https://github.com/oasislinux/libinput.git
+commit = 702610db1c4c1e14c87dbd30380f89b48c50b841
+shallow = true

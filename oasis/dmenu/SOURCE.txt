@@ -1,0 +1,10 @@
+# Oasis package source metadata
+
+origin = oasislinux/oasis
+package = dmenu
+version = 4.9
+release = r4
+kind = git-submodule
+url = git://git.suckless.org/dmenu
+commit = 65be875f5adf31e9c4762ac8a8d74b1dfdd78584
+shallow = true

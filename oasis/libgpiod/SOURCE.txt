@@ -1,0 +1,10 @@
+# Oasis package source metadata
+
+origin = oasislinux/oasis
+package = libgpiod
+version = 1.6.3
+release = r1
+kind = git-submodule
+url = https://git.kernel.org/pub/scm/libs/libgpiod/libgpiod.git
+commit = bb4e5ce7071feed41bd3f0d9a62b5033fd483a18
+shallow = true

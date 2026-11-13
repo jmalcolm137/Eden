@@ -1,0 +1,10 @@
+# Oasis package source metadata
+
+origin = oasislinux/oasis
+package = dav1d
+version = 0.9.2
+release = r0
+kind = git-submodule
+url = https://github.com/videolan/dav1d.git
+commit = 7b433e077298d0f4faf8da6d6eb5774e29bffa54
+shallow = true

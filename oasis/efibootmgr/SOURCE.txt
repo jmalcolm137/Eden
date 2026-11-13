@@ -1,0 +1,9 @@
+# Oasis package source metadata
+
+origin = oasislinux/oasis
+package = efibootmgr
+version = 18
+kind = git-submodule
+url = https://github.com/rhinstaller/efibootmgr.git
+commit = c3f9f0534e32158f62c43564036878b93b9e0fd6
+shallow = true
