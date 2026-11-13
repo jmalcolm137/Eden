@@ -30,18 +30,21 @@ The `main` entry enables the remote Chimera binary repository.
 acl apk-tools argp-standalone attr awk base-cbuild base-files bearssl byacc bzip2 ca-certificates cmake curl diffutils elfutils fakeroot fortify-headers git gmake libarchive libatomic-chimera libedit libffi8 linux-headers linux-personality llvm llvm-bootstrap lz4 m4 mandoc muon musl musl-bsd-headers musl-fts musl-obstack nasm netbsd-curses oksh patch perl pigz pkgconf python samurai sbase sed ubase ugetopt unzip xz zlib-ng-compat zlib-static zstd
 ```
 
-### oasis templates (43)
+### oasis templates (57)
 
 ```
 adobe-source-fonts atinout bc cacert cmark
-cmark-devel cmark-devel-static cproc expat flex
-freetype hyx libffi libjpeg-turbo libpng
-libtermkey libtls-bearssl libxkbcommon lpeg lua
-man-pages-posix ncompress netsurf pdpmake perp
-pixman pwgen qbe sdhcp sinit
-skeleton syslogd texi2mdoc tinyalsa tinyalsa-devel
-tinyalsa-devel-static u-config usbids utf8proc velox
-vis wayland yt-dlp
+cmark-devel cmark-devel-static cproc dosfstools expat
+flex freetype hyx libcbor libcbor-devel
+libevent libevent-devel libevent-devel-static libffi libjpeg-turbo
+libpciaccess libpciaccess-devel libpng libtermkey libtls-bearssl
+libxkbcommon lpeg lua man-pages-posix ncompress
+netsurf opus opus-devel opus-devel-static pcre
+pcre-devel pcre-devel-static pdpmake perp pixman
+pwgen qbe sdhcp sinit skeleton
+syslogd texi2mdoc tinyalsa tinyalsa-devel tinyalsa-devel-static
+u-config usbids utf8proc velox vis
+wayland yt-dlp
 ```
 
 ### scaffolded Oasis packages (110)
