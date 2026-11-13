@@ -2,7 +2,7 @@
 # Sync the cbuild engine, architecture profiles, and repository definitions
 # from an existing cports checkout.
 #
-# The local templates in main/ and user/ are never touched. This only writes
+# The local templates in core/, oasis/, pkgsrc/, and extra/ are never touched. This only writes
 # inside this tree; the upstream checkout is read-only.
 #
 # Usage:
@@ -37,6 +37,8 @@ done
 mkdir -p "$here/etc"
 rm -rf "$here/etc/build_profiles"
 cp -a "$upstream/etc/build_profiles" "$here/etc/build_profiles"
+# The local tree does not use the Chimera user repository.
+sed -i 's/\(repos[[:space:]]*=[[:space:]]*main\)[[:space:]]\+user/\1/' "$here"/etc/build_profiles/*.ini
 cp -a "$upstream/etc/config.ini.example" "$here/etc/config.ini.example"
 
 # Repository definitions and Chimera signing keys.
@@ -49,4 +51,4 @@ for f in COPYING.md .flake8 pyproject.toml; do
     fi
 done
 
-echo "done; local templates in main/ and user/ were left alone"
+echo "done; local templates were left alone"

@@ -21,21 +21,21 @@ The categories are layered with `.parent` symlinks:
 core <- oasis <- pkgsrc <- extra
 ```
 
-Registry config uses `categories = core oasis pkgsrc extra main user`; the
-`main`/`user` entries only enable the remote Chimera binary repositories.
+Registry config uses `categories = core oasis pkgsrc extra main`; the
+The `main` entry enables the remote Chimera binary repository.
 
-### core templates (44)
-
-```
-acl apk-tools argp-standalone awk base-cbuild base-files bearssl bzip2 ca-certificates cmake diffutils elfutils fakeroot fortify-headers gmake libarchive libatomic-chimera libedit libffi8 linux-headers linux-personality llvm llvm-bootstrap lz4 m4 muon musl musl-bsd-headers musl-fts musl-obstack netbsd-curses oksh patch perl pigz pkgconf python samurai sbase sed ubase xz zlib-ng-compat zstd
-```
-
-### oasis templates (23)
+### core templates (48)
 
 ```
-adobe-source-fonts cproc curl expat freetype libffi libjpeg-turbo
+acl apk-tools argp-standalone awk base-cbuild base-files bearssl bzip2 ca-certificates cmake curl diffutils elfutils fakeroot fortify-headers git gmake libarchive libatomic-chimera libedit libffi8 linux-headers linux-personality llvm llvm-bootstrap lz4 m4 muon musl musl-bsd-headers musl-fts musl-obstack netbsd-curses oksh patch perl pigz pkgconf python samurai sbase sed ubase unzip xz zlib-ng-compat zlib-static zstd
+```
+
+### oasis templates (21)
+
+```
+adobe-source-fonts cproc expat freetype libffi libjpeg-turbo
 libpng libtermkey libtls-bearssl libxkbcommon lpeg lua netsurf perp
-pixman qbe sinit utf8proc velox vis wayland zlib-static
+pixman qbe sinit utf8proc velox vis wayland
 ```
 
 ## Current bldroot
@@ -104,7 +104,7 @@ No `chimerautils`, no `debianutils`, no OpenSSL CLI.
 | `patches/` | engine patches: gmake, apk TLS cert path, core category, muon/samurai |
 | `etc/build_profiles/` | architecture profiles |
 | `etc/apk/` | Chimera repo config, Chimera keys, local public key |
-| `etc/config.ini` | local config (`categories = core oasis pkgsrc extra main user`) |
+| `etc/config.ini` | local config (`categories = core oasis pkgsrc extra main`) |
 | `tools/bootstrap-oasis.sh` | build environment in a temporary Chimera root |
 | `tools/sync-engine.sh` | refresh engine/profiles/repo config from cports |
 | `tools/verify-bootstrap-closure.sh` | verify templates, composition, patches |

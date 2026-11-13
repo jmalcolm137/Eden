@@ -91,4 +91,4 @@ fi
 
 echo
 echo "done: bldroot-oasis is the Oasis-composed build root"
-echo "build packages with: ./cbuild -b bldroot-oasis pkg user/<name>"
+echo "build packages with: ./cbuild -b bldroot-oasis pkg oasis/<name>"
