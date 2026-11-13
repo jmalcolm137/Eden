@@ -42,7 +42,7 @@ if self.stage > 0:
 
 # Local fork: Chimera supplies the toolchain (clang/llvm/lld, gmake, musl),
 # Oasis supplies the userland (sbase, ubase, oksh, base-files).
-# ccache and the Chimera-only extras (chimerautils, ncurses, resolvconf,
+# ccache and the Chimera-only extras (chimerautils, resolvconf,
 # tzdb, bc) are intentionally omitted.
 
 

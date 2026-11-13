@@ -59,7 +59,7 @@ for p in \
     zstd \
     acl \
     libffi8 \
-    ncurses \
+    netbsd-curses \
     libedit \
     bearssl \
     musl \

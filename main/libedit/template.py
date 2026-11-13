@@ -1,10 +1,10 @@
 pkgname = "libedit"
 pkgver = "20250614"
-pkgrel = 1
+pkgrel = 2
 _gitrev = "b280b361724a60fa8b740150950a59c4f4edcf15"
 build_style = "makefile"
 hostmakedepends = ["pkgconf"]
-makedepends = ["ncurses-devel"]
+makedepends = ["netbsd-curses-devel", "netbsd-curses-devel-static"]
 pkgdesc = "Port of the NetBSD command line editing library"
 license = "BSD-3-Clause"
 url = "https://github.com/chimera-linux/libedit-chimera"
@@ -42,5 +42,5 @@ def _(self):
     # ncurses apk's do not provide any .pc files during stage 0
     if self.stage == 0:
         self.options = ["!scanrundeps"]
-        self.depends = [self.parent, "ncurses-devel"]
+        self.depends = [self.parent, "netbsd-curses-devel"]
     return self.default_devel()

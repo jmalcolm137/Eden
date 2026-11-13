@@ -1,0 +1,12 @@
+--- a/lib/libcurses/tty.c
++++ b/lib/libcurses/tty.c
+@@ -571,7 +571,7 @@
+ int
+ flushinp(void)
+ {
+ 
+-	(void)fpurge(_cursesi_screen->infd);
++	(void)tcflush(fileno(_cursesi_screen->infd), TCIFLUSH);
+ 	return OK;
+ }
+ 

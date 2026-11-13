@@ -21,7 +21,7 @@ libffi8
 linux-personality
 lz4
 musl
-ncurses
+netbsd-curses
 oksh
 patch
 pigz

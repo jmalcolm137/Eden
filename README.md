@@ -16,7 +16,7 @@ Oasis / local:
 acl          apk-tools     awk             base-cbuild     base-files
 bearssl      bzip2         ca-certificates diffutils       gmake
 libedit      libffi8       linux-personality lz4           musl
-ncurses      oksh          patch           pigz            sbase
+netbsd-curses oksh         patch           pigz            sbase
 sed          ubase         xz              zlib-ng-compat  zstd
 ```
 
@@ -30,7 +30,7 @@ local templates:
 ```
 acl awk base-cbuild base-files bearssl bzip2 ca-certificates diffutils
 gmake grep libedit libffi8 lz4 musl musl-devel musl-ldso musl-progs
-ncurses-libs oksh patch pigz sbase sed ubase xz zlib-ng-compat zstd
+netbsd-curses oksh patch pigz sbase sed ubase xz zlib-ng-compat zstd
 zstd-progs
 ```
 
@@ -53,6 +53,11 @@ compiler-generated atomic builtins. It is pulled in by clang; cbuild itself
 does not call it directly. The `-devel` package is only needed for static
 builds.
 
+`netbsd-curses` is built from Oasis and provides static `libcurses`,
+`libterminfo`, and the terminfo database. `libedit` is built against it and
+embeds the curses code, so neither `libedit` nor `llvm-libs` pulls in
+`libncursesw.so.6`.
+
 No `chimerautils`, no `debianutils`, no OpenSSL CLI.
 
 ## Deliberate exceptions
@@ -65,7 +70,7 @@ No `chimerautils`, no `debianutils`, no OpenSSL CLI.
 | strings/getconf | Chimera llvm-binutils/musl | same packages provide required strip/objcopy and musl ABI |
 | grep/sed/diff/patch | pkgsrc-version GNU tools | GNU sed passes autoconf's non-truncation test (sbase sed truncates); GNU diff/patch are required. GNU grep is kept for reliability; sbase grep passes the test in isolation |
 | OpenSSL | Chimera `openssl3-libs` | apk-tools has only OpenSSL/mbedTLS crypto backends; a BearSSL backend needs to be written |
-| ncurses | Chimera `ncurses-libs` for now | netbsd-curses is Oasis's preference, but Chimera libedit/LLVM link `libncursesw.so.6`; swapping needs those rebuilt against netbsd-curses |
+| ncurses | **removed** | libedit is rebuilt against static Oasis netbsd-curses, so it no longer links `libncursesw.so.6`; the bldroot carries no ncurses |
 
 ## Layout
 
@@ -141,8 +146,9 @@ the Oasis/Chimera split in `base-cbuild`, the gmake rename, and the engine's
 
 ## Next
 
-Move up from the bottom layer: `apk-tools`, `fakeroot`, `libarchive`,
-`libatomic-chimera`, `fortify-headers`, then the LLVM/clang stack.
+Move up from the bottom layer: `fakeroot`, `libarchive`, `libatomic-chimera`,
+`fortify-headers`, then the LLVM/clang stack. The LLVM source template should
+link against the local `libedit` built with netbsd-curses.
 
 `apk-tools` now builds with a local `crypto_bearssl.c` backend (SHA-1/256/512,
 RSA PKCS#1 sign/verify, PKCS#8/SPKI key loading, key IDs). Its remaining

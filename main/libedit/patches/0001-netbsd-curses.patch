@@ -1,0 +1,32 @@
+--- a/Makefile
++++ b/Makefile
+@@ -1,4 +1,4 @@
+-VERSION = 20240711
++VERSION = 20250614
+ 
+ CC ?= cc
+ AR ?= ar
+@@ -10,10 +10,10 @@
+ LIBDIR ?= lib
+ MANDIR ?= share/man
+ 
+-REQUIRES = ncursesw
+-REQ_LIBS = `$(PKG_CONFIG) --libs $(REQUIRES)`
+-REQ_CFLAGS = `$(PKG_CONFIG) --cflags $(REQUIRES)`
+-REQ_LLIBS = `$(PKG_CONFIG) --libs-only-l $(REQUIRES)`
++REQUIRES =
++REQ_LIBS = -lcurses -lterminfo
++REQ_CFLAGS = -I/usr/include
++REQ_LLIBS = -lcurses -lterminfo
+ 
+ EXTRA_CFLAGS = -I. -Wall -Wextra -fPIC
+ 
+@@ -86,7 +86,7 @@
+ 
+ $(PCFILE): $(PCFILE).in
+ 	PREFIX=$(PREFIX) LIBDIR=$(LIBDIR) INCDIR=$(INCDIR) VERSION=$(VERSION) \
+-	REQUIRES=$(REQUIRES) REQLIBS=$(REQ_LLIBS) sh genpc.sh $(PCFILE)
++	REQUIRES=$(REQUIRES) REQLIBS="$(REQ_LLIBS)" sh genpc.sh $(PCFILE)
+ 
+ # no tests yet
+ check:
