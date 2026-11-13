@@ -66,6 +66,9 @@ tinyalsa-devel-static
 u-config
 usbids
 utf8proc
+util-linux
+util-linux-devel
+util-linux-devel-static
 velox
 vis
 wayland
