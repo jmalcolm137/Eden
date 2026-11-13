@@ -68,8 +68,14 @@ for p in \
     libarchive \
     bearssl \
     musl \
+    perl \
+    linux-headers \
+    python \
     samurai \
     muon \
+    cmake \
+    llvm-bootstrap \
+    llvm \
     apk-tools \
     base-cbuild
 do
