@@ -16,6 +16,7 @@ f2fs-tools
 flex
 freetype
 hyx
+iproute2
 less
 libcbor
 libcbor-devel
@@ -41,6 +42,8 @@ libpciaccess
 libpciaccess-devel
 libpng
 libtermkey
+libtirpc
+libtirpc-devel
 libtls-bearssl
 libutp
 libutp-devel
@@ -87,5 +90,6 @@ velox
 vis
 wayland
 wayland-protocols
+wireguard-tools
 wl9
 yt-dlp
