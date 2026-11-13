@@ -41,8 +41,8 @@ libtls-bearssl
 
 ## Current bldroot
 
-`bldroot-oasis` has 66 packages. The following are now source-built from the
-local templates:
+`bldroot-oasis` is built from the Oasis-composed `base-cbuild`. The following
+are now source-built from the local templates:
 
 ```
 acl apk-tools apk-tools-static-bin awk base-cbuild base-files bearssl
