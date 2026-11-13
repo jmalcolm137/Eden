@@ -1,7 +1,6 @@
 # Oasis repository: packages required for a full OASIS system.
 adobe-source-fonts
 cproc
-curl
 expat
 freetype
 libffi
@@ -21,4 +20,3 @@ utf8proc
 velox
 vis
 wayland
-zlib-static

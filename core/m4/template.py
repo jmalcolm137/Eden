@@ -17,3 +17,6 @@ options = ["!check"]
 
 def post_install(self):
     self.install_license("COPYING")
+    # pkgsrc convention: GNU m4 is also reachable as gm4
+    self.install_link("usr/bin/gm4", "m4")
+    self.install_link("usr/share/man/man1/gm4.1", "m4.1")

@@ -16,10 +16,12 @@ bearssl
 bzip2
 ca-certificates
 cmake
+curl
 diffutils
 elfutils
 fakeroot
 fortify-headers
+git
 gmake
 libarchive
 libatomic-chimera
@@ -47,6 +49,8 @@ samurai
 sbase
 sed
 ubase
+unzip
 xz
 zlib-ng-compat
+zlib-static
 zstd
