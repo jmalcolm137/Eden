@@ -44,7 +44,7 @@ CC = {self.get_tool("CC")}
 AR = {self.get_tool("AR")}
 CFLAGS = {cfl} -include oasis-config.h -DFALLBACK_RUNTIME_PREFIX='"/usr"'
 LDFLAGS = {ldfl}
-CURL_CFLAGS =
+CURL_CFLAGS = -I/usr/include
 CURL_LDFLAGS = -lcurl -lbearssl -lz -lm -ldl -lpthread
 USE_CURL_FOR_IMAP_SEND = Yes
 NO_OPENSSL = Yes
