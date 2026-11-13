@@ -24,13 +24,10 @@ core <- oasis <- pkgsrc <- extra
 Registry config uses `categories = core oasis pkgsrc extra main user`; the
 `main`/`user` entries only enable the remote Chimera binary repositories.
 
-### core templates (33)
+### core templates (44)
 
 ```
-acl apk-tools awk base-cbuild base-files bearssl bzip2 ca-certificates
-diffutils elfutils fakeroot fortify-headers gmake libarchive libatomic-chimera
-libedit libffi8 linux-personality lz4 muon musl netbsd-curses oksh
-patch pigz pkgconf samurai sbase sed ubase xz zlib-ng-compat zstd
+acl apk-tools argp-standalone awk base-cbuild base-files bearssl bzip2 ca-certificates cmake diffutils elfutils fakeroot fortify-headers gmake libarchive libatomic-chimera libedit libffi8 linux-headers linux-personality llvm llvm-bootstrap lz4 m4 muon musl musl-bsd-headers musl-fts musl-obstack netbsd-curses oksh patch perl pigz pkgconf python samurai sbase sed ubase xz zlib-ng-compat zstd
 ```
 
 ### oasis templates (23)
