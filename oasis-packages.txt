@@ -8,7 +8,11 @@ cmark-devel
 cmark-devel-static
 cproc
 dosfstools
+e2fsprogs
+e2fsprogs-devel
+e2fsprogs-devel-static
 expat
+f2fs-tools
 flex
 freetype
 hyx
