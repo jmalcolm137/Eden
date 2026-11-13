@@ -54,8 +54,8 @@ No `chimerautils`, no `debianutils`, no OpenSSL CLI.
 | make | Oasis `make`, Chimera `gmake` | cbuild uses gmake explicitly; `/usr/bin/make` stays sbase |
 | tar | Chimera bsdtar | sbase tar does not auto-decompress `.gz`/`.xz`/`.zst` |
 | strings/getconf | Chimera llvm-binutils/musl | same packages provide required strip/objcopy and musl ABI |
-| grep/sed/diff/patch | pkgsrc-version GNU tools | sbase grep/sed are rejected by autoconf; GNU diff/patch required |
-| OpenSSL | Chimera `openssl3-libs` | apk-tools links `libcrypto.so.3` and `libssl.so.3` |
+| grep/sed/diff/patch | pkgsrc-version GNU tools | GNU sed passes autoconf's non-truncation test (sbase sed truncates); GNU diff/patch are required. GNU grep is kept for reliability; sbase grep passes the test in isolation |
+| OpenSSL | Chimera `openssl3-libs` | apk-tools has only OpenSSL/mbedTLS crypto backends; a BearSSL backend needs to be written |
 | ncurses | Chimera `ncurses-libs` for now | netbsd-curses is Oasis's preference, but Chimera libedit/LLVM link `libncursesw.so.6`; swapping needs those rebuilt against netbsd-curses |
 
 ## Layout
@@ -133,5 +133,13 @@ the Oasis/Chimera split in `base-cbuild`, the gmake rename, and the engine's
 ## Next
 
 Move up from the bottom layer: `apk-tools`, `fakeroot`, `libarchive`,
-`libatomic-chimera`, `fortify-headers`, then the LLVM/clang stack. OpenSSL and
-the ncurses ABI remain the main deliberate binary dependencies.
+`libatomic-chimera`, `fortify-headers`, then the LLVM/clang stack.
+
+`apk-tools` is the main OpenSSL blocker. Its crypto is abstracted by
+`src/apk_crypto.h` and currently has `crypto_openssl.c` and
+`crypto_mbedtls.c`. A `crypto_bearssl.c` backend is feasible (BearSSL provides
+SHA-1/256/512 and RSA PKCS#1 sign/verify), but requires implementing key
+loading (PKCS#1/PKCS#8/SPKI DER handling), the `apk_digest_*` context API, and
+sign/verify, plus a meson backend option. Until that backend is tested,
+`openssl3-libs` remains the one deliberate OpenSSL dependency.
+
