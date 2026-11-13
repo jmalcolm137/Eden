@@ -14,6 +14,8 @@ e2fsprogs-devel
 e2fsprogs-devel-static
 expat
 f2fs-tools
+file
+file-devel
 flex
 freetype
 hotplugd
@@ -54,6 +56,7 @@ lpeg
 lua
 man-pages-posix
 mblaze
+msmtp
 mtdev
 mtdev-devel
 ncompress
