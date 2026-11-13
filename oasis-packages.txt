@@ -16,6 +16,7 @@ f2fs-tools
 flex
 freetype
 hyx
+less
 libcbor
 libcbor-devel
 libdrm
@@ -31,6 +32,9 @@ libffi
 libgpiod
 libgpiod-devel
 libjpeg-turbo
+libliftoff
+libliftoff-devel
+libliftoff-devel-static
 libnl
 libnl-devel
 libpciaccess
@@ -38,6 +42,8 @@ libpciaccess-devel
 libpng
 libtermkey
 libtls-bearssl
+libutp
+libutp-devel
 libxkbcommon
 lpeg
 lua
