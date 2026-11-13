@@ -7,6 +7,7 @@ cmark
 cmark-devel
 cmark-devel-static
 cproc
+dnssec-rr
 dosfstools
 e2fsprogs
 e2fsprogs-devel
@@ -15,6 +16,7 @@ expat
 f2fs-tools
 flex
 freetype
+hotplugd
 hyx
 iproute2
 less
@@ -92,4 +94,7 @@ wayland
 wayland-protocols
 wireguard-tools
 wl9
+x509cert
+x509cert-devel
+x509cert-devel-static
 yt-dlp
