@@ -1,10 +1,13 @@
 pkgname = "fakeroot"
 pkgver = "2.1.4"
-pkgrel = 1
-build_style = "gnu_configure"
-configure_args = ["--disable-static"]
-make_check_env = {"VERBOSE": "x"}
-hostmakedepends = ["automake", "slibtool"]
+pkgrel = 2
+build_style = "meson"
+configure_args = [
+    "-Dipc=sysv",
+    "-Ddbformat=inode",
+    "-Ddocs=false",
+]
+hostmakedepends = ["muon", "samurai"]
 makedepends = ["acl-devel"]
 checkdepends = ["ugetopt"]
 depends = [self.with_pkgver("fakeroot-core")]
@@ -16,10 +19,7 @@ sha256 = "b71f645037e5a44a474efd641b353b506db3803eb60ed90a4ac6322a8d96d340"
 options = ["bootstrap"]
 
 if self.stage > 0:
-    makedepends += ["libcap-devel"]
     depends += ["ugetopt"]
-else:
-    configure_args += ["ac_cv_func_capset=0"]
 
 
 @subpackage("fakeroot-core")
