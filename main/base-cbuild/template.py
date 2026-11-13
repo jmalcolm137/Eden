@@ -17,6 +17,7 @@ depends = [
     "lld",
     "llvm",
     "musl-devel",
+    "netbsd-curses",
     "oksh",
     "patch",
     "pigz",
