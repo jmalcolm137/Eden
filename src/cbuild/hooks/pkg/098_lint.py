@@ -153,7 +153,7 @@ def invoke(pkg):
     _lint_comp(pkg)
 
     # does not apply
-    if pkg.pkgname == "base-files" or pkg.pkgname == "base-kernel":
+    if pkg.pkgname in ("base-files", "base-kernel", "skeleton"):
         return
 
     lintfail = False

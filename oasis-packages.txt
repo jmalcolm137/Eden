@@ -1,5 +1,10 @@
 # Oasis repository: packages required for a full OASIS system.
 adobe-source-fonts
+atinout
+bc
+cmark
+cmark-devel
+cmark-devel-static
 cproc
 expat
 freetype
@@ -20,6 +25,11 @@ pwgen
 qbe
 sdhcp
 sinit
+skeleton
+syslogd
+tinyalsa
+tinyalsa-devel
+tinyalsa-devel-static
 u-config
 utf8proc
 velox
