@@ -16,6 +16,9 @@ dosfstools
 e2fsprogs
 e2fsprogs-devel
 e2fsprogs-devel-static
+efibootmgr
+efivar
+efivar-devel
 expat
 f2fs-tools
 file
