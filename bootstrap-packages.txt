@@ -20,7 +20,6 @@ ca-certificates
 cmake
 curl
 diffutils
-elfutils
 fakeroot
 fortify-headers
 git
