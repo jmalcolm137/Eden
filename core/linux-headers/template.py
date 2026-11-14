@@ -11,7 +11,7 @@ url = "https://www.kernel.org"
 source = f"$(KERNEL_SITE)/kernel/v{pkgver[0]}.x/linux-{pkgver}.tar.xz"
 sha256 = "57edc9a41efc1ca6b797afa8f4a587a30da2af6bca7356eb56e1e1a4ada265da"
 # nothing to test
-options = ["!check"]
+options = ["bootstrap", "!check"]
 
 # x86_64 only for the bootstrap toolchain (other arches deferred)
 _arch = "x86_64"

@@ -9,7 +9,7 @@ url = "https://zlib.net"
 source = f"https://github.com/madler/zlib/archive/{_commit}.tar.gz"
 sha256 = "d9e270d46252734aa49770fbc544125391617956266f220bd63216c834f3a522"
 # no test suite
-options = ["!check", "!lto"]
+options = ["bootstrap", "!check", "!lto"]
 
 _sources = [
     "adler32.c",

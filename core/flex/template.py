@@ -7,7 +7,7 @@ url = "https://github.com/westes/flex"
 source = f"{url}/releases/download/v{pkgver}/flex-{pkgver}.tar.gz"
 sha256 = "e87aae032bf07c26f85ac0ed3250998c37621d95f8bd748b31f15b33c45ee995"
 # no test suite in the Oasis recipe
-options = ["!check"]
+options = ["bootstrap", "!check"]
 
 _cflags = ["-DHAVE_CONFIG_H", "-I."]
 

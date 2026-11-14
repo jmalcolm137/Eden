@@ -9,4 +9,4 @@ url = "https://www.gnu.org/software/patch"
 source = f"$(GNU_SITE)/patch/patch-{pkgver}.tar.xz"
 sha256 = "3240c7959c5347c8ed347e3c4201c0337bf4240d5cf09d68889e58eeaba30e17"
 # no tests; keep the bootstrap build fast
-options = ["!check"]
+options = ["bootstrap", "!check"]

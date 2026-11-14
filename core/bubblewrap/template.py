@@ -10,7 +10,7 @@ url = "https://github.com/containers/bubblewrap"
 source = f"{url}/archive/{_commit}.tar.gz"
 sha256 = "552cec9c79bb85c8ecd25ae3e55efca9af03390c17d829885ee45722dedada4f"
 # no test suite in the Oasis recipe
-options = ["!check"]
+options = ["bootstrap", "!check"]
 
 _cflags = ["-std=c11", "-Wall", "-Wpedantic", "-Wvla", "-D_GNU_SOURCE", "-I."]
 

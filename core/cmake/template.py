@@ -29,7 +29,7 @@ tool_flags = {
 }
 hardening = ["vis", "!int"]
 # bootstrap build: no check tooling or LTO
-options = ["!check", "!lto"]
+options = ["bootstrap", "!check", "!lto"]
 
 # need to use bundled jsoncpp (i.e. --system-jsoncpp is not possible) as
 # the two build systems that offers are meson and cmake - cmake cannot be

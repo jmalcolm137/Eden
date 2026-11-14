@@ -75,6 +75,7 @@ hardening = ["!int"]
 # runtimes build may invoke built clang during install, which has
 # rpath and fakeroot effectively overrides rpath, so disable that
 options = [
+    "bootstrap",
     "!ci",
     "!lto",
     "!cross",

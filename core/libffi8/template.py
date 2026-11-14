@@ -33,7 +33,7 @@ url = "http://sourceware.org/libffi"
 source = f"https://github.com/libffi/libffi/releases/download/v{pkgver}/libffi-{pkgver}.tar.gz"
 sha256 = "f3a3082a23b37c293a4fcd1053147b371f2ff91fa7ea1b2a52e335676bac82dc"
 # dejagnu
-options = ["!check", "linkundefver"]
+options = ["bootstrap", "!check", "linkundefver"]
 
 
 def post_install(self):

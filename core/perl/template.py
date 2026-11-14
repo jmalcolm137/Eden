@@ -41,7 +41,7 @@ env = {
 # FIXME int; available ubsan patch does not help (e.g. automake fails to run)
 hardening = ["!int"]
 # check is cyclic: depends on perl modules
-options = ["!check"]
+options = ["bootstrap", "!check"]
 
 
 def pre_patch(self):

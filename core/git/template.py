@@ -21,7 +21,7 @@ sha256 = [
 # Oasis pkg/git config.h. HTTP/IMAP transport uses the Oasis static
 # libcurl.a from core/curl (BearSSL + zlib).
 # no tests; upstream's suite needs a full test harness
-options = ["!check"]
+options = ["bootstrap", "!check"]
 
 
 def configure(self):

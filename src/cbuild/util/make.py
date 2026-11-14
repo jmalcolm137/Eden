@@ -9,8 +9,11 @@ class Make:
 
     def _command(self):
         cmd = self.command
-        if cmd == "samu" and self.template.stage == 0 and not shutil.which("samu"):
-            return "ninja"
+        if self.template.stage == 0:
+            if cmd == "samu" and not shutil.which("samu"):
+                return "ninja"
+            if cmd == "gmake" and not shutil.which("gmake"):
+                return "make"
         return cmd
 
     def _invoke(

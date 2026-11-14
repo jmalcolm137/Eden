@@ -16,7 +16,7 @@ sha256 = "6705bba1714961b41a728dfc5debbe348d2966c117649392f8c8139efc83ff14"
 tools = {"LD": "clang"}
 tool_flags = {"CFLAGS": ["-fPIC"]}
 # no tests; upstream's make only builds the library and tools
-options = ["!check"]
+options = ["bootstrap", "!check"]
 
 
 def install(self):

@@ -11,7 +11,7 @@ url = "https://github.com/onetrueawk/awk"
 source = f"{url}/archive/refs/tags/{pkgver}.tar.gz"
 sha256 = "7ae5b9fc6a8149bc45ea0ba3ba434a69a16d1460d19f6d01b6f04cc885b8e02b"
 # no tests; upstream's check target runs a large interactive regression suite
-options = ["!check"]
+options = ["bootstrap", "!check"]
 
 
 def install(self):

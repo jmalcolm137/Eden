@@ -10,7 +10,7 @@ url = "https://curl.se"
 source = f"https://github.com/oasislinux/curl/archive/{_commit}.tar.gz"
 sha256 = "2e1b471df3ec4ab20e8de3254258a5aeb159b373ae29588694ca1e7100943f1c"
 # no test suite
-options = ["!check", "!lto"]
+options = ["bootstrap", "!check", "!lto"]
 
 
 def _read_list(self, name):

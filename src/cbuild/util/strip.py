@@ -1,3 +1,4 @@
+import shutil
 import re
 import shlex
 
@@ -32,8 +33,11 @@ def strip_attach(pkg, strip_list, no_split=None):
         mkf.write(f".PHONY: {mks}\nall: {mks}\n")
 
     # invoke
+    mcmd = "gmake"
+    if pkg.rparent.stage == 0 and not shutil.which("gmake"):
+        mcmd = "make"
     pkg.rparent.do(
-        "gmake",
+        mcmd,
         "--silent",
         "--no-print-directory",
         f"-j{pkg.rparent.conf_jobs}",

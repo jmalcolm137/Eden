@@ -85,7 +85,7 @@ env = {
 # are just skipped and so on, so be on the safe side for the time being
 hardening = ["vis", "!cfi", "!int"]
 # bootstrap build: skip the long test suite and LTO/PGO
-options = ["!check", "!lto"]
+options = ["bootstrap", "!check", "!lto"]
 
 if self.profile.cross:
     hostmakedepends += ["python"]
