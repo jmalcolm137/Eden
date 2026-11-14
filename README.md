@@ -78,8 +78,7 @@ No Oasis package is metadata-only anymore: every Oasis `pkg/` entry has a
 their build dependency or source acquisition is still missing:
 
 ```
-acme-client libfido2 mpv openbsd syslinux
-u-boot zfs
+acme-client libfido2 mpv openbsd zfs
 ```
 
 See [`oasis/SCAFFOLDING.md`](oasis/SCAFFOLDING.md) for the blockers.

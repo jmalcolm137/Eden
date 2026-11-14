@@ -1,0 +1,58 @@
+From 3acc8649522bc55999ddab0e3ccd073070adce74 Mon Sep 17 00:00:00 2001
+From: Michael Forney <mforney@mforney.org>
+Date: Sat, 1 May 2021 01:37:46 -0700
+Subject: [PATCH] Remove stray ';' at top-level
+
+This is not allowed by the ISO C grammar.
+---
+ scripts/dtc/libfdt/libfdt.h | 20 ++++++++++----------
+ tools/pblimage.c            |  2 +-
+ 2 files changed, 11 insertions(+), 11 deletions(-)
+
+diff --git a/scripts/dtc/libfdt/libfdt.h b/scripts/dtc/libfdt/libfdt.h
+index 421f90ad93..947e8b31cf 100644
+--- a/scripts/dtc/libfdt/libfdt.h
++++ b/scripts/dtc/libfdt/libfdt.h
+@@ -219,16 +219,16 @@ int fdt_next_subnode(const void *fdt, int offset);
+ 		struct fdt_header *fdth = (struct fdt_header *)fdt; \
+ 		fdth->name = cpu_to_fdt32(val); \
+ 	}
+-fdt_set_hdr_(magic);
+-fdt_set_hdr_(totalsize);
+-fdt_set_hdr_(off_dt_struct);
+-fdt_set_hdr_(off_dt_strings);
+-fdt_set_hdr_(off_mem_rsvmap);
+-fdt_set_hdr_(version);
+-fdt_set_hdr_(last_comp_version);
+-fdt_set_hdr_(boot_cpuid_phys);
+-fdt_set_hdr_(size_dt_strings);
+-fdt_set_hdr_(size_dt_struct);
++fdt_set_hdr_(magic)
++fdt_set_hdr_(totalsize)
++fdt_set_hdr_(off_dt_struct)
++fdt_set_hdr_(off_dt_strings)
++fdt_set_hdr_(off_mem_rsvmap)
++fdt_set_hdr_(version)
++fdt_set_hdr_(last_comp_version)
++fdt_set_hdr_(boot_cpuid_phys)
++fdt_set_hdr_(size_dt_strings)
++fdt_set_hdr_(size_dt_struct)
+ #undef fdt_set_hdr_
+ 
+ /**
+diff --git a/tools/pblimage.c b/tools/pblimage.c
+index 3c823e96cf..4c448c2111 100644
+--- a/tools/pblimage.c
++++ b/tools/pblimage.c
+@@ -311,7 +311,7 @@ int pblimage_check_params(struct image_tool_params *params)
+ 
+ 	next_pbl_cmd = pbl_cmd_initaddr;
+ 	return 0;
+-};
++}
+ 
+ /* pblimage parameters */
+ U_BOOT_IMAGE_TYPE(
+-- 
+2.31.1
+
