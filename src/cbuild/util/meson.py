@@ -1,3 +1,4 @@
+import shutil
 def _make_crossfile(pkg, build_dir):
     if not pkg.profile.cross:
         return
@@ -63,6 +64,20 @@ _MUON_UNSUPPORTED_OPTS = (
 )
 
 
+def _meson(pkg):
+    # Prefer the Oasis tools. Stage 0 builds on the host, so fall back to
+    # the host meson when muon has not been installed yet.
+    if pkg.stage == 0 and not shutil.which("muon"):
+        return "meson"
+    return "muon"
+
+
+def _cross_arg(pkg, path):
+    if _meson(pkg) == "muon":
+        return "-pcross:" + path
+    return "--cross-file=" + path
+
+
 def _muon_arg(arg):
     # translate meson-style long options into muon's -D form
     if arg.startswith("--") and "=" in arg:
@@ -90,19 +105,23 @@ def configure(pkg, build_dir, meson_dir=None, extra_args=None, env=None):
 
     # muon's native setup takes a single build directory; its meson
     # compatibility layer is needed when a source subdirectory is requested.
-    if meson_dir and meson_dir != ".":
-        setup = ["muon", "meson", "setup"]
-        setup_dirs = [meson_dir, build_dir]
+    if _meson(pkg) == "muon":
+        if meson_dir and meson_dir != ".":
+            setup = ["muon", "meson", "setup"]
+            setup_dirs = [meson_dir, build_dir]
+        else:
+            setup = ["muon", "setup"]
+            setup_dirs = [build_dir]
     else:
-        setup = ["muon", "setup"]
-        setup_dirs = [build_dir]
+        setup = ["meson", "setup"]
+        setup_dirs = [meson_dir, build_dir] if meson_dir and meson_dir != "." else [build_dir]
 
     cfp = _make_crossfile(pkg, build_dir)
 
     cargs = []
     if cfp:
         cargs = [
-            "-pcross:" + str(pkg.chroot_cwd / cfp.relative_to(pkg.cwd))
+            _cross_arg(pkg, str(pkg.chroot_cwd / cfp.relative_to(pkg.cwd)))
         ]
 
     if pkg.has_lto():
@@ -137,7 +156,7 @@ def configure(pkg, build_dir, meson_dir=None, extra_args=None, env=None):
         "-Db_staticpic=true",
         "-Dpython.bytecompile=0",
         *cargs,
-        *_muon_extra_args(extra_args),
+        *(_muon_extra_args(extra_args) if _meson(pkg) == "muon" else (extra_args or [])),
         *setup_dirs,
         env=env,
     )
@@ -155,7 +174,7 @@ def _muon_extra_args(extra_args):
 def invoke(pkg, command, build_dir, extra_args=None, env=None, wrapper=None):
     pkg.do(
         *(wrapper or []),
-        "muon",
+        _meson(pkg),
         command,
         *(extra_args or []),
         wrksrc=build_dir,
@@ -167,27 +186,21 @@ def install(pkg, build_dir, extra_args=None, env=None, wrapper=None):
     renv = {"DESTDIR": str(pkg.chroot_destdir)}
     if env:
         renv.update(env)
-    invoke(
-        pkg,
-        "install",
-        build_dir,
-        [*(extra_args or [])],
-        renv,
-        wrapper,
-    )
+    args = [*(extra_args or [])]
+    if _meson(pkg) == "meson":
+        args.insert(0, "--no-rebuild")
+    invoke(pkg, "install", build_dir, args, renv, wrapper)
 
 
 def test(pkg, build_dir, extra_args=None, env=None, wrapper=None):
-    invoke(
-        pkg,
-        "test",
-        build_dir,
-        [
-            "-R",
-            "-j",
+    if _meson(pkg) == "muon":
+        args = ["-R", "-j", str(pkg.make_jobs), *(extra_args or [])]
+    else:
+        args = [
+            "--no-rebuild",
+            "--print-errorlogs",
+            "--num-processes",
             str(pkg.make_jobs),
             *(extra_args or []),
-        ],
-        env,
-        wrapper,
-    )
+        ]
+    invoke(pkg, "test", build_dir, args, env, wrapper)

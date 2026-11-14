@@ -1,3 +1,4 @@
+import shutil
 from cbuild.util import meson
 
 
@@ -20,10 +21,13 @@ def build(self):
     if self.make_build_target and self.make_build_target != "all":
         targs.append(self.make_build_target)
     targs.extend(self.make_build_args)
+    make_cmd = self.make_cmd
+    if make_cmd == "samu" and self.stage == 0 and not shutil.which("samu"):
+        make_cmd = "ninja"
     self.do(
         *self.make_wrapper,
         *self.make_build_wrapper,
-        self.make_cmd,
+        make_cmd,
         "-j",
         str(self.make_jobs),
         *targs,

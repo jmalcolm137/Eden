@@ -1,3 +1,4 @@
+import shutil
 class Make:
     def __init__(self, tmpl, jobs=None, command=None, env=None, wrksrc=None):
         self.template = tmpl
@@ -5,6 +6,12 @@ class Make:
         self.wrksrc = wrksrc
         self.env = env or {}
         self.jobs = jobs
+
+    def _command(self):
+        cmd = self.command
+        if cmd == "samu" and self.template.stage == 0 and not shutil.which("samu"):
+            return "ninja"
+        return cmd
 
     def _invoke(
         self, targets, args, jobs, base_env, env, wrksrc, ewrapper, wrapper
@@ -42,7 +49,7 @@ class Make:
             *(wrapper or []),
             *(ewrapper or []),
             *self.template.make_wrapper,
-            self.command,
+            self._command(),
             *argsbase,
             env=renv,
             wrksrc=wrksrc,
@@ -88,7 +95,7 @@ class Make:
         argsbase = []
 
         if default_args:
-            if self.command == "samu":
+            if self._command() in ("samu", "ninja"):
                 args_use_env = True
             if not args_use_env:
                 argsbase.append("DESTDIR=" + str(pkg.chroot_destdir))

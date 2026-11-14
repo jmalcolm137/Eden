@@ -8,7 +8,7 @@ def configure(self):
         self.cmake_dir,
         self.configure_args,
         self.configure_env,
-        "Ninja" if self.make_cmd == "samu" else "Unix Makefiles",
+        "Ninja" if self.make_cmd in ("samu", "ninja") else "Unix Makefiles",
     )
 
 
