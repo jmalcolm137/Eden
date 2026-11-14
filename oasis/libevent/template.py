@@ -39,6 +39,7 @@ def pre_configure(self):
 
 
 def post_install(self):
+    self.install_link("usr/lib/libevent.so", "libevent.a")
     self.install_license("LICENSE")
 
     pc = self.destdir / "usr/lib/pkgconfig/libevent.pc"

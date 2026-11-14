@@ -81,6 +81,7 @@ mtdev-devel
 ncompress
 netsurf
 nginx
+nsd
 openntpd
 openssh
 opus
