@@ -14,6 +14,7 @@ cmark-devel-static
 cproc
 dav1d
 dav1d-devel
+dmenu
 dnssec-rr
 dosfstools
 e2fsprogs
