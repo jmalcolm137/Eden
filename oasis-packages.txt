@@ -117,6 +117,7 @@ sfeed
 sinit
 skeleton
 sndio
+snes9x
 squashfs-tools-ng
 strace
 syslogd
