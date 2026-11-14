@@ -25,6 +25,7 @@ fakeroot
 fortify-headers
 git
 gmake
+gperf
 libarchive
 libatomic-chimera
 libedit

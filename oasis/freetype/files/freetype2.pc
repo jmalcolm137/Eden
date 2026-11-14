@@ -1,0 +1,11 @@
+prefix=/usr
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: freetype2
+Description: FreeType font engine
+Version: 2.11.0
+Libs: -L${libdir} -lfreetype
+Libs.private: /usr/lib/libz.a
+Cflags: -I${includedir}/freetype2

@@ -81,4 +81,5 @@ def install(self):
         if str(rel.parent) != ".":
             dest += f"/{rel.parent}"
         self.install_file(f"include/{rel}", dest)
+    self.install_file(self.files_path / "freetype2.pc", "usr/lib/pkgconfig")
     self.install_license("LICENSE.TXT")

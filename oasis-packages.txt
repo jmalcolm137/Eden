@@ -1,4 +1,5 @@
 # Oasis repository: packages required for a full OASIS system.
+acpid
 adobe-source-fonts
 atinout
 bc
@@ -17,6 +18,9 @@ f2fs-tools
 file
 file-devel
 flex
+fontconfig
+fontconfig-devel
+fontconfig-devel-static
 freetype
 hotplugd
 hyx
@@ -75,6 +79,7 @@ perp
 pixman
 pwgen
 qbe
+rc
 sdhcp
 sfeed
 sinit
