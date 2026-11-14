@@ -49,6 +49,8 @@ kbd
 less
 libass
 libass-devel
+libbluray
+libbluray-devel
 libcbor
 libcbor-devel
 libdrm
