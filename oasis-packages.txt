@@ -24,6 +24,8 @@ e2fsprogs-devel-static
 efibootmgr
 efivar
 efivar-devel
+elftoolchain
+elftoolchain-devel
 expat
 f2fs-tools
 farbfeld
