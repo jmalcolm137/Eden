@@ -5,7 +5,7 @@ includedir=${prefix}/include
 
 Name: freetype2
 Description: FreeType font engine
-Version: 2.11.0
+Version: 21.0.15
 Libs: -L${libdir} -lfreetype
 Libs.private: /usr/lib/libz.a
 Cflags: -I${includedir}/freetype2

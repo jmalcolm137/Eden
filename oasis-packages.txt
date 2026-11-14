@@ -105,6 +105,8 @@ wayland
 wayland-protocols
 wireguard-tools
 wl9
+wld
+wld-devel
 x509cert
 x509cert-devel
 x509cert-devel-static
