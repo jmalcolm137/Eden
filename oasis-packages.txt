@@ -1,6 +1,8 @@
 # Oasis repository: packages required for a full OASIS system.
 acpid
 adobe-source-fonts
+alsa-lib
+alsa-lib-devel
 atinout
 bc
 bubblewrap
