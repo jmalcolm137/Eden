@@ -134,6 +134,7 @@ tinyalsa-devel-static
 tinyemu
 tz
 u-config
+unbound
 usbids
 utf8proc
 util-linux
