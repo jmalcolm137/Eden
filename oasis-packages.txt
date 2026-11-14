@@ -110,6 +110,7 @@ texi2mdoc
 tinyalsa
 tinyalsa-devel
 tinyalsa-devel-static
+tz
 u-config
 usbids
 utf8proc
