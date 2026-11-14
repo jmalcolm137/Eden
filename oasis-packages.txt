@@ -11,6 +11,8 @@ cmark
 cmark-devel
 cmark-devel-static
 cproc
+dav1d
+dav1d-devel
 dnssec-rr
 dosfstools
 e2fsprogs
@@ -35,6 +37,8 @@ fuse-devel
 hotplugd
 hyx
 iproute2
+jbig2dec
+jbig2dec-devel
 less
 libass
 libass-devel
