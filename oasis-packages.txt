@@ -27,6 +27,8 @@ fontconfig-devel-static
 freetype
 fribidi
 fribidi-devel
+fuse
+fuse-devel
 hotplugd
 hyx
 iproute2
