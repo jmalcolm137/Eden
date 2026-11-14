@@ -82,6 +82,7 @@ luaposix
 make
 man-pages-posix
 mblaze
+mgba
 msmtp
 mtdev
 mtdev-devel
