@@ -109,6 +109,7 @@ perp
 pixman
 pwgen
 qbe
+quark
 rc
 sdhcp
 sfeed
