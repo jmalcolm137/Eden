@@ -60,6 +60,8 @@ libnl-devel
 libpciaccess
 libpciaccess-devel
 libpng
+libressl
+libressl-devel
 libtermkey
 libtirpc
 libtirpc-devel
