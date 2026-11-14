@@ -3,11 +3,11 @@ acpid
 adobe-source-fonts
 alsa-lib
 alsa-lib-devel
+as-standalone
 atinout
 bc
 binutils
 blind
-bubblewrap
 cacert
 cmark
 cmark-devel
@@ -32,7 +32,6 @@ farbfeld
 ffmpeg
 file
 file-devel
-flex
 fontconfig
 fontconfig-devel
 fontconfig-devel-static
@@ -99,6 +98,8 @@ mgba
 msmtp
 mtdev
 mtdev-devel
+mupdf
+mupdf-devel
 ncompress
 netsurf
 nginx
