@@ -113,6 +113,7 @@ sfeed
 sinit
 skeleton
 sndio
+squashfs-tools-ng
 syslogd
 terminus-font
 texi2mdoc
