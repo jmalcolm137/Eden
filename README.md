@@ -68,7 +68,7 @@ wl9 wld wld-devel wpa_supplicant x509cert
 x509cert-devel x509cert-devel-static xkeyboard-config yt-dlp
 ```
 
-### scaffolded Oasis packages (16)
+### scaffolded Oasis packages (14)
 
 The remaining Oasis `pkg/` entries are scaffolded under `oasis/<name>/` with
 their Oasis recipe metadata (`gen.lua`, `ver`, `config.h`, patches, helper
