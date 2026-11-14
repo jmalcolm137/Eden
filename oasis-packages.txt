@@ -118,6 +118,7 @@ sinit
 skeleton
 sndio
 squashfs-tools-ng
+strace
 syslogd
 terminus-font
 texi2mdoc
