@@ -23,6 +23,7 @@ efivar
 efivar-devel
 expat
 f2fs-tools
+farbfeld
 file
 file-devel
 flex
@@ -36,6 +37,7 @@ fuse
 fuse-devel
 hotplugd
 hyx
+ii
 iproute2
 jbig2dec
 jbig2dec-devel
