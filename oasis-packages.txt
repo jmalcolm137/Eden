@@ -1,14 +1,17 @@
 # Oasis repository: packages required for a full OASIS system.
+acme-client
 acpid
 adobe-source-fonts
 alsa-lib
 alsa-lib-devel
 as-standalone
 atinout
+b3sum
 bc
 binutils
 blind
 cacert
+catgirl
 cmark
 cmark-devel
 cmark-devel-static
@@ -38,6 +41,7 @@ fontconfig-devel-static
 freetype
 fribidi
 fribidi-devel
+fspec-sync
 fuse
 fuse-devel
 hotplugd
@@ -64,6 +68,7 @@ libevent
 libevent-devel
 libevent-devel-static
 libffi
+libfido2
 libgpiod
 libgpiod-devel
 libinput
@@ -95,6 +100,7 @@ make
 man-pages-posix
 mblaze
 mgba
+mpv
 msmtp
 mtdev
 mtdev-devel
@@ -104,6 +110,7 @@ ncompress
 netsurf
 nginx
 nsd
+openbsd
 openntpd
 openssh
 opus
@@ -118,6 +125,7 @@ pcre-devel-static
 pdpmake
 perp
 pixman
+pounce
 pwgen
 qbe
 quark
@@ -129,10 +137,12 @@ skeleton
 sndio
 snes9x
 squashfs-tools-ng
+sshfs
 st
 strace
 swc
 swc-devel
+syslinux
 syslogd
 terminus-font
 texi2mdoc
@@ -143,6 +153,7 @@ tinyalsa-devel-static
 tinyemu
 transmission
 tz
+u-boot
 u-config
 unbound
 usbids
@@ -164,3 +175,5 @@ x509cert-devel
 x509cert-devel-static
 xkeyboard-config
 yt-dlp
+zfs
+zlib
