@@ -80,6 +80,7 @@ mtdev
 mtdev-devel
 ncompress
 netsurf
+nginx
 opus
 opus-devel
 opus-devel-static
