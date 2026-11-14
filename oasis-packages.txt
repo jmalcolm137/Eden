@@ -41,6 +41,8 @@ libevent-devel-static
 libffi
 libgpiod
 libgpiod-devel
+libinput
+libinput-devel
 libjpeg-turbo
 libliftoff
 libliftoff-devel

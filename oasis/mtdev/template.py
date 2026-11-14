@@ -7,6 +7,7 @@ license = "MIT"
 url = "https://bitmath.se/org/code/mtdev"
 source = f"{url}/mtdev-{pkgver}.tar.gz"
 sha256 = "a55bd02a9af4dd266c0042ec608744fff3a017577614c057da09f1f4566ea32c"
+tool_flags = {"CFLAGS": ["-fPIC"]}
 # static-only library, as in the Oasis recipe
 options = ["!lto", "!check"]
 
@@ -28,11 +29,14 @@ def build(self):
 
 def install(self):
     self.install_lib("libmtdev.a", mode=0o644)
+    self.install_link("usr/lib/libmtdev.so", "libmtdev.a")
     self.install_file("include/mtdev.h", "usr/include")
     self.install_file("include/mtdev-plumbing.h", "usr/include")
+    self.install_file(self.files_path / "mtdev.pc", "usr/lib/pkgconfig")
     self.install_license("COPYING")
 
 
 @subpackage("mtdev-devel")
 def _(self):
-    return ["usr/include"]
+    self.depends = [self.parent]
+    return ["usr/include", "usr/lib/pkgconfig"]
