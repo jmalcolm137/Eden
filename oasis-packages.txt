@@ -120,6 +120,8 @@ sndio
 snes9x
 squashfs-tools-ng
 strace
+swc
+swc-devel
 syslogd
 terminus-font
 texi2mdoc

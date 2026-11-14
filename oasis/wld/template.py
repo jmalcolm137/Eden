@@ -82,6 +82,7 @@ def install(self):
     self.install_lib("libwld.a", mode=0o644)
     for h in ("wld.h", "drm.h", "pixman.h", "wayland.h"):
         self.install_file(h, "usr/include/wld")
+    self.install_file("protocol/wayland-drm.xml", "usr/share/wld")
     self.install_license("COPYING")
 
 
