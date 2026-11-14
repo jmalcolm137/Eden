@@ -72,6 +72,8 @@ libnl
 libnl-devel
 libpciaccess
 libpciaccess-devel
+libplacebo
+libplacebo-devel
 libpng
 libressl
 libressl-devel
