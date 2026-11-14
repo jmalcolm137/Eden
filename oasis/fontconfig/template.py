@@ -83,3 +83,4 @@ def _(self):
 
 def post_install(self):
     self.install_license("COPYING")
+    self.install_link("usr/lib/libfontconfig.so", "libfontconfig.a")
