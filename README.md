@@ -30,31 +30,31 @@ The `main` entry enables the remote Chimera binary repository.
 acl apk-tools argp-standalone attr awk base-cbuild base-files bearssl byacc bzip2 ca-certificates cmake curl diffutils elfutils fakeroot fortify-headers git gmake gperf libarchive libatomic-chimera libedit libffi8 linux-headers linux-personality llvm llvm-bootstrap lz4 m4 mandoc muon musl musl-bsd-headers musl-fts musl-obstack nasm netbsd-curses oksh patch perl pigz pkgconf python samurai sbase sed ubase ugetopt unzip xz zlib-ng-compat zlib-static zstd
 ```
 
-### oasis templates (107)
+### oasis templates (108)
 
 ```
-acpid adobe-source-fonts atinout bc cacert
-cmark cmark-devel cmark-devel-static cproc dnssec-rr
-dosfstools e2fsprogs e2fsprogs-devel e2fsprogs-devel-static expat
-f2fs-tools file file-devel flex fontconfig
-fontconfig-devel fontconfig-devel-static freetype hotplugd hyx
-iproute2 less libcbor libcbor-devel libdrm
-libdrm-devel libdrm-devel-static libevdev libevdev-devel libevdev-devel-static
-libevent libevent-devel libevent-devel-static libffi libgpiod
-libgpiod-devel libjpeg-turbo libliftoff libliftoff-devel libliftoff-devel-static
-libnl libnl-devel libpciaccess libpciaccess-devel libpng
-libtermkey libtirpc libtirpc-devel libtls-bearssl libutp
-libutp-devel libxkbcommon lpeg lua man-pages-posix
-mblaze msmtp mtdev mtdev-devel ncompress
-netsurf opus opus-devel opus-devel-static pax
-pciutils pciutils-devel pcre pcre-devel pcre-devel-static
-pdpmake perp pixman pwgen qbe
-rc sdhcp sfeed sinit skeleton
-sndio syslogd texi2mdoc tinyalsa tinyalsa-devel
-tinyalsa-devel-static u-config usbids utf8proc util-linux
-util-linux-devel util-linux-devel-static velox vis wayland
-wayland-protocols wireguard-tools wl9 x509cert x509cert-devel
-x509cert-devel-static yt-dlp
+acpid adobe-source-fonts atinout bc bubblewrap
+cacert cmark cmark-devel cmark-devel-static cproc
+dnssec-rr dosfstools e2fsprogs e2fsprogs-devel e2fsprogs-devel-static
+expat f2fs-tools file file-devel flex
+fontconfig fontconfig-devel fontconfig-devel-static freetype hotplugd
+hyx iproute2 less libcbor libcbor-devel
+libdrm libdrm-devel libdrm-devel-static libevdev libevdev-devel
+libevdev-devel-static libevent libevent-devel libevent-devel-static libffi
+libgpiod libgpiod-devel libjpeg-turbo libliftoff libliftoff-devel
+libliftoff-devel-static libnl libnl-devel libpciaccess libpciaccess-devel
+libpng libtermkey libtirpc libtirpc-devel libtls-bearssl
+libutp libutp-devel libxkbcommon lpeg lua
+man-pages-posix mblaze msmtp mtdev mtdev-devel
+ncompress netsurf opus opus-devel opus-devel-static
+pax pciutils pciutils-devel pcre pcre-devel
+pcre-devel-static pdpmake perp pixman pwgen
+qbe rc sdhcp sfeed sinit
+skeleton sndio syslogd texi2mdoc tinyalsa
+tinyalsa-devel tinyalsa-devel-static u-config usbids utf8proc
+util-linux util-linux-devel util-linux-devel-static velox vis
+wayland wayland-protocols wireguard-tools wl9 x509cert
+x509cert-devel x509cert-devel-static yt-dlp
 ```
 
 ### scaffolded Oasis packages (110)

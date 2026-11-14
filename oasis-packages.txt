@@ -3,6 +3,7 @@ acpid
 adobe-source-fonts
 atinout
 bc
+bubblewrap
 cacert
 cmark
 cmark-devel
