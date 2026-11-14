@@ -71,6 +71,7 @@ libevent-devel
 libevent-devel-static
 libffi
 libfido2
+libfido2-devel
 libgpiod
 libgpiod-devel
 libinput
@@ -113,6 +114,8 @@ netsurf
 nginx
 nsd
 openbsd
+openbsd-devel
+openbsd-devel-static
 openntpd
 openssh
 opus
@@ -163,6 +166,7 @@ utf8proc
 util-linux
 util-linux-devel
 util-linux-devel-static
+util-linux-libs-static
 velox
 vis
 wayland

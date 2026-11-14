@@ -1,0 +1,73 @@
+From bf938d0fd70582d8d7942c2f04c2d4209b9b8633 Mon Sep 17 00:00:00 2001
+From: Michael Forney <mforney@mforney.org>
+Date: Mon, 5 Aug 2019 21:42:54 -0700
+Subject: [PATCH] Include sys/sysmacros.h if necessary
+
+---
+ bin/pax/cpio.c        | 4 ++++
+ bin/pax/gen_subs.c    | 3 +++
+ bin/pax/tar.c         | 3 +++
+ usr.bin/rsync/flist.c | 4 ++++
+ 4 files changed, 14 insertions(+)
+
+diff --git a/bin/pax/cpio.c b/bin/pax/cpio.c
+index be0316d8dd9..fbcf032e091 100644
+--- a/bin/pax/cpio.c
++++ b/bin/pax/cpio.c
+@@ -41,6 +41,10 @@
+ #include <stdio.h>
+ #include <unistd.h>
+ #include <stdlib.h>
++#ifndef major
++#include <sys/sysmacros.h>
++#endif
++
+ #include "pax.h"
+ #include "cpio.h"
+ #include "extern.h"
+diff --git a/bin/pax/gen_subs.c b/bin/pax/gen_subs.c
+index fcda4d37391..928cfcd3657 100644
+--- a/bin/pax/gen_subs.c
++++ b/bin/pax/gen_subs.c
+@@ -45,6 +45,9 @@
+ #include <unistd.h>
+ #include <utmp.h>
+ #include <vis.h>
++#ifndef major
++#include <sys/sysmacros.h>
++#endif
+ 
+ #include "pax.h"
+ #include "extern.h"
+diff --git a/bin/pax/tar.c b/bin/pax/tar.c
+index ef22a9fd2d8..a0cbb31b547 100644
+--- a/bin/pax/tar.c
++++ b/bin/pax/tar.c
+@@ -47,6 +47,9 @@
+ #include <stdlib.h>
+ #include <string.h>
+ #include <unistd.h>
++#ifndef major
++#include <sys/sysmacros.h>
++#endif
+ 
+ #include "pax.h"
+ #include "extern.h"
+diff --git a/usr.bin/rsync/flist.c b/usr.bin/rsync/flist.c
+index cdc9f1da1dd..8832420cce0 100644
+--- a/usr.bin/rsync/flist.c
++++ b/usr.bin/rsync/flist.c
+@@ -16,6 +16,10 @@
+  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+  */
+ #include <sys/stat.h>
++#include <sys/types.h>
++#ifndef major
++#include <sys/sysmacros.h>
++#endif
+ 
+ #include <assert.h>
+ #include <errno.h>
+-- 
+2.49.0
+

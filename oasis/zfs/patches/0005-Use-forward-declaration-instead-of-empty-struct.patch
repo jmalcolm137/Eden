@@ -1,0 +1,25 @@
+From 7f3f1e3af5e39c6745c52cf4cce914664e16f93e Mon Sep 17 00:00:00 2001
+From: Michael Forney <mforney@mforney.org>
+Date: Sat, 21 Jan 2023 17:15:47 -0800
+Subject: [PATCH] Use forward declaration instead of empty struct
+
+---
+ include/sys/zfs_context.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/include/sys/zfs_context.h b/include/sys/zfs_context.h
+index 26e7b5cf5..58bf98f9c 100644
+--- a/include/sys/zfs_context.h
++++ b/include/sys/zfs_context.h
+@@ -376,7 +376,7 @@ typedef struct procfs_list {
+ } procfs_list_t;
+ 
+ #ifndef __cplusplus
+-struct seq_file { };
++struct seq_file;
+ void seq_printf(struct seq_file *m, const char *fmt, ...);
+ 
+ typedef struct procfs_list_node {
+-- 
+2.49.0
+

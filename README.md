@@ -30,7 +30,7 @@ The `main` entry enables the remote Chimera binary repository.
 acl apk-tools argp-standalone attr awk base-cbuild base-files bearssl bubblewrap byacc bzip2 ca-certificates cmake curl diffutils fakeroot flex fortify-headers git gmake gperf libarchive libatomic-chimera libedit libffi8 linux-headers linux-personality llvm llvm-bootstrap lz4 m4 mandoc muon musl musl-bsd-headers musl-fts musl-obstack nasm netbsd-curses oksh patch perl pigz pkgconf python samurai sbase sed ubase ugetopt unzip xz zlib-ng-compat zlib-static zstd
 ```
 
-### oasis templates (180)
+### oasis templates (184)
 
 ```
 acme-client acpid adobe-source-fonts alsa-lib alsa-lib-devel
@@ -47,41 +47,37 @@ iproute2 jbig2dec jbig2dec-devel kbd less
 libass libass-devel libbluray libbluray-devel libcbor
 libcbor-devel libdrm libdrm-devel libdrm-devel-static libevdev
 libevdev-devel libevdev-devel-static libevent libevent-devel libevent-devel-static
-libffi libfido2 libgpiod libgpiod-devel libinput
-libinput-devel libjpeg-turbo libliftoff libliftoff-devel libliftoff-devel-static
-libnl libnl-devel libpciaccess libpciaccess-devel libplacebo
-libplacebo-devel libpng libressl libressl-devel libtermkey
-libtirpc libtirpc-devel libtls-bearssl libutp libutp-devel
-libxkbcommon lpeg lua luaposix make
-man-pages-posix mblaze mgba mpv msmtp
-mtdev mtdev-devel mupdf mupdf-devel ncompress
-netsurf nginx nsd openbsd openntpd
-openssh opus opus-devel opus-devel-static pax
-pciutils pciutils-devel pcre pcre-devel pcre-devel-static
-pdpmake perp pixman pounce pwgen
-qbe quark rc sdhcp sfeed
-sinit skeleton sndio snes9x squashfs-tools-ng
-sshfs st strace swc swc-devel
-syslinux syslogd terminus-font texi2mdoc the_silver_searcher
-tinyalsa tinyalsa-devel tinyalsa-devel-static tinyemu transmission
-tz u-boot u-config unbound usbids
-utf8proc util-linux util-linux-devel util-linux-devel-static velox
-vis wayland wayland-protocols wireguard-tools wl9
-wld wld-devel wpa_supplicant x509cert x509cert-devel
-x509cert-devel-static xkeyboard-config yt-dlp zfs zlib
+libffi libfido2 libfido2-devel libgpiod libgpiod-devel
+libinput libinput-devel libjpeg-turbo libliftoff libliftoff-devel
+libliftoff-devel-static libnl libnl-devel libpciaccess libpciaccess-devel
+libplacebo libplacebo-devel libpng libressl libressl-devel
+libtermkey libtirpc libtirpc-devel libtls-bearssl libutp
+libutp-devel libxkbcommon lpeg lua luaposix
+make man-pages-posix mblaze mgba mpv
+msmtp mtdev mtdev-devel mupdf mupdf-devel
+ncompress netsurf nginx nsd openbsd
+openbsd-devel openbsd-devel-static openntpd openssh opus
+opus-devel opus-devel-static pax pciutils pciutils-devel
+pcre pcre-devel pcre-devel-static pdpmake perp
+pixman pounce pwgen qbe quark
+rc sdhcp sfeed sinit skeleton
+sndio snes9x squashfs-tools-ng sshfs st
+strace swc swc-devel syslinux syslogd
+terminus-font texi2mdoc the_silver_searcher tinyalsa tinyalsa-devel
+tinyalsa-devel-static tinyemu transmission tz u-boot
+u-config unbound usbids utf8proc util-linux
+util-linux-devel util-linux-devel-static util-linux-libs-static velox vis
+wayland wayland-protocols wireguard-tools wl9 wld
+wld-devel wpa_supplicant x509cert x509cert-devel x509cert-devel-static
+xkeyboard-config yt-dlp zfs zlib
 ```
 
 ### scaffolded Oasis packages (0)
 
 No Oasis package is metadata-only anymore: every Oasis `pkg/` entry has a
-`template.py`. The following templates are currently marked `broken` because
-their build dependency or source acquisition is still missing:
+`template.py`, and no template is currently marked `broken`.
 
-```
-acme-client libfido2 mpv openbsd zfs
-```
-
-See [`oasis/SCAFFOLDING.md`](oasis/SCAFFOLDING.md) for the blockers.
+See [`oasis/SCAFFOLDING.md`](oasis/SCAFFOLDING.md) for details.
 
 ## Current bldroot
 

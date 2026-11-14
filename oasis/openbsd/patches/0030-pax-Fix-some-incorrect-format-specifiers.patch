@@ -1,0 +1,48 @@
+From 7770f53d7d46a5dee46478caa4d0bda8d7cf9b9c Mon Sep 17 00:00:00 2001
+From: Michael Forney <mforney@mforney.org>
+Date: Thu, 4 Jun 2020 21:36:11 -0700
+Subject: [PATCH] pax: Fix some incorrect format specifiers
+
+---
+ bin/pax/cpio.c     | 2 +-
+ bin/pax/gen_subs.c | 4 ++--
+ 2 files changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/bin/pax/cpio.c b/bin/pax/cpio.c
+index fbcf032e091..1242ad0d8a7 100644
+--- a/bin/pax/cpio.c
++++ b/bin/pax/cpio.c
+@@ -214,7 +214,7 @@ rd_ln_nm(ARCHD *arcn)
+ 	 */
+ 	if ((arcn->sb.st_size <= 0) ||
+ 	    (arcn->sb.st_size >= (off_t)sizeof(arcn->ln_name))) {
+-		paxwarn(1, "Cpio link name length is invalid: %lld",
++		paxwarn(1, "Cpio link name length is invalid: %zu",
+ 		    arcn->sb.st_size);
+ 		return(-1);
+ 	}
+diff --git a/bin/pax/gen_subs.c b/bin/pax/gen_subs.c
+index 928cfcd3657..897a688327e 100644
+--- a/bin/pax/gen_subs.c
++++ b/bin/pax/gen_subs.c
+@@ -112,7 +112,7 @@ ls_list(ARCHD *arcn, time_t now, FILE *fp)
+ 	else if (strftime(f_date, sizeof(f_date), TIMEFMT(sbp->st_mtime, now),
+ 	    tm) == 0)
+ 		f_date[0] = '\0';
+-	(void)fprintf(fp, "%s%2u %-*.*s %-*.*s ", f_mode, sbp->st_nlink,
++	(void)fprintf(fp, "%s%2u %-*.*s %-*.*s ", f_mode, (unsigned)sbp->st_nlink,
+ 		NAME_WIDTH, UT_NAMESIZE, user_from_uid(sbp->st_uid, 0),
+ 		NAME_WIDTH, UT_NAMESIZE, group_from_gid(sbp->st_gid, 0));
+ 
+@@ -124,7 +124,7 @@ ls_list(ARCHD *arcn, time_t now, FILE *fp)
+ 		    (unsigned long)MAJOR(sbp->st_rdev),
+ 		    (unsigned long)MINOR(sbp->st_rdev));
+ 	else {
+-		(void)fprintf(fp, "%9llu ", sbp->st_size);
++		(void)fprintf(fp, "%9zu ", sbp->st_size);
+ 	}
+ 
+ 	/*
+-- 
+2.49.0
+

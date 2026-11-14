@@ -1,0 +1,34 @@
+From 12921ad20c464030307cce5490d028988c5b2d96 Mon Sep 17 00:00:00 2001
+From: Michael Forney <mforney@mforney.org>
+Date: Sat, 21 Jan 2023 17:30:39 -0800
+Subject: [PATCH] Avoid use of long double function
+
+---
+ lib/libzutil/zutil_nicenum.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/lib/libzutil/zutil_nicenum.c b/lib/libzutil/zutil_nicenum.c
+index 44d68e85d..593e5e264 100644
+--- a/lib/libzutil/zutil_nicenum.c
++++ b/lib/libzutil/zutil_nicenum.c
+@@ -103,7 +103,7 @@ zfs_nicenum_format(uint64_t num, char *buf, size_t buflen,
+ 	if ((format == ZFS_NICENUM_TIME) && (num == 0)) {
+ 		(void) snprintf(buf, buflen, "-");
+ 	} else if ((index == 0) || ((num %
+-	    (uint64_t)powl(k_unit[format], index)) == 0)) {
++	    (uint64_t)pow(k_unit[format], index)) == 0)) {
+ 		/*
+ 		 * If this is an even multiple of the base, always display
+ 		 * without any decimal precision.
+@@ -123,7 +123,7 @@ zfs_nicenum_format(uint64_t num, char *buf, size_t buflen,
+ 		int i;
+ 		for (i = 2; i >= 0; i--) {
+ 			val = (double)num /
+-			    (uint64_t)powl(k_unit[format], index);
++			    (uint64_t)pow(k_unit[format], index);
+ 
+ 			/*
+ 			 * Don't print floating point values for time.  Note,
+-- 
+2.49.0
+

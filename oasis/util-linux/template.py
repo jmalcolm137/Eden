@@ -53,6 +53,17 @@ def post_install(self):
             p.chmod(0o755)
 
 
+@subpackage("util-linux-libs-static")
+def _(self):
+    self.depends = []
+    return [
+        "usr/lib/libuuid.a",
+        "usr/lib/libblkid.a",
+        "usr/include/uuid",
+        "usr/include/blkid",
+    ]
+
+
 @subpackage("util-linux-devel")
 def _(self):
     return self.default_devel()

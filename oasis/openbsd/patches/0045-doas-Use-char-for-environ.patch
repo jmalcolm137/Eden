@@ -1,0 +1,21 @@
+From: Eden port <editors@example.org>
+Subject: [PATCH] doas: Use char ** for environ
+
+musl declares environ as char **; a conflicting const declaration is an
+error under modern clang.
+---
+ usr.bin/doas/env.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/usr.bin/doas/env.c b/usr.bin/doas/env.c
+--- a/usr.bin/doas/env.c
++++ b/usr.bin/doas/env.c
+@@ -110,7 +110,7 @@
+ 	fillenv(env, copyset);
+ 
+ 	if (rule->options & KEEPENV) {
+-		extern const char **environ;
++		extern char **environ;
+ 
+ 		for (i = 0; environ[i] != NULL; i++) {
+ 			struct envnode *node;
