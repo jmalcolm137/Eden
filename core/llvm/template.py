@@ -13,6 +13,7 @@ configure_args = [
     "-DCOMPILER_RT_DEFAULT_TARGET_ONLY=ON",
     # avoid execinfo
     "-DCOMPILER_RT_BUILD_GWP_ASAN=OFF",
+    "-DCOMPILER_RT_SANITIZERS_TO_BUILD=asan;dfsan;msan;hwasan;tsan;tysan;safestack;cfi;scudo_standalone;ubsan_minimal;gwp_asan;nsan;asan_abi",
     "-DLIBCXX_CXX_ABI=libcxxabi",
     "-DLIBCXX_USE_COMPILER_RT=ON",
     "-DLIBCXX_ENABLE_STATIC_ABI_LIBRARY=OFF",
@@ -110,8 +111,13 @@ if self.stage > 0:
             "--ld-path=/usr/lib/llvm-bootstrap/bin/ld.lld",
             "-L/usr/lib/llvm-bootstrap/lib",
         ]
-        # this so it resolves at runtime too (e.g. -tblgen runs)
-        make_build_env = {"LD_LIBRARY_PATH": "/usr/lib/llvm-bootstrap/lib"}
+        # compiler-rt's symbol-list generator uses $NM; point it at the
+        # bootstrap tool so it does not depend on the host bldroot's nm.
+        # Do not set LD_LIBRARY_PATH here: it would make the system lld load
+        # the bootstrap X86-only libLLVM and fail to resolve other targets.
+        make_build_env = {
+            "NM": "/usr/lib/llvm-bootstrap/bin/llvm-nm",
+        }
     else:
         configure_args += ["-DLLVM_ENABLE_LLD=ON"]
         # don't build flang/mlir for stage 1 to save time
@@ -351,7 +357,7 @@ def _(self):
         "usr/bin/*clang*",
         "usr/bin/*-cc",
         "usr/bin/*-c++",
-        "usr/bin/c-index-test",
+        "?usr/bin/c-index-test",
         "usr/bin/cc",
         "usr/bin/c89",
         "usr/bin/c99",
