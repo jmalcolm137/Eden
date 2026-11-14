@@ -9,7 +9,7 @@ the upstream source comes from. There is deliberately no `template.py`:
 add one only when the package has actually been ported, then list it in
 `oasis-packages.txt`.
 
-Scaffolded packages: 39
+Scaffolded packages: 34
 
 | Package | Version | Source kind | Source |
 | --- | --- | --- | --- |
@@ -18,16 +18,12 @@ Scaffolded packages: 39
 | `binutils` | 2.46.0 r1 | tarball | https://ftp.gnu.org/gnu/binutils/binutils-2.46.0.tar.xz |
 | `blind` | 1.1 r4 | git-submodule | git://git.suckless.org/blind |
 | `catgirl` | 2.2a | git-submodule | https://git.causal.agency/catgirl |
-| `dav1d` | 0.9.2 r0 | git-submodule | https://github.com/videolan/dav1d.git |
 | `dmenu` | 4.9 r4 | git-submodule | git://git.suckless.org/dmenu |
-| `efibootmgr` | 18 | git-submodule | https://github.com/rhinstaller/efibootmgr.git |
-| `efivar` | 39 | git-submodule | https://github.com/rhinstaller/efivar.git |
 | `elftoolchain` | ce6d62aaba r1 | git-submodule | f7e9afc6f9ad0d84ea73b4659c5d6d13275d2306 |
 | `farbfeld` | 4 r0 | git-submodule | git://git.suckless.org/farbfeld |
 | `ffmpeg` | 7.0.2 r1 | git-submodule | https://github.com/ffmpeg/ffmpeg.git |
 | `fspec-sync` | a79592936c r0 | git-submodule | https://github.com/oasislinux/fspec-sync.git |
 | `ii` | 1.9 r0 | git-submodule | git://git.suckless.org/ii |
-| `jbig2dec` | 0.19 r0 | git-submodule | git://git.ghostscript.com/jbig2dec.git |
 | `kbd` | 2.4.0 r0 | tarball | https://www.kernel.org/pub/linux/utils/kbd/kbd-2.4.0.tar.gz |
 | `libbluray` | 1.3.4 r0 | tarball | https://download.videolan.org/pub/videolan/libbluray/1.3.4/libbluray-1.3.4.tar.bz2 |
 | `libfido2` | 1.9.0 r0 | git-submodule | https://github.com/oasislinux/libfido2.git |
@@ -45,7 +41,6 @@ Scaffolded packages: 39
 | `strace` | 6.19 r2 | tarball | https://github.com/strace/strace/releases/download/v6.19/strace-6.19.tar.xz |
 | `swc` | 19893a5ca3 r0 | git-submodule | https://github.com/michaelforney/swc.git |
 | `syslinux` | 6.03 r4 | tarball | https://www.kernel.org/pub/linux/utils/boot/syslinux/syslinux-6.03.tar.xz |
-| `the_silver_searcher` | 2.2.0 r3 | git-submodule | https://github.com/ggreer/the_silver_searcher.git |
 | `tinyemu` | 20191221 r2 | tarball | https://bellard.org/tinyemu/tinyemu-2019-12-21.tar.gz |
 | `transmission` | 3.00 r3 | tarball | https://github.com/transmission/transmission-releases/raw/master/transmission-3.00.tar.xz |
 | `u-boot` | 2021.04 r3 | tarball | ftp://ftp.denx.de/pub/u-boot/u-boot-2021.04.tar.bz2 |
