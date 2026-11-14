@@ -39,6 +39,7 @@ hyx
 iproute2
 jbig2dec
 jbig2dec-devel
+kbd
 less
 libass
 libass-devel
