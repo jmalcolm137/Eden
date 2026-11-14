@@ -110,9 +110,13 @@ def install(self):
         "genl/mngt.h",
     ]:
         self.install_file(f"include/netlink/{h}", "usr/include/netlink")
+    self.install_dir("usr/include/netlink/genl")
+    for h in ("ctrl.h", "family.h", "genl.h", "mngt.h"):
+        self.install_link(f"usr/include/netlink/genl/{h}", f"../{h}")
     self.install_license("COPYING")
 
 
 @subpackage("libnl-devel")
 def _(self):
+    self.depends = [self.parent]
     return ["usr/include"]
