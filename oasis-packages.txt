@@ -140,6 +140,7 @@ tinyalsa
 tinyalsa-devel
 tinyalsa-devel-static
 tinyemu
+transmission
 tz
 u-config
 unbound
