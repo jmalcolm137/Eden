@@ -121,4 +121,6 @@ def install(self):
         "wayland-version.h",
     ]:
         self.install_file(f"include/{h}", "usr/include")
+    for n in ("client", "cursor", "server", "egl"):
+        self.install_file(self.files_path / f"wayland-{n}.pc", "usr/lib/pkgconfig")
     self.install_license("COPYING")

@@ -72,4 +72,5 @@ def install(self):
     self.install_file("libxkbcommon.a", "usr/lib")
     for src in sorted((self.cwd / "include/xkbcommon").glob("*.h")):
         self.install_file(f"include/xkbcommon/{src.name}", "usr/include/xkbcommon")
+    self.install_file(self.files_path / "xkbcommon.pc", "usr/lib/pkgconfig")
     self.install_license("LICENSE")

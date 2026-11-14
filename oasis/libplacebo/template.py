@@ -59,9 +59,11 @@ def install(self):
         self.install_file(f"src/include/libplacebo/{h}", dest)
     self.install_file("include/libplacebo/config.h", "usr/include/libplacebo")
     self.install_file("version.h", "usr/include/libplacebo")
+    self.install_file(self.files_path / "libplacebo.pc", "usr/lib/pkgconfig")
     self.install_license("LICENSE")
 
 
 @subpackage("libplacebo-devel")
 def _(self):
-    return ["usr/include"]
+    self.depends = [self.parent]
+    return ["usr/include", "usr/lib/pkgconfig"]

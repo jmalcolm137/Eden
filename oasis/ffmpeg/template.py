@@ -72,3 +72,8 @@ def configure(self):
         "--disable-vulkan",
         wrksrc=self.chroot_cwd / "build",
     )
+
+
+@subpackage("ffmpeg-devel")
+def _(self):
+    return self.default_devel()
