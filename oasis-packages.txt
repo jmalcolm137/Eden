@@ -119,6 +119,7 @@ skeleton
 sndio
 snes9x
 squashfs-tools-ng
+st
 strace
 swc
 swc-devel
