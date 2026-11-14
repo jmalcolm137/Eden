@@ -25,10 +25,14 @@ fontconfig
 fontconfig-devel
 fontconfig-devel-static
 freetype
+fribidi
+fribidi-devel
 hotplugd
 hyx
 iproute2
 less
+libass
+libass-devel
 libcbor
 libcbor-devel
 libdrm
