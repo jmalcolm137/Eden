@@ -78,7 +78,7 @@ No Oasis package is metadata-only anymore: every Oasis `pkg/` entry has a
 their build dependency or source acquisition is still missing:
 
 ```
-acme-client b3sum fspec-sync libfido2 mpv openbsd sshfs
+acme-client b3sum fspec-sync libfido2 mpv openbsd
 syslinux u-boot zfs
 ```
 
