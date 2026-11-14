@@ -107,6 +107,7 @@ sndio
 syslogd
 terminus-font
 texi2mdoc
+the_silver_searcher
 tinyalsa
 tinyalsa-devel
 tinyalsa-devel-static

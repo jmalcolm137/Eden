@@ -30,7 +30,7 @@ The `main` entry enables the remote Chimera binary repository.
 acl apk-tools argp-standalone attr awk base-cbuild base-files bearssl byacc bzip2 ca-certificates cmake curl diffutils elfutils fakeroot fortify-headers git gmake gperf libarchive libatomic-chimera libedit libffi8 linux-headers linux-personality llvm llvm-bootstrap lz4 m4 mandoc muon musl musl-bsd-headers musl-fts musl-obstack nasm netbsd-curses oksh patch perl pigz pkgconf python samurai sbase sed ubase ugetopt unzip xz zlib-ng-compat zlib-static zstd
 ```
 
-### oasis templates (132)
+### oasis templates (133)
 
 ```
 acpid adobe-source-fonts alsa-lib alsa-lib-devel atinout
@@ -54,12 +54,12 @@ opus opus-devel opus-devel-static pax pciutils
 pciutils-devel pcre pcre-devel pcre-devel-static pdpmake
 perp pixman pwgen qbe rc
 sdhcp sfeed sinit skeleton sndio
-syslogd terminus-font texi2mdoc tinyalsa tinyalsa-devel
-tinyalsa-devel-static tz u-config usbids utf8proc
-util-linux util-linux-devel util-linux-devel-static velox vis
-wayland wayland-protocols wireguard-tools wl9 wld
-wld-devel wpa_supplicant x509cert x509cert-devel x509cert-devel-static
-xkeyboard-config yt-dlp
+syslogd terminus-font texi2mdoc the_silver_searcher tinyalsa
+tinyalsa-devel tinyalsa-devel-static tz u-config usbids
+utf8proc util-linux util-linux-devel util-linux-devel-static velox
+vis wayland wayland-protocols wireguard-tools wl9
+wld wld-devel wpa_supplicant x509cert x509cert-devel
+x509cert-devel-static xkeyboard-config yt-dlp
 ```
 
 ### scaffolded Oasis packages (39)
