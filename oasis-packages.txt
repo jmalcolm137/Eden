@@ -27,6 +27,7 @@ efivar-devel
 expat
 f2fs-tools
 farbfeld
+ffmpeg
 file
 file-devel
 flex
