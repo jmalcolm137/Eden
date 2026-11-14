@@ -71,18 +71,18 @@ wpa_supplicant x509cert x509cert-devel x509cert-devel-static xkeyboard-config
 yt-dlp zfs zlib
 ```
 
-### scaffolded Oasis packages (14)
+### scaffolded Oasis packages (0)
 
-The remaining Oasis `pkg/` entries are scaffolded under `oasis/<name>/` with
-their Oasis recipe metadata (`gen.lua`, `ver`, `config.h`, patches, helper
-files) and a `SOURCE.txt` recording the upstream source URL/commit. They do
-not have a `template.py` yet, so cbuild does not treat them as buildable
-packages. See [`oasis/SCAFFOLDING.md`](oasis/SCAFFOLDING.md) for the full
-list and source references.
+No Oasis package is metadata-only anymore: every Oasis `pkg/` entry has a
+`template.py`. The following templates are currently marked `broken` because
+their build dependency or source acquisition is still missing:
 
-When a scaffolded package is ported, add its `template.py`, verify it lints
-and builds, then add it to `oasis-packages.txt` and remove it from the
-scaffolding list.
+```
+acme-client b3sum catgirl fspec-sync libfido2 mpv openbsd pounce
+sshfs syslinux u-boot zfs
+```
+
+See [`oasis/SCAFFOLDING.md`](oasis/SCAFFOLDING.md) for the blockers.
 
 ## Current bldroot
 
