@@ -34,7 +34,7 @@ def configure(self):
         cf.write(
             f"""\
 prefix = /usr
-gitexecdir = /usr/libexec/git-core
+gitexecdir = /usr/lib/git-core
 template_dir = /usr/share/git-core/templates
 sysconfdir = /etc
 mandir = /usr/share/man
@@ -84,7 +84,7 @@ def install(self):
         "git-send-email",
         "git-svn",
     ]:
-        self.uninstall(f"usr/libexec/git-core/{helper}", missing_ok=True)
+        self.uninstall(f"usr/lib/git-core/{helper}", missing_ok=True)
 
     # Prebuilt pages from the git-manpages tarball (the Oasis approach)
     skip = {
