@@ -118,6 +118,7 @@ the_silver_searcher
 tinyalsa
 tinyalsa-devel
 tinyalsa-devel-static
+tinyemu
 tz
 u-config
 usbids
