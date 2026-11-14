@@ -105,6 +105,7 @@ sinit
 skeleton
 sndio
 syslogd
+terminus-font
 texi2mdoc
 tinyalsa
 tinyalsa-devel
