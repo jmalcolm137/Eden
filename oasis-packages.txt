@@ -69,6 +69,8 @@ libutp-devel
 libxkbcommon
 lpeg
 lua
+luaposix
+make
 man-pages-posix
 mblaze
 msmtp
@@ -118,4 +120,5 @@ wld-devel
 x509cert
 x509cert-devel
 x509cert-devel-static
+xkeyboard-config
 yt-dlp
