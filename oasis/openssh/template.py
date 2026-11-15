@@ -10,7 +10,7 @@ configure_args = [
     "--with-maildir=/var/mail",
 ]
 configure_gen = []
-makedepends = ["libressl-devel", "zlib-ng-compat-devel"]
+makedepends = ["libressl-devel", "zlib-static"]
 pkgdesc = "OpenBSD Secure Shell"
 license = "ISC"
 url = "https://www.openssh.com"

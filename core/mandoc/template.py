@@ -4,7 +4,7 @@ pkgrel = 0
 # Oasis pkg/mandoc source tarball
 build_style = "configure"
 hostmakedepends = ["pkgconf"]
-makedepends = ["zlib-ng-compat-devel"]
+makedepends = ["zlib-static"]
 pkgdesc = "UNIX manpage compiler toolset"
 license = "ISC"
 url = "https://mandoc.bsd.lv"

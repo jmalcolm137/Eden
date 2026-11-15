@@ -8,7 +8,7 @@ configure_args = [
     "--disable-lzlib",
 ]
 configure_gen = []
-makedepends = ["zlib-ng-compat-devel"]
+makedepends = ["zlib-static"]
 pkgdesc = "File type identification utility"
 license = "BSD-2-Clause"
 url = "https://www.darwinsys.com/file"

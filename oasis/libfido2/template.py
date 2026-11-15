@@ -5,8 +5,7 @@ _commit = "328395f410034d93d806bd36c9aa1584d802cd2e"
 makedepends = [
     "bearssl-devel-static", "libcbor", "libcbor-devel", "linux-headers",
     "openbsd-devel",
-    "openbsd-devel-static", "zlib-ng-compat-devel",
-    "zlib-ng-compat-devel-static",
+    "openbsd-devel-static", "zlib-static",
 ]
 pkgdesc = "FIDO2 library"
 license = "BSD-2-Clause"

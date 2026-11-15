@@ -45,9 +45,9 @@ hostmakedepends = [
     "pkgconf",
     "python",
     "samurai",
-    "zlib-ng-compat-devel",
+    "zlib-static",
 ]
-makedepends = ["libatomic-chimera-devel", "zlib-ng-compat-devel"]
+makedepends = ["libatomic-chimera-devel", "zlib-static"]
 depends = [
     self.with_pkgver("llvm-libs"),
     self.with_pkgver("llvm-binutils"),

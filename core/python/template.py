@@ -13,11 +13,6 @@ configure_args = [
     "--without-readline",
     "--without-ensurepip",
 ]
-configure_env = {
-    # bootstrap Python deliberately has no OpenSSL-backed ssl/hashlib
-    "ac_cv_working_openssl_ssl": "no",
-    "ac_cv_working_openssl_hashlib": "no",
-}
 configure_gen = []
 make_check_target = "quicktest"
 # disable tests that disagree with our build environment or musl
@@ -54,9 +49,10 @@ hostmakedepends = ["pkgconf"]
 makedepends = [
     "bzip2-devel",
     "libffi8-devel",
+    "libressl-devel",
     "linux-headers",
     "xz-devel",
-    "zlib-ng-compat-devel",
+    "zlib-static",
     "zstd-devel",
 ]
 depends = [self.with_pkgver("python-meta")]

@@ -27,10 +27,10 @@ The `main` entry enables the remote Chimera binary repository.
 ### core templates (55)
 
 ```
-acl apk-tools argp-standalone attr awk base-cbuild base-files bearssl bubblewrap byacc bzip2 ca-certificates cmake curl diffutils fakeroot flex fortify-headers git gmake gperf libarchive libatomic-chimera libedit libffi8 linux-headers linux-personality llvm llvm-bootstrap lz4 m4 mandoc muon musl musl-bsd-headers musl-fts musl-obstack nasm netbsd-curses oksh patch perl pigz pkgconf python samurai sbase sed ubase ugetopt unzip xz zlib-ng-compat zlib-static zstd
+acl apk-tools argp-standalone attr awk base-cbuild base-files bearssl bubblewrap byacc bzip2 ca-certificates cmake curl diffutils fakeroot flex fortify-headers git gmake gperf libarchive libatomic-chimera libedit libffi8 libressl linux-headers linux-personality llvm llvm-bootstrap lz4 m4 mandoc muon musl musl-bsd-headers musl-fts musl-obstack nasm netbsd-curses oksh patch perl pigz pkgconf python samurai sbase sed ubase ugetopt unzip xz zlib-static zstd
 ```
 
-### oasis templates (184)
+### oasis templates (181)
 
 ```
 acme-client acpid adobe-source-fonts alsa-lib alsa-lib-devel
@@ -50,7 +50,7 @@ libevdev-devel libevdev-devel-static libevent libevent-devel libevent-devel-stat
 libffi libfido2 libfido2-devel libgpiod libgpiod-devel
 libinput libinput-devel libjpeg-turbo libliftoff libliftoff-devel
 libliftoff-devel-static libnl libnl-devel libpciaccess libpciaccess-devel
-libplacebo libplacebo-devel libpng libressl libressl-devel
+libplacebo libplacebo-devel libpng
 libtermkey libtirpc libtirpc-devel libtls-bearssl libutp
 libutp-devel libxkbcommon lpeg lua luaposix
 make man-pages-posix mblaze mgba mpv
@@ -69,7 +69,13 @@ u-config unbound usbids utf8proc util-linux
 util-linux-devel util-linux-devel-static util-linux-libs-static velox vis
 wayland wayland-protocols wireguard-tools wl9 wld
 wld-devel wpa_supplicant x509cert x509cert-devel x509cert-devel-static
-xkeyboard-config yt-dlp zfs zlib
+xkeyboard-config yt-dlp zfs
+```
+
+### pkgsrc templates (1)
+
+```
+rust
 ```
 
 ### scaffolded Oasis packages (0)
@@ -89,7 +95,7 @@ acl apk-tools apk-tools-static-bin awk base-cbuild base-files bearssl
 bzip2 ca-certificates diffutils fakeroot-core fortify-headers gmake
 libarchive-progs libatomic-chimera libatomic-chimera-devel libedit
 libffi8 lz4 muon musl musl-devel musl-ldso musl-progs netbsd-curses
-oksh patch pigz pkgconf samurai sbase sed ubase xz zlib-ng-compat zstd
+oksh patch pigz pkgconf samurai sbase sed ubase xz zlib-static zstd
 zstd-progs
 ```
 
@@ -103,11 +109,8 @@ llvm-libs llvm-linker-tools llvm-runtime
 ```
 
 `apk-tools` is now source-built with **BearSSL for both crypto and libfetch
-TLS**; no OpenSSL packages remain in the bldroot.
-
-`cbuild keygen` also uses BearSSL's `brssl` when installed, so key generation
-works without OpenSSL; OpenSSL is only used as a fallback on hosts that have
-it.
+TLS**. Python uses the core LibreSSL package for `ssl` and `hashlib`, and
+`cbuild keygen` uses LibreSSL's `openssl` CLI; no OpenSSL package is used.
 
 All Meson-style packages are built with Oasis **muon** and **samurai**; the
 engine no longer invokes `meson` or `ninja`. `muon` carries one local patch so
@@ -124,7 +127,7 @@ builds.
 embeds the curses code, so neither `libedit` nor `llvm-libs` pulls in
 `libncursesw.so.6`.
 
-No `chimerautils`, no `debianutils`, no OpenSSL CLI.
+No `chimerautils`, no `debianutils`, no OpenSSL package.
 
 ## Deliberate exceptions
 
@@ -135,7 +138,7 @@ No `chimerautils`, no `debianutils`, no OpenSSL CLI.
 | tar | Chimera bsdtar | sbase tar does not auto-decompress `.gz`/`.xz`/`.zst` |
 | strings/getconf | Chimera llvm-binutils/musl | same packages provide required strip/objcopy and musl ABI |
 | grep/sed/diff/patch | pkgsrc-version GNU tools | GNU sed passes autoconf's non-truncation test (sbase sed truncates); GNU diff/patch are required. GNU grep is kept for reliability; sbase grep passes the test in isolation |
-| OpenSSL | **removed** | apk-tools uses BearSSL for crypto and libfetch TLS; no OpenSSL packages remain |
+| OpenSSL | **removed** | apk-tools uses BearSSL; Python and cbuild keygen use LibreSSL from core |
 | ncurses | **removed** | libedit is rebuilt against static Oasis netbsd-curses, so it no longer links `libncursesw.so.6`; the bldroot carries no ncurses |
 
 ## Layout

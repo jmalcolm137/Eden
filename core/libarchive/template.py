@@ -19,7 +19,7 @@ makedepends = [
     "lz4-devel",
     "musl-bsd-headers",
     "xz-devel",
-    "zlib-ng-compat-devel",
+    "zlib-static",
 ]
 pkgdesc = "Library to read/write several different streaming archive formats"
 license = "BSD-2-Clause"

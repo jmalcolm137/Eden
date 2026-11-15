@@ -14,6 +14,7 @@ awk
 base-cbuild
 base-files
 bearssl
+bubblewrap
 byacc
 bzip2
 ca-certificates
@@ -21,6 +22,7 @@ cmake
 curl
 diffutils
 fakeroot
+flex
 fortify-headers
 git
 gmake
@@ -29,6 +31,7 @@ libarchive
 libatomic-chimera
 libedit
 libffi8
+libressl
 linux-headers
 linux-personality
 llvm
@@ -56,6 +59,5 @@ ubase
 ugetopt
 unzip
 xz
-zlib-ng-compat
 zlib-static
 zstd

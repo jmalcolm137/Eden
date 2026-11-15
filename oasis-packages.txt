@@ -87,8 +87,6 @@ libpciaccess-devel
 libplacebo
 libplacebo-devel
 libpng
-libressl
-libressl-devel
 libtermkey
 libtirpc
 libtirpc-devel
@@ -182,4 +180,3 @@ x509cert-devel-static
 xkeyboard-config
 yt-dlp
 zfs
-zlib

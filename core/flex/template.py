@@ -1,6 +1,7 @@
 pkgname = "flex"
 pkgver = "2.6.4"
 pkgrel = 1
+depends = ["m4"]
 pkgdesc = "Fast lexical analyser generator"
 license = "BSD-2-Clause"
 url = "https://github.com/westes/flex"

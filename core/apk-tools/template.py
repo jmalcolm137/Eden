@@ -11,7 +11,7 @@ configure_args = [
 ]
 make_check_env = {"APK_CONFIG": "/dev/null"}
 hostmakedepends = ["muon", "samurai", "pkgconf"]
-makedepends = ["bearssl-devel", "zlib-ng-compat-devel"]
+makedepends = ["bearssl-devel", "zlib-static"]
 pkgdesc = "Alpine package manager with BearSSL"
 license = "GPL-2.0-only"
 url = "http://git.alpinelinux.org/cgit/apk-tools"
@@ -28,7 +28,6 @@ if self.stage > 0:
         "libunwind-devel-static",
         "linux-headers",
         "musl-devel-static",
-        "zlib-ng-compat-devel-static",
         "zstd-devel-static",
     ]
     if self.stage > 1:

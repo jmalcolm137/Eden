@@ -3,7 +3,7 @@ pkgver = "2.4.0"
 pkgrel = 0
 makedepends = [
     "bearssl-devel-static", "libtirpc-devel-static", "linux-headers",
-    "util-linux-libs-static", "zlib-ng-compat-devel-static",
+    "util-linux-libs-static", "zlib-static",
 ]
 pkgdesc = "ZFS filesystem and tools"
 license = "CDDL-1.0"

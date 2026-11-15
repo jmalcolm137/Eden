@@ -40,12 +40,15 @@ fi
 # gmake is first: once base-cbuild is built it pulls in the Oasis userland,
 # which intentionally does not provide everything autoconf expects.
 for p in \
+    byacc \
     awk \
     sed \
     diffutils \
     patch \
     pkgconf \
     gmake \
+    m4 \
+    flex \
     base-files \
     linux-personality \
     oksh \
@@ -53,7 +56,7 @@ for p in \
     sbase \
     ubase \
     ca-certificates \
-    zlib-ng-compat \
+    zlib-static \
     xz \
     bzip2 \
     lz4 \
@@ -70,6 +73,10 @@ for p in \
     musl \
     perl \
     linux-headers \
+    libressl \
+    bubblewrap \
+    curl \
+    git \
     python \
     samurai \
     muon \
