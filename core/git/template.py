@@ -4,8 +4,7 @@ pkgrel = 0
 # Oasis pkg/git/src (git.git v2.54.0)
 _commit = "94f057755b7941b321fd11fec1b2e3ca5313a4e0"
 hostmakedepends = ["pkgconf"]
-makedepends = ["bearssl-devel", "curl", "zlib-ng-compat-devel", "zlib-ng-compat-devel-static"]
-depends = ["zlib-ng-compat"]
+makedepends = ["bearssl-devel", "curl", "zlib-static"]
 pkgdesc = "Fast, scalable, distributed revision control system"
 license = "GPL-2.0-only"
 url = "https://git-scm.com"

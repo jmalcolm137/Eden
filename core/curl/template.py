@@ -3,7 +3,7 @@ pkgver = "8.20.0"
 pkgrel = 4
 # Oasis pkg/curl/src
 _commit = "291c75968e8551a15fe0d3a4418c5db236c46c4b"
-makedepends = ["bearssl-devel", "linux-headers", "zlib-ng-compat-devel", "zlib-ng-compat-devel-static"]
+makedepends = ["bearssl-devel", "linux-headers", "zlib-static"]
 pkgdesc = "URL transfer library and tool from Oasis"
 license = "curl"
 url = "https://curl.se"

@@ -3,9 +3,9 @@ pkgver = "1.3.1"
 pkgrel = 1
 # Oasis pkg/zlib/src
 _commit = "51b7f2abdade71cd9bb0e7a373ef2610ec6f9daf"
+# Do not provide the bare zlib virtual here: the pre-bootstrapped stage-0
+# root may still contain zlib-ng-compat from older binary packages.
 provides = [
-    f"zlib={pkgver}-r{pkgrel}",
-    f"zlib-devel={pkgver}-r{pkgrel}",
     f"zlib-devel-static={pkgver}-r{pkgrel}",
     f"pc:zlib={pkgver}",
 ]
