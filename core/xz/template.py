@@ -19,6 +19,17 @@ if self.stage > 0:
     makedepends += ["linux-headers"]
 
 
+def pre_configure(self):
+    # We use the pre-generated autotools files; keep make from trying to
+    # regenerate them after the patches touch configure.ac/Makefile.am.
+    for f in list(self.cwd.rglob("Makefile.in")):
+        f.touch()
+    for f in ("aclocal.m4", "configure", "config.h.in"):
+        p = self.cwd / f
+        if p.exists():
+            p.touch()
+
+
 def post_install(self):
     self.install_license("COPYING")
     self.uninstall("usr/share/doc")
