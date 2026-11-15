@@ -58,7 +58,3 @@ def _(self):
 
     return self.default_devel()
 
-
-@subpackage("zstd-devel-static")
-def _(self):
-    return ["usr/lib/*.a"]

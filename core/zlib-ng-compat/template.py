@@ -33,21 +33,4 @@ if self.profile.cross:
 def _(self):
     self.renames = [f"zlib-devel={_cver}-r99"]
 
-    def install():
-        # leave static archives for zlib-ng-compat-devel-static
-        libdir = self.parent.destdir / "usr/lib"
-        saved = []
-        for f in libdir.glob("*.a"):
-            tmp = f.with_name(f.name + ".in-devel")
-            f.rename(tmp)
-            saved.append((tmp, f))
-        self.default_devel()()
-        for tmp, f in saved:
-            tmp.rename(f)
-
-    return install
-
-
-@subpackage("zlib-ng-compat-devel-static")
-def _(self):
-    return ["usr/lib/*.a"]
+    return self.default_devel()
