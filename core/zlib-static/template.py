@@ -1,13 +1,20 @@
 pkgname = "zlib-static"
 pkgver = "1.3.1"
-pkgrel = 0
+pkgrel = 1
 # Oasis pkg/zlib/src
 _commit = "51b7f2abdade71cd9bb0e7a373ef2610ec6f9daf"
-pkgdesc = "Compression library from Oasis"
+provides = [
+    f"zlib={pkgver}-r{pkgrel}",
+    f"zlib-devel={pkgver}-r{pkgrel}",
+    f"zlib-devel-static={pkgver}-r{pkgrel}",
+    f"pc:zlib={pkgver}",
+]
+pkgdesc = "Reference zlib static library"
 license = "Zlib"
 url = "https://zlib.net"
 source = f"https://github.com/madler/zlib/archive/{_commit}.tar.gz"
 sha256 = "d9e270d46252734aa49770fbc544125391617956266f220bd63216c834f3a522"
+tool_flags = {"CFLAGS": ["-fPIC"]}
 # no test suite
 options = ["bootstrap", "!check", "!lto"]
 
@@ -54,7 +61,8 @@ def build(self):
 
 
 def install(self):
-    self.install_file("libz.a", "usr/lib")
+    self.install_lib("libz.a", mode=0o644)
     self.install_file("zlib.h", "usr/include")
     self.install_file("zconf.h", "usr/include")
+    self.install_file(self.files_path / "zlib.pc", "usr/lib/pkgconfig")
     self.install_license("LICENSE")

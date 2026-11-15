@@ -2,6 +2,7 @@ pkgname = "xz"
 pkgver = "5.8.4"
 pkgrel = 1
 build_style = "gnu_configure"
+configure_gen = []
 hostmakedepends = ["pkgconf"]
 makedepends = []
 renames = ["liblzma"]
