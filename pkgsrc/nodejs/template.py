@@ -1,14 +1,14 @@
 pkgname = "nodejs"
 pkgver = "26.13.1"
-pkgrel = 0
+pkgrel = 1
 build_style = "configure"
 configure_args = [
     "--prefix=/usr",
-    "--with-intl=none",
+    "--with-intl=small-icu",
     "--openssl-use-def-ca-store",
 ]
 configure_gen = []
-hostmakedepends = ["perl", "pkgconf", "python"]
+hostmakedepends = ["gperf", "perl", "pkgconf", "python"]
 makedepends = [
     "libatomic-chimera-devel",
     "libcxx-devel",
