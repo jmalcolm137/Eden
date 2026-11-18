@@ -214,7 +214,7 @@ No `chimerautils`, no `debianutils`, no OpenSSL package.
 | make | Oasis `make`, Chimera `gmake` | cbuild uses gmake explicitly; `/usr/bin/make` stays sbase |
 | tar | Chimera bsdtar | sbase tar does not auto-decompress `.gz`/`.xz`/`.zst` |
 | strings/getconf | Chimera llvm-binutils/musl | same packages provide required strip/objcopy and musl ABI |
-| grep/sed/diff/patch | sbase sed, GNU gsed/diff/patch, pkgsrc GNU grep | `/usr/bin/sed` stays sbase; GNU sed is packaged as `gsed` (autoconf's `AC_PROG_SED` picks it up) and also linked at `/usr/bin/gnu/sed`. GNU diff/patch are required. GNU grep is kept for reliability; sbase grep passes the test in isolation |
+| grep/sed/diff/patch | sbase sed, GNU gsed/diff/patch, pkgsrc GNU grep | `/usr/bin/sed` stays sbase; GNU sed is packaged as `gsed` (autoconf's `AC_PROG_SED` picks it up) and also linked at `/usr/gnubin/sed`. GNU diff/patch are required. GNU grep is kept for reliability; sbase grep passes the test in isolation |
 | OpenSSL | **removed** | apk-tools uses BearSSL; Python and cbuild keygen use LibreSSL from core |
 | ncurses | **removed** | libedit is rebuilt against static Oasis netbsd-curses, so it no longer links `libncursesw.so.6`; the bldroot carries no ncurses |
 
@@ -230,7 +230,7 @@ No `chimerautils`, no `debianutils`, no OpenSSL package.
 | `etc/build_profiles/` | architecture profiles |
 | `etc/apk/` | Eden repo config and local public key |
 | `etc/config.ini` | local config (`categories = core oasis pkgsrc extra`, Eden mirror) |
-| `/usr/bin/gnu` (installed) | GNU tool alternatives (`make`, `sed`); prepend to PATH to prefer them |
+| `/usr/gnubin` (installed) | GNU tool alternatives (`make`, `sed`); prepend to PATH to prefer them |
 | `tools/bootstrap-oasis.sh` | build environment in a temporary stage-0 root |
 | `tools/sync-engine.sh` | refresh engine/profiles/repo config from cports |
 | `tools/verify-bootstrap-closure.sh` | verify templates, composition, patches |

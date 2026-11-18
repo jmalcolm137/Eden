@@ -1,6 +1,6 @@
 pkgname = "gsed"
 pkgver = "4.10"
-pkgrel = 2
+pkgrel = 3
 build_style = "gnu_configure"
 configure_gen = []
 makedepends = [
@@ -20,10 +20,10 @@ options = ["bootstrap", "!check"]
 
 def post_install(self):
     # the default sed is sbase's; keep GNU sed available under its own name
-    # and behind the /usr/bin/gnu drop-in directory
-    self.install_dir("usr/bin/gnu")
+    # and behind the /usr/gnubin drop-in directory
+    self.install_dir("usr/gnubin")
     (self.destdir / "usr/bin/sed").rename(self.destdir / "usr/bin/gsed")
-    self.install_link("usr/bin/gnu/sed", "../gsed")
+    self.install_link("usr/gnubin/sed", "../bin/gsed")
     self.install_man("doc/sed.1", name="gsed")
     self.uninstall("usr/share/man/man1/sed.1")
     self.install_license("COPYING")
