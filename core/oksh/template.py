@@ -1,6 +1,6 @@
 pkgname = "oksh"
 pkgver = "7.9"
-pkgrel = 1
+pkgrel = 2
 build_style = "configure"
 configure_args = [
     "--prefix=/usr",

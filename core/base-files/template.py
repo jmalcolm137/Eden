@@ -1,6 +1,6 @@
 pkgname = "base-files"
 pkgver = "1.0"
-pkgrel = 4
+pkgrel = 5
 pkgdesc = "Minimal base filesystem and account files for the bldroot"
 license = "custom:meta"
 url = "https://oasislinux.org"
@@ -51,6 +51,7 @@ def install(self):
     # GNU tool compatibility entries; profile.path puts this right after
     # /usr/local/bin, so login shells prefer GNU make/sed
     self.install_dir("usr/gnubin")
+
     self.install_dir("etc/profile.d")
     self.install_file(self.files_path / "share/profile", "usr/share/base-files")
     self.install_file(
@@ -64,6 +65,7 @@ def install(self):
 
     self.install_file(self.files_path / "etc/passwd", "etc")
     self.install_file(self.files_path / "etc/group", "etc")
+    self.install_file(self.files_path / "etc/kshrc", "etc")
 
     (self.destdir / "root").chmod(0o750)
     (self.destdir / "tmp").chmod(0o1777)

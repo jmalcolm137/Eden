@@ -1,0 +1,8 @@
+# /etc/kshrc
+#
+# System rc for interactive ksh/oksh shells. The shell sources it when ENV is
+# unset; login shells already get /etc/profile.
+#
+if [ -r /usr/share/base-files/profile.path ]; then
+    . /usr/share/base-files/profile.path
+fi

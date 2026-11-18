@@ -1,0 +1,34 @@
+--- a/main.c
++++ b/main.c
+@@ -208,16 +208,7 @@
+ 
+ 	init_histvec();
+ 
+-	def_path = _PATH_DEFPATH;
+-	{
+-		size_t len = confstr(_CS_PATH, NULL, 0);
+-		char *new;
+-
+-		if (len > 0) {
+-			confstr(_CS_PATH, new = alloc(len + 1, APERM), len + 1);
+-			def_path = new;
+-		}
+-	}
++	def_path = "/usr/local/bin:/usr/gnubin:/usr/bin";
+ 
+ 	/* Set PATH to def_path (will set the path global variable).
+ 	 * (import of environment below will probably change this setting).
+@@ -422,11 +413,9 @@
+ 		/* include $ENV */
+ 		env_file = str_val(global("ENV"));
+ 
+-#ifdef DEFAULT_ENV
+-		/* If env isn't set, include default environment */
++		/* If env isn't set, include the system rc */
+ 		if (env_file == null)
+-			env_file = DEFAULT_ENV;
+-#endif /* DEFAULT_ENV */
++			env_file = "/etc/kshrc";
+ 		env_file = substitute(env_file, DOTILDE);
+ 		if (*env_file != '\0')
+ 			include(env_file, 0, NULL, 1);
