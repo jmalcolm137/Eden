@@ -41,21 +41,47 @@ def extract_tar(pkg, fname, dfile, edir, sfx):
             tf.extractall(path=edir)
         return True
 
-    return (
-        chroot.enter(
-            "tar",
-            "-x",
-            "--no-same-permissions",
-            "--no-same-owner",
-            "-f",
-            dfile,
-            "-C",
-            edir,
-            ro_root=True,
-            unshare_all=True,
-        ).returncode
-        == 0
-    )
+    # prefer bsdtar when the bldroot has it (supports every suffix and
+    # honors the no-owner flags); a fresh Oasis root may not have it yet
+    if (paths.bldroot() / "usr/bin/bsdtar").exists():
+        try:
+            if (
+                chroot.enter(
+                    "bsdtar",
+                    "-x",
+                    "--no-same-permissions",
+                    "--no-same-owner",
+                    "-f",
+                    dfile,
+                    "-C",
+                    edir,
+                    ro_root=True,
+                    unshare_all=True,
+                ).returncode
+                == 0
+            ):
+                return True
+        except Exception:
+            pass
+
+    # fall back to python's tarfile (gzip/bzip2/xz) so a bldroot without
+    # bsdtar can still build libarchive itself. dfile/edir are chroot paths,
+    # so translate them back to the host.
+    import tarfile
+
+    host_file = paths.sources() / f"{pkg.pkgname}-{pkg.pkgver}" / fname
+    host_edir = edir
+    if not host_edir.exists():
+        host_edir = paths.bldroot() / str(edir).lstrip("/")
+    try:
+        with tarfile.open(host_file) as tf:
+            try:
+                tf.extractall(path=host_edir, filter="data")
+            except TypeError:
+                tf.extractall(path=host_edir)
+        return True
+    except Exception:
+        return False
 
 
 def extract_notar(pkg, fname, dfile, edir, sfx):
@@ -92,7 +118,7 @@ def extract_notar(pkg, fname, dfile, edir, sfx):
 def extract_alsotar(pkg, fname, dfile, edir, sfx):
     return (
         chroot.enter(
-            "tar", "-xf", dfile, "-C", edir, ro_root=True, unshare_all=True
+            "bsdtar", "-xf", dfile, "-C", edir, ro_root=True, unshare_all=True
         ).returncode
         == 0
     )
@@ -102,7 +128,7 @@ def extract_deb(pkg, fname, dfile, edir, sfx):
     with open(pkg.statedir / edir.name / "data", "wb") as outf:
         if (
             chroot.enter(
-                "tar",
+                "bsdtar",
                 "-xf",
                 dfile,
                 "-C",

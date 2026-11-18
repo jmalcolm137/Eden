@@ -1,6 +1,6 @@
 pkgname = "base-cbuild"
 pkgver = "0.1"
-pkgrel = 18
+pkgrel = 19
 build_style = "meta"
 # musl must be built first to provide shlibs for later packages during stage 0
 depends = [
@@ -15,6 +15,7 @@ depends = [
     "flex",
     "git",
     "gmake",
+    "libarchive-progs",
     "linux-personality",
     "lld",
     "llvm",

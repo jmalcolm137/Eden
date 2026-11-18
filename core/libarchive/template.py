@@ -1,6 +1,6 @@
 pkgname = "libarchive"
 pkgver = "3.8.10"
-pkgrel = 2
+pkgrel = 3
 build_style = "gnu_configure"
 configure_args = [
     "--enable-acl",
@@ -38,19 +38,21 @@ else:
 
 def post_install(self):
     self.install_license("COPYING")
-    # tar/cpio come from core/openbsd (Oasis pax); keep only the library.
-    for f in [
-        "usr/bin/bsdtar",
-        "usr/bin/tar",
-        "usr/bin/bsdcpio",
-        "usr/bin/cpio",
-        "usr/share/man/man1/bsdtar.1",
-        "usr/share/man/man1/tar.1",
-        "usr/share/man/man1/bsdcpio.1",
-        "usr/share/man/man1/cpio.1",
-        "usr/share/man/man5/mtree.5",
-    ]:
+    # tar/cpio come from core/openbsd (Oasis pax); keep bsdtar under its
+    # own name as cbuild's source extractor.
+    for f in ["usr/bin/tar", "usr/bin/cpio"]:
         self.uninstall(f, missing_ok=True)
+
+
+@subpackage("libarchive-progs")
+def _(self):
+    return [
+        "usr/bin/bsdtar",
+        "usr/bin/bsdcpio",
+        "usr/share/man/man1/bsdtar.1",
+        "usr/share/man/man1/bsdcpio.1",
+        "usr/share/man/man5/mtree.5",
+    ]
 
 
 @subpackage("libarchive-devel")
