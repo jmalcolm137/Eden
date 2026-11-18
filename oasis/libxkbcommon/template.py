@@ -50,6 +50,11 @@ def post_patch(self):
     old_gen = "    yacc_gen.process('src/xkbcomp/parser.y'),"
     assert old_gen in mtext
     mtext = mtext.replace(old_gen, "    'src/xkbcomp/parser.c',")
+    old_summary = "    'yacc': yacc.full_path() + ' ' + yacc.version(),"
+    assert old_summary in mtext
+    mtext = mtext.replace(
+        old_summary, "    'yacc': 'not required (using tracked parser)',"
+    )
     mf.write_text(mtext)
 
 
