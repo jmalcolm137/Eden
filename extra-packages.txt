@@ -29,6 +29,7 @@ mesa-gbm-devel
 mesa-gbm-libs
 mesa-libgallium
 mousepad
+opencode
 parole
 python-dbus
 python-gobject

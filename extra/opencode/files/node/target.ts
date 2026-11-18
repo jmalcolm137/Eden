@@ -27,7 +27,7 @@ export function nodeTarget(platform: string, arch: string) {
     fffPackage,
     fffAsset: `${fffPackage}/${targetPlatform === "darwin" ? "libfff_c.dylib" : targetPlatform === "win32" ? "fff_c.dll" : "libfff_c.so"}`,
     fffFfiPackage,
-    fffFfiAsset: `${fffFfiPackage}/ffi-rs.${targetPlatform}-${targetArch}${targetPlatform === "linux" ? "-gnu" : targetPlatform === "win32" ? "-msvc" : ""}.node`,
+    fffFfiAsset: `${fffFfiPackage}/ffi-rs.${targetPlatform}-${targetArch}${targetPlatform === "linux" ? `-${linuxLibc}` : targetPlatform === "win32" ? "-msvc" : ""}.node`,
     opencodePtyAsset,
   }
 }

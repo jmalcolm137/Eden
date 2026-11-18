@@ -4,13 +4,13 @@ pkgrel = 2
 archs = ["x86_64"]
 _nodepty_ver = "1.2.0-beta.12"
 _ffirs_commit = "d93e1748d68f5f688e9d57cb8efa8e4007ac29f4"
+_lightningcss_ver = "1.32.0"
 hostmakedepends = [
     "cargo-bootstrap",
     "clang",
     "git",
     "gmake",
     "libcxx-devel",
-    "libgcc-chimera",
     "nodejs",
     "python",
     "rust",
@@ -21,9 +21,9 @@ depends = [
     "curl",
     "libcxx",
     "libcxxabi",
-    "libgcc-chimera",
     "libunwind",
     "openbsd",
+    "ripgrep",
 ]
 pkgdesc = "Open source AI coding agent"
 license = "MIT"
@@ -32,12 +32,14 @@ source = [
     f"{url}/archive/refs/tags/v{pkgver}.tar.gz",
     f"https://registry.npmjs.org/node-pty/-/node-pty-{_nodepty_ver}.tgz",
     f"https://github.com/zhangyuang/node-ffi-rs/archive/{_ffirs_commit}.tar.gz",
+    f"https://github.com/parcel-bundler/lightningcss/archive/refs/tags/v{_lightningcss_ver}.tar.gz",
 ]
-source_paths = [".", "node-pty", "ffi-rs"]
+source_paths = [".", "node-pty", "ffi-rs", "lightningcss"]
 sha256 = [
     "04621edf6c47c2c7a36982ef39914d482c16977708fbd7b779f49f928bdc4fba",
     "45a012e37699bb70c9050cbf2e06e71b0b842de4cda58e938e3de973f6d5a36a",
     "5015ad7c332562ca98ae1a99d816a3428f44e9a26982ed038c6efd5405936e2e",
+    "ca67b9ba532d439f5f91d23debfc2543d6decac130ee88bc4c66202fc7173ad9",
 ]
 # the single-executable binary cannot be stripped, and tests need a browser
 options = ["!check", "!cross", "!debug", "!lto", "!strip"]
@@ -96,6 +98,19 @@ def prepare(self):
     )
 
     self.do("node", "apply-patches.mjs", ".")
+
+    # Tailwind imports lightningcss directly and Vite ships its own copy; keep
+    # Vite on esbuild for CSS so it never loads the npm native build.
+    cfgp = self.cwd / "packages/app/vite.config.ts"
+    cfg = cfgp.read_text()
+    if "css:" not in cfg:
+        cfgp.write_text(
+            cfg.replace(
+                "export default defineConfig({",
+                'export default defineConfig({\n  css: { transformer: "postcss", minify: "esbuild" },',
+                1,
+            )
+        )
 
     # Node's V8 rejects the \p{Surrogate} Unicode property that vite uses;
     # the equivalent surrogate range works.
@@ -224,6 +239,41 @@ def prepare(self):
         "ffi-rs/target/release/libffi_rs.so",
         "node_modules/@yuuang/ffi-rs-linux-x64-musl/ffi-rs.linux-x64-musl.node",
     )
+
+    # the npm prebuilt is linked against libgcc_s; Tailwind's CSS pipeline
+    # loads it, so build it with our toolchain (libunwind) instead
+    self.do(
+        "cargo",
+        "build",
+        "--release",
+        "--locked",
+        "-p",
+        "lightningcss_node",
+        wrksrc="lightningcss",
+        env={
+            "CC": toolbin + "/clang",
+            "CXX": toolbin + "/clang++",
+            "CARGO_HOME": "/cbuild_cache/cargo",
+            "PATH": makebin + ":" + toolbin + ":/usr/bin:/bin",
+        },
+        allow_network=True,
+    )
+    # replace the npm native builds (linked against libgcc_s) everywhere they
+    # are loaded: the platform packages and each JS wrapper's fallback path
+    built = "lightningcss/target/release/liblightningcss_node.so"
+    for d in self.cwd.rglob("lightningcss*"):
+        if not d.is_dir():
+            continue
+        if d.name == "lightningcss-linux-x64-musl":
+            self.cp(
+                built,
+                str(d.relative_to(self.cwd)) + "/lightningcss.linux-x64-musl.node",
+            )
+        elif d.name == "lightningcss" and d.parent.name == "node_modules":
+            self.cp(
+                built,
+                str(d.relative_to(self.cwd)) + "/lightningcss.linux-x64-musl.node",
+            )
 
 
 def build(self):
