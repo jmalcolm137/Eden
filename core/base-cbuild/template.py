@@ -1,6 +1,6 @@
 pkgname = "base-cbuild"
 pkgver = "0.1"
-pkgrel = 21
+pkgrel = 22
 build_style = "meta"
 # musl must be built first to provide shlibs for later packages during stage 0
 depends = [
@@ -16,6 +16,7 @@ depends = [
     "flex",
     "git",
     "gmake",
+    "gsed",
     "linux-personality",
     "lld",
     "llvm",
@@ -28,7 +29,6 @@ depends = [
     "pkgconf",
     "samurai",
     "sbase",
-    "sed",
     "ubase",
     "xz",
     "zlib-static",
@@ -50,10 +50,8 @@ options = ["bootstrap", "brokenlinks"]
 if self.stage > 0:
     depends += ["apk-tools-static-bin"]
 
-# Local fork: Chimera supplies the toolchain (clang/llvm/lld, gmake, musl),
+# Chimera Linux inpspired toolchain (clang/llvm/lld, gmake, musl),
 # Oasis supplies the userland (sbase, ubase, oksh, base-files).
-# ccache and the Chimera-only extras (chimerautils, resolvconf,
-# tzdb, bc) are intentionally omitted.
 
 
 def build(self):

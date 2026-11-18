@@ -34,12 +34,11 @@ def post_install(self):
     # Keep the Oasis make at /usr/bin/make. cbuild is patched to use
     # /usr/bin/gmake for GNU make. Drop the sbase tools that conflict with
     # hard requirements: Chimera musl provides getconf, llvm-binutils
-    # provides strings/strip/objcopy, bsdtar is needed for compressed
-    # sources, and autoconf rejects sbase sed in favour of GNU sed.
+    # provides strings/strip/objcopy, and bsdtar is needed for compressed
+    # sources. sed stays: GNU sed is packaged as gsed and autoconf prefers it.
     for f in [
         "usr/bin/cmp",
         "usr/bin/getconf",
-        "usr/bin/sed",
         "usr/bin/strings",
         "usr/bin/tar",
     ]:

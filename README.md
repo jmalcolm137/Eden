@@ -37,7 +37,7 @@ awk base-cbuild base-cbuild-progs base-files bearssl bearssl-devel bearssl-
 devel-static bubblewrap byacc bzip2 bzip2-devel ca-certificates clang clang-
 analyzer clang-cpp-libs clang-devel clang-devel-static clang-libs clang-rt-
 devel clang-tools-extra clang-tools-extra-static cmake curl fakeroot fakeroot-
-core flex fortify-headers git gmake gperf libarchive-devel libatomic-chimera
+core flex fortify-headers git gmake gsed gperf libarchive-devel libatomic-chimera
 libatomic-chimera-devel libatomic-chimera-devel-static libcap libcap-devel
 libcap-progs libcxx libcxx-devel libcxx-devel-static libcxxabi libcxxabi-devel
 libcxxabi-devel-static libedit libedit-devel libedit-readline-devel libffi8
@@ -50,7 +50,7 @@ musl-bsd-headers musl-devel musl-devel-static musl-fts musl-ldso musl-libssp-
 static musl-mallocng musl-mallocng-devel-static musl-obstack musl-progs nasm
 netbsd-curses netbsd-curses-devel netbsd-curses-devel-static oksh openbsd
 openbsd-devel openbsd-devel-static perl pigz pkgconf pkgconf-devel pkgconf-
-libs python python-devel python-meta python-tests samurai sbase sed ubase
+libs python python-devel python-meta python-tests samurai sbase ubase
 ugetopt unzip xz xz-devel zlib-static zstd zstd-devel zstd-devel-static zstd-
 progs
 ```
@@ -162,7 +162,7 @@ libatomic-chimera libatomic-chimera-devel libcxx libcxxabi libcxxabi-devel
 libcxx-devel libedit libffi8 libunwind libunwind-devel lld llvm
 llvm-binutils llvm-libs llvm-linker-tools llvm-runtime lz4 muon musl
 musl-devel musl-ldso musl-progs netbsd-curses oksh patch pigz pkgconf
-samurai sbase sed ubase xz zlib-static zstd zstd-progs
+samurai sbase ubase xz zlib-static zstd zstd-progs
 ```
 
 The stage-0 root itself is installed from the published Eden repositories,
@@ -214,7 +214,7 @@ No `chimerautils`, no `debianutils`, no OpenSSL package.
 | make | Oasis `make`, Chimera `gmake` | cbuild uses gmake explicitly; `/usr/bin/make` stays sbase |
 | tar | Chimera bsdtar | sbase tar does not auto-decompress `.gz`/`.xz`/`.zst` |
 | strings/getconf | Chimera llvm-binutils/musl | same packages provide required strip/objcopy and musl ABI |
-| grep/sed/diff/patch | pkgsrc-version GNU tools | GNU sed passes autoconf's non-truncation test (sbase sed truncates); GNU diff/patch are required. GNU grep is kept for reliability; sbase grep passes the test in isolation |
+| grep/sed/diff/patch | sbase sed, GNU gsed/diff/patch, pkgsrc GNU grep | `/usr/bin/sed` stays sbase; GNU sed is packaged as `gsed` (autoconf's `AC_PROG_SED` picks it up) and also linked at `/usr/bin/gnu/sed`. GNU diff/patch are required. GNU grep is kept for reliability; sbase grep passes the test in isolation |
 | OpenSSL | **removed** | apk-tools uses BearSSL; Python and cbuild keygen use LibreSSL from core |
 | ncurses | **removed** | libedit is rebuilt against static Oasis netbsd-curses, so it no longer links `libncursesw.so.6`; the bldroot carries no ncurses |
 
@@ -230,6 +230,7 @@ No `chimerautils`, no `debianutils`, no OpenSSL package.
 | `etc/build_profiles/` | architecture profiles |
 | `etc/apk/` | Eden repo config and local public key |
 | `etc/config.ini` | local config (`categories = core oasis pkgsrc extra`, Eden mirror) |
+| `/usr/bin/gnu` (installed) | GNU tool alternatives (`make`, `sed`); prepend to PATH to prefer them |
 | `tools/bootstrap-oasis.sh` | build environment in a temporary stage-0 root |
 | `tools/sync-engine.sh` | refresh engine/profiles/repo config from cports |
 | `tools/verify-bootstrap-closure.sh` | verify templates, composition, patches |

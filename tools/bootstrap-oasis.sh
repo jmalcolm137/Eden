@@ -41,7 +41,6 @@ fi
 for p in \
     byacc \
     awk \
-    sed \
     pkgconf \
     gmake \
     flex \
@@ -50,6 +49,7 @@ for p in \
     oksh \
     pigz \
     sbase \
+    gsed \
     ubase \
     ca-certificates \
     zlib-static \

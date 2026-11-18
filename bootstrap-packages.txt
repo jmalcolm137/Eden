@@ -26,6 +26,7 @@ flex
 fortify-headers
 git
 gmake
+gsed
 gperf
 libatomic-chimera
 libcap
@@ -54,7 +55,6 @@ pkgconf
 python
 samurai
 sbase
-sed
 ubase
 ugetopt
 unzip

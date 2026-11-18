@@ -93,8 +93,8 @@ while IFS= read -r p; do
 done < "$tmp/manifest"
 
 # Composition checks: Oasis userland in, Chimera base userland out.
-for p in awk bearssl bubblewrap byacc flex git gmake \
-         linux-personality oksh openbsd pigz sbase sed ubase; do
+for p in awk bearssl bubblewrap byacc flex git gmake gsed \
+         linux-personality oksh openbsd pigz sbase ubase; do
     if ! grep -q "\"$p\"" core/base-cbuild/template.py; then
         echo "error: base-cbuild does not depend on $p" >&2
         fail=1
