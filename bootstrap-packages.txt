@@ -27,7 +27,6 @@ fortify-headers
 git
 gmake
 gperf
-libarchive
 libatomic-chimera
 libcap
 libedit

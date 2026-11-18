@@ -65,7 +65,6 @@ for p in \
     libatomic-chimera \
     libcap \
     fakeroot \
-    libarchive \
     bearssl \
     musl \
     perl \

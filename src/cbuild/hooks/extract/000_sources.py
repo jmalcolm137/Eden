@@ -41,22 +41,31 @@ def extract_tar(pkg, fname, dfile, edir, sfx):
             tf.extractall(path=edir)
         return True
 
-    # prefer bsdtar when the bldroot has it (supports every suffix and
-    # honors the no-owner flags); a fresh Oasis root may not have it yet
-    if (paths.bldroot() / "usr/bin/bsdtar").exists():
+    # Oasis uses the OpenBSD pax tar; it needs the compressor selected
+    # explicitly and does not accept GNU's --no-same-* options.
+    import shlex
+
+    comp = {
+        "tgz": "gzip -dc",
+        "tbz": "bzip2 -dc",
+        "txz": "xz -dc",
+        "tlz": "xz -dc --format=lzma",
+        "tzst": "zstd -dc",
+        "crate": "gzip -dc",
+    }
+    qf = shlex.quote(str(dfile))
+    qd = shlex.quote(str(edir))
+    if sfx == "tar":
+        cmd = f"tar -x -f {qf} -C {qd}"
+    elif sfx in comp:
+        cmd = f"{comp[sfx]} {qf} | tar -x -f - -C {qd}"
+    else:
+        cmd = None
+    if cmd:
         try:
             if (
                 chroot.enter(
-                    "bsdtar",
-                    "-x",
-                    "--no-same-permissions",
-                    "--no-same-owner",
-                    "-f",
-                    dfile,
-                    "-C",
-                    edir,
-                    ro_root=True,
-                    unshare_all=True,
+                    "sh", "-c", cmd, ro_root=True, unshare_all=True
                 ).returncode
                 == 0
             ):
@@ -64,9 +73,7 @@ def extract_tar(pkg, fname, dfile, edir, sfx):
         except Exception:
             pass
 
-    # fall back to python's tarfile (gzip/bzip2/xz) so a bldroot without
-    # bsdtar can still build libarchive itself. dfile/edir are chroot paths,
-    # so translate them back to the host.
+    # last-resort fallback for environments where the extractor is missing
     import tarfile
 
     host_file = paths.sources() / f"{pkg.pkgname}-{pkg.pkgver}" / fname

@@ -1,6 +1,6 @@
 pkgname = "openbsd"
 pkgver = "8.0"
-pkgrel = 1
+pkgrel = 2
 makedepends = [
     "bearssl-devel-static", "byacc", "libatomic-chimera-devel-static",
     "libtls-bearssl-devel-static", "linux-headers", "musl-bsd-headers",
@@ -175,6 +175,9 @@ def install(self):
         self.install_bin(bin, mode=0o6755 if bin == "doas" else 0o755)
     self.install_bin("pax", name="tar")
     self.install_link("usr/bin/cpio", "tar")
+    # aliases used by software that expects libarchive's bsdtar/bsdcpio
+    self.install_link("usr/bin/bsdtar", "tar")
+    self.install_link("usr/bin/bsdcpio", "cpio")
     for man in [
         "usr.bin/diff/diff.1", "usr.bin/doas/doas.1",
         "usr.bin/doas/doas.conf.5", "usr.bin/fmt/fmt.1", "usr.bin/m4/m4.1",

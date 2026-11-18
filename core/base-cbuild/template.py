@@ -1,6 +1,6 @@
 pkgname = "base-cbuild"
 pkgver = "0.1"
-pkgrel = 19
+pkgrel = 21
 build_style = "meta"
 # musl must be built first to provide shlibs for later packages during stage 0
 depends = [
@@ -10,12 +10,12 @@ depends = [
     "bearssl",
     "bubblewrap",
     "byacc",
+    "bzip2",
     "clang",
     "fakeroot-core",
     "flex",
     "git",
     "gmake",
-    "libarchive-progs",
     "linux-personality",
     "lld",
     "llvm",
@@ -30,7 +30,9 @@ depends = [
     "sbase",
     "sed",
     "ubase",
+    "xz",
     "zlib-static",
+    "zstd",
     self.with_pkgver("base-cbuild-progs"),
 ]
 # bootstrap-llvm is temporary until next llvm release, don't feel like rebuild
