@@ -1,6 +1,6 @@
 pkgname = "base-cbuild"
 pkgver = "0.1"
-pkgrel = 17
+pkgrel = 18
 build_style = "meta"
 # musl must be built first to provide shlibs for later packages during stage 0
 depends = [
@@ -11,21 +11,18 @@ depends = [
     "bubblewrap",
     "byacc",
     "clang",
-    "diffutils",
     "fakeroot-core",
     "flex",
     "git",
     "gmake",
-    "libarchive-progs",
     "linux-personality",
     "lld",
     "llvm",
-    "m4",
     "muon",
     "musl-devel",
     "netbsd-curses",
     "oksh",
-    "patch",
+    "openbsd",
     "pigz",
     "pkgconf",
     "samurai",

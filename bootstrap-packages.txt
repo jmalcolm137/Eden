@@ -21,7 +21,6 @@ bzip2
 ca-certificates
 cmake
 curl
-diffutils
 fakeroot
 flex
 fortify-headers
@@ -34,12 +33,12 @@ libcap
 libedit
 libffi8
 libressl
+libtls-bearssl
 linux-headers
 linux-personality
 llvm
 llvm-bootstrap
 lz4
-m4
 mandoc
 muon
 musl
@@ -49,7 +48,7 @@ musl-obstack
 nasm
 netbsd-curses
 oksh
-patch
+openbsd
 perl
 pigz
 pkgconf

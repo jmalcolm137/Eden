@@ -42,11 +42,8 @@ for p in \
     byacc \
     awk \
     sed \
-    diffutils \
-    patch \
     pkgconf \
     gmake \
-    m4 \
     flex \
     base-files \
     linux-personality \
@@ -74,6 +71,7 @@ for p in \
     perl \
     linux-headers \
     libressl \
+    libtls-bearssl \
     bubblewrap \
     curl \
     git \
@@ -84,6 +82,7 @@ for p in \
     llvm-bootstrap \
     llvm \
     apk-tools \
+    openbsd \
     base-cbuild
 do
     echo "==> building core/$p"

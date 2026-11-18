@@ -1,6 +1,6 @@
 pkgname = "libarchive"
 pkgver = "3.8.10"
-pkgrel = 1
+pkgrel = 2
 build_style = "gnu_configure"
 configure_args = [
     "--enable-acl",
@@ -38,23 +38,19 @@ else:
 
 def post_install(self):
     self.install_license("COPYING")
-    self.rename("usr/bin/bsdtar", "tar")
-    # but symlink them back
-    self.install_link("usr/bin/bsdtar", "tar")
-    self.rename("usr/bin/bsdcpio", "cpio")
-    self.install_link("usr/bin/bsdcpio", "cpio")
-    self.rename("usr/share/man/man1/bsdcpio.1", "cpio.1")
-    self.install_link("usr/share/man/man1/bsdcpio.1", "cpio.1")
-    self.rename("usr/share/man/man1/bsdtar.1", "tar.1")
-    self.install_link("usr/share/man/man1/bsdtar.1", "tar.1")
-    self.rename("usr/share/man/man5/mtree.5", "libarchive-mtree.5")
-
-
-@subpackage("libarchive-progs")
-def _(self):
-    self.renames = ["bsdtar"]
-
-    return self.default_progs(man="15")
+    # tar/cpio come from core/openbsd (Oasis pax); keep only the library.
+    for f in [
+        "usr/bin/bsdtar",
+        "usr/bin/tar",
+        "usr/bin/bsdcpio",
+        "usr/bin/cpio",
+        "usr/share/man/man1/bsdtar.1",
+        "usr/share/man/man1/tar.1",
+        "usr/share/man/man1/bsdcpio.1",
+        "usr/share/man/man1/cpio.1",
+        "usr/share/man/man5/mtree.5",
+    ]:
+        self.uninstall(f, missing_ok=True)
 
 
 @subpackage("libarchive-devel")

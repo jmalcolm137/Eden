@@ -1,10 +1,13 @@
 pkgname = "openbsd"
 pkgver = "8.0"
-pkgrel = 0
+pkgrel = 1
 makedepends = [
-    "bearssl-devel-static", "byacc", "libtls-bearssl-devel-static",
-    "linux-headers", "musl-bsd-headers",
+    "bearssl-devel-static", "byacc", "libatomic-chimera-devel-static",
+    "libtls-bearssl-devel-static", "linux-headers", "musl-bsd-headers",
+    "musl-devel-static",
 ]
+provides = ["m4"]
+triggers = ["/usr/bin/doas"]
 pkgdesc = "OpenBSD libc compatibility library and tools"
 license = "ISC"
 url = "https://www.openbsd.org"
@@ -16,6 +19,7 @@ sha256 = [
     "9984c74ff875b5ff041e4676a7f3e4e1ead2cc47a284d705eb9f37cbec4fe795",
     "964b1aed7839b86f4e010a0fdd03dcd409e6f569e69fe85f95e5fceb740c2aaf",
 ]
+tool_flags = {"LDFLAGS": ["-static-pie", "-unwindlib=none"]}
 file_modes = {"usr/bin/doas": ("root", "root", 0o6755)}
 # only the subset used by the Oasis tree is built
 options = ["!check"]

@@ -100,9 +100,6 @@ libpng-devel
 libtermkey
 libtirpc
 libtirpc-devel
-libtls-bearssl
-libtls-bearssl-devel
-libtls-bearssl-devel-static
 libtool
 libtool-devel
 libtool-libs
@@ -130,9 +127,6 @@ ncompress
 netsurf
 nginx
 nsd
-openbsd
-openbsd-devel
-openbsd-devel-static
 openntpd
 openssh
 opus
