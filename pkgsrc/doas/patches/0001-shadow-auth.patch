@@ -1,0 +1,187 @@
+--- a/doas.c
++++ b/doas.c
+@@ -44,23 +44,11 @@
+ #include <readpassphrase.h>
+ #endif
+ 
+-#if defined(USE_PAM)
+-#include <security/pam_appl.h>
+-
+-#if defined(OPENPAM) /* BSD, MacOS & certain Linux distros */
+-#include <security/openpam.h>
+-static struct pam_conv pamc = { openpam_ttyconv, NULL };
+-
+-#elif defined(__LINUX_PAM__) /* Linux */
+-#include <security/pam_misc.h>
+-static struct pam_conv pamc = { misc_conv, NULL };
+-
+-#elif defined(SOLARIS_PAM) /* illumos & Solaris */
+-#include "pm_pam_conv.h"
+-static struct pam_conv pamc = { pam_tty_conv, NULL };
+-
+-#endif /* OPENPAM */
+-#endif /* USE_PAM */
++#if defined(USE_SHADOW)
++#include <shadow.h>
++#include <crypt.h>
++#include <time.h>
++#endif
+ 
+ #include "doas.h"
+ 
+@@ -406,106 +394,43 @@
+ 
+ #if defined(USE_BSD_AUTH) 
+ 		authuser(myname, login_style, rule->options & PERSIST);
+-#elif defined(USE_PAM)
+-#define PAM_END(msg) do { 						\
+-	syslog(LOG_ERR, "%s: %s", msg, pam_strerror(pamh, pam_err)); 	\
+-	warnx("%s: %s", msg, pam_strerror(pamh, pam_err));		\
+-	pam_end(pamh, pam_err);						\
+-	exit(EXIT_FAILURE);						\
+-} while (/*CONSTCOND*/0)
+-		pam_handle_t *pamh = NULL;
+-		int pam_err;
+-
+-/* #ifndef linux */
+-		int temp_stdin;
+-
+-		/* openpam_ttyconv checks if stdin is a terminal and
+-		 * if it is then does not bother to open /dev/tty.
+-		 * The result is that PAM writes the password prompt
+-		 * directly to stdout.  In scenarios where stdin is a
+-		 * terminal, but stdout is redirected to a file
+-		 * e.g. by running doas ls &> ls.out interactively,
+-		 * the password prompt gets written to ls.out as well.
+-		 * By closing stdin first we forces PAM to read/write
+-		 * to/from the terminal directly.  We restore stdin
+-		 * after authenticating. */
+-		temp_stdin = dup(STDIN_FILENO);
+-		if (temp_stdin == -1)
+-			err(1, "dup");
+-		close(STDIN_FILENO);
+-/* #else */
+-		/* force password prompt to display on stderr, not stdout */
+-		int temp_stdout = dup(1);
+-		if (temp_stdout == -1)
+-			err(1, "dup");
+-		close(1);
+-		if (dup2(2, 1) == -1)
+-			err(1, "dup2");
+-/* #endif */
+-
+-		pam_err = pam_start("doas", myname, &pamc, &pamh);
+-		if (pam_err != PAM_SUCCESS) {
+-			if (pamh != NULL)
+-				PAM_END("pam_start");
+-			syslog(LOG_ERR, "pam_start failed: %s",
+-			    pam_strerror(pamh, pam_err));
+-			errx(EXIT_FAILURE, "pam_start failed");
+-		}
+-
+-		switch (pam_err = pam_authenticate(pamh, PAM_SILENT)) {
+-		case PAM_SUCCESS:
+-			switch (pam_err = pam_acct_mgmt(pamh, PAM_SILENT)) {
+-			case PAM_SUCCESS:
+-				break;
+-
+-			case PAM_NEW_AUTHTOK_REQD:
+-				pam_err = pam_chauthtok(pamh,
+-				    PAM_SILENT|PAM_CHANGE_EXPIRED_AUTHTOK);
+-				if (pam_err != PAM_SUCCESS)
+-					PAM_END("pam_chauthtok");
+-				break;
+-
+-			case PAM_AUTH_ERR:
+-			case PAM_USER_UNKNOWN:
+-			case PAM_MAXTRIES:
++#elif defined(USE_SHADOW)
++		{
++			struct spwd *sp;
++			char *pw, *hash;
++			long today;
++
++			sp = getspnam(myname);
++			if (sp == NULL || sp->sp_pwdp == NULL ||
++			    sp->sp_pwdp[0] == 0 ||
++			    sp->sp_pwdp[0] == '!' || sp->sp_pwdp[0] == '*') {
+ 				syslog(LOG_AUTHPRIV | LOG_NOTICE,
+ 				    "failed auth for %s", myname);
+-                                errx(EXIT_FAILURE, "second authentication failed");
+-				break;
+-
+-			default:
+-				PAM_END("pam_acct_mgmt");
+-				break;
++				errx(EXIT_FAILURE, "authentication failed");
++			}
++			today = time(NULL) / 86400;
++			if (sp->sp_expire > 0 && today >= sp->sp_expire) {
++				syslog(LOG_AUTHPRIV | LOG_NOTICE,
++				    "expired account for %s", myname);
++				errx(EXIT_FAILURE, "account expired");
++			}
++			if (sp->sp_lstchg > 0 && sp->sp_max > 0 &&
++			    today > sp->sp_lstchg + sp->sp_max) {
++				syslog(LOG_AUTHPRIV | LOG_NOTICE,
++				    "expired password for %s", myname);
++				errx(EXIT_FAILURE, "password expired");
++			}
++			pw = getpass("Password:");
++			if (pw == NULL)
++				err(1, "getpass");
++			hash = crypt(pw, sp->sp_pwdp);
++			explicit_bzero(pw, strlen(pw));
++			if (hash == NULL || strcmp(hash, sp->sp_pwdp) != 0) {
++				syslog(LOG_AUTHPRIV | LOG_NOTICE,
++				    "failed auth for %s", myname);
++				errx(EXIT_FAILURE, "authentication failed");
+ 			}
+-			break;
+-
+-		case PAM_AUTH_ERR:
+-		case PAM_USER_UNKNOWN:
+-		case PAM_MAXTRIES:
+-			syslog(LOG_AUTHPRIV | LOG_NOTICE,
+-			    "failed auth for %s", myname);
+-                        errx(EXIT_FAILURE, "authentication failed");
+-			break;
+-
+-		default:
+-			PAM_END("pam_authenticate");
+-			break;
+ 		}
+-		pam_end(pamh, pam_err);
+-
+-#ifndef linux
+-		/* Re-establish stdin */
+-		if (dup2(temp_stdin, STDIN_FILENO) == -1)
+-			err(1, "dup2");
+-		close(temp_stdin);
+-#else 
+-		/* Re-establish stdout */
+-		close(1);
+-		if (dup2(temp_stdout, 1) == -1)
+-			err(1, "dup2");
+-#endif
+-#else
+-#error	No auth module!
+ #endif
+ 	}
+ 
+--- a/Makefile
++++ b/Makefile
+@@ -9,12 +9,10 @@
+ OPT?=-O2
+ # Can set GLOBAL_PATH here to set PATH for target user.
+ # TARGETPATH=-DGLOBAL_PATH=\"/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:\"
+-CFLAGS+=-Wall $(OPT) -DUSE_PAM -DDOAS_CONF=\"${SYSCONFDIR}/doas.conf\" $(TARGETPATH)
++CFLAGS+=-Wall $(OPT) -DUSE_SHADOW -DDOAS_CONF=\"${SYSCONFDIR}/doas.conf\" $(TARGETPATH)
+ CPPFLAGS+=-include compat/compat.h
+-LDFLAGS+=-lpam
+ UNAME_S := $(shell uname -s)
+ ifeq ($(UNAME_S),Linux)
+-    LDFLAGS+=-lpam_misc
+     CPPFLAGS+=-Icompat
+     CFLAGS+=-D_GNU_SOURCE
+     COMPAT+=closefrom.o errc.o getprogname.o setprogname.o strlcat.o strlcpy.o strtonum.o verrc.o
