@@ -1,6 +1,6 @@
 pkgname = "gmake"
 pkgver = "4.4.1"
-pkgrel = 4
+pkgrel = 5
 build_style = "gnu_configure"
 configure_args = ["--without-guile"]
 configure_gen = []

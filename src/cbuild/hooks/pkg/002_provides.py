@@ -39,6 +39,9 @@ def _invoke_cmd(pkg):
     for f in pkg.destdir.glob("usr/bin/*"):
         if f.name in cmdset:
             continue
+        # a drop-in directory such as usr/bin/gnu is not a command
+        if not f.is_file() and not f.is_symlink():
+            continue
         if not _match_skipprov(pkg, f):
             continue
         # forbidden characters

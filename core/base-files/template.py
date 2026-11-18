@@ -1,6 +1,6 @@
 pkgname = "base-files"
 pkgver = "1.0"
-pkgrel = 1
+pkgrel = 2
 pkgdesc = "Minimal base filesystem and account files for the bldroot"
 license = "custom:meta"
 url = "https://oasislinux.org"

@@ -1,0 +1,14 @@
+diff --git a/src/cbuild/hooks/pkg/002_provides.py b/src/cbuild/hooks/pkg/002_provides.py
+index 2ad583e..8277d49 100644
+--- a/src/cbuild/hooks/pkg/002_provides.py
++++ b/src/cbuild/hooks/pkg/002_provides.py
+@@ -39,6 +39,9 @@ def _invoke_cmd(pkg):
+     for f in pkg.destdir.glob("usr/bin/*"):
+         if f.name in cmdset:
+             continue
++        # a drop-in directory such as usr/bin/gnu is not a command
++        if not f.is_file() and not f.is_symlink():
++            continue
+         if not _match_skipprov(pkg, f):
+             continue
+         # forbidden characters
