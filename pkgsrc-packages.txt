@@ -103,6 +103,7 @@ nettle-devel
 nettle-progs
 nghttp2
 nghttp2-devel
+nodejs
 pango
 pango-devel
 pcre2
@@ -112,6 +113,7 @@ polkit-devel
 polkit-libs
 pulseaudio
 pulseaudio-progs
+ripgrep
 rust
 rust-bootstrap
 shared-mime-info
