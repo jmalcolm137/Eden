@@ -1,6 +1,6 @@
 pkgname = "uutils-coreutils"
 pkgver = "0.12.0"
-pkgrel = 0
+pkgrel = 1
 hostmakedepends = ["cargo-bootstrap", "rust"]
 pkgdesc = "Cross-platform Rust rewrite of the GNU coreutils"
 license = "MIT"
@@ -33,7 +33,7 @@ def build(self):
         "--release",
         "--locked",
         "--features",
-        "unix",
+        "unix,uudoc",
         env=_cargo_env,
     )
     # single multicall binary; dispatch is based on argv[0]
@@ -41,6 +41,14 @@ def build(self):
         "./target/release/coreutils", "--list", capture_output=True, env=_cargo_env
     )
     (self.cwd / "progs").write_text(res.stdout.decode())
+    # generate one man page per utility; uudoc writes them to stdout
+    self.do(
+        "sh",
+        "-c",
+        "mkdir -p mandir && "
+        "while read -r p; do ./target/release/uudoc manpage \"$p\" "
+        '> "mandir/$p.1"; done < progs',
+    )
 
 
 def install(self):
@@ -49,4 +57,5 @@ def install(self):
     self.install_file("target/release/coreutils", "usr/gnubin", 0o755)
     for name in (self.cwd / "progs").read_text().split():
         self.install_link(f"usr/gnubin/{name}", "coreutils")
+        self.install_file(f"mandir/{name}.1", "usr/share/man/man1")
     self.install_license("LICENSE")
