@@ -1,6 +1,6 @@
 pkgname = "base-files"
 pkgver = "1.0"
-pkgrel = 3
+pkgrel = 4
 pkgdesc = "Minimal base filesystem and account files for the bldroot"
 license = "custom:meta"
 url = "https://oasislinux.org"
@@ -48,9 +48,15 @@ def install(self):
     self.install_link("sbin", "usr/bin")
     self.install_link("usr/sbin", "bin")
 
-    # empty drop-in directory for GNU tool compatibility entries; packages
-    # install their alternative binaries here and users prepend it to PATH
+    # GNU tool compatibility entries; profile.path puts this right after
+    # /usr/local/bin, so login shells prefer GNU make/sed
     self.install_dir("usr/gnubin")
+    self.install_dir("etc/profile.d")
+    self.install_file(self.files_path / "share/profile", "usr/share/base-files")
+    self.install_file(
+        self.files_path / "share/profile.path", "usr/share/base-files"
+    )
+    self.install_link("etc/profile", "../usr/share/base-files/profile")
 
     libwn = f"lib{self.profile.wordsize}"
     self.install_link(libwn, "lib")

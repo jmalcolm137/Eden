@@ -18,6 +18,7 @@ IFS=":"
 
 _HAVE_BIN=
 _HAVE_LBIN=
+_HAVE_GNUBIN=
 
 for p in $PATH; do
     case "$p" in
@@ -27,14 +28,18 @@ for p in $PATH; do
                 _HAVE_LBIN=1
             fi
             ;;
+        /usr/gnubin)
+            # always kept right after /usr/local/bin
+            ;;
         /usr/bin|/usr/sbin|/bin|/sbin)
             if [ -z "$_HAVE_BIN" ]; then
                 if [ -z "$_HAVE_LBIN" ]; then
-                    _NEW_PATH="$_NEW_PATH:/usr/local/bin:/usr/bin"
+                    _NEW_PATH="$_NEW_PATH:/usr/local/bin"
                     _HAVE_LBIN=1
-                else
-                    _NEW_PATH="$_NEW_PATH:/usr/bin"
                 fi
+                _NEW_PATH="$_NEW_PATH:/usr/gnubin"
+                _HAVE_GNUBIN=1
+                _NEW_PATH="$_NEW_PATH:/usr/bin"
                 _HAVE_BIN=1
             fi
             ;;
@@ -47,17 +52,22 @@ unset p
 
 IFS="$_OLD_IFS"
 
+if [ -z "$_HAVE_LBIN" ]; then
+    _NEW_PATH="$_NEW_PATH:/usr/local/bin"
+fi
+
+if [ -z "$_HAVE_GNUBIN" ]; then
+    _NEW_PATH="$_NEW_PATH:/usr/gnubin"
+fi
+
 if [ -z "$_HAVE_BIN" ]; then
-    if [ -z "$_HAVE_LBIN" ]; then
-        _NEW_PATH="$_NEW_PATH:/usr/local/bin:/usr/bin"
-    else
-        _NEW_PATH="$_NEW_PATH:/usr/bin"
-    fi
+    _NEW_PATH="$_NEW_PATH:/usr/bin"
 fi
 
 export PATH="${_NEW_PATH#:}"
 
 unset _HAVE_BIN
 unset _HAVE_LBIN
+unset _HAVE_GNUBIN
 unset _NEW_PATH
 unset _OLD_IFS

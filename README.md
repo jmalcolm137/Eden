@@ -230,7 +230,7 @@ No `chimerautils`, no `debianutils`, no OpenSSL package.
 | `etc/build_profiles/` | architecture profiles |
 | `etc/apk/` | Eden repo config and local public key |
 | `etc/config.ini` | local config (`categories = core oasis pkgsrc extra`, Eden mirror) |
-| `/usr/gnubin` (installed) | GNU tool alternatives (`make`, `sed`); prepend to PATH to prefer them |
+| `/usr/gnubin` (installed) | GNU tool alternatives (`make`, `sed`); `/etc/profile` puts it after `/usr/local/bin` and before `/usr/bin` |
 | `tools/bootstrap-oasis.sh` | build environment in a temporary stage-0 root |
 | `tools/sync-engine.sh` | refresh engine/profiles/repo config from cports |
 | `tools/verify-bootstrap-closure.sh` | verify templates, composition, patches |
