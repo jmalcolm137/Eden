@@ -89,7 +89,7 @@ wld wld-devel wpa_supplicant x509cert x509cert-devel x509cert-devel-static
 xkeyboard-config yt-dlp zfs
 ```
 
-### pkgsrc templates (126)
+### pkgsrc templates (127)
 
 ```
 adwaita-icon-theme adwaita-icon-theme-legacy atk atk-devel bison brotli
@@ -111,7 +111,7 @@ libxslt-devel libxslt-progs libyaml libyaml-devel meson-real nettle nettle-
 devel nettle-progs nghttp2 nghttp2-devel nodejs pango pango-devel pcre2
 pcre2-devel polkit polkit-devel polkit-libs pulseaudio pulseaudio-progs ripgrep
 rust rust-bootstrap shared-mime-info sqlite sqlite-devel taglib taglib-devel
-upower upower-devel upower-libs zlib-shared
+upower upower-devel upower-libs uutils-coreutils zlib-shared
 ```
 
 ### extra templates (103)

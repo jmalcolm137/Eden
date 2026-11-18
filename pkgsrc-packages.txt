@@ -124,4 +124,5 @@ taglib-devel
 upower
 upower-devel
 upower-libs
+uutils-coreutils
 zlib-shared
