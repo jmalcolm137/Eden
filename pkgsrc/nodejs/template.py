@@ -1,10 +1,12 @@
 pkgname = "nodejs"
 pkgver = "26.13.1"
-pkgrel = 1
+pkgrel = 2
 build_style = "configure"
 configure_args = [
     "--prefix=/usr",
-    "--with-intl=small-icu",
+    # bundled small-icu trims out every ICU break iterator, and V8's
+    # Intl.Segmenter then segfaults; the canned full data keeps them
+    "--with-intl=full-icu",
     "--openssl-use-def-ca-store",
 ]
 configure_gen = []
