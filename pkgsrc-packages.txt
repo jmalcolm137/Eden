@@ -125,4 +125,5 @@ upower
 upower-devel
 upower-libs
 uutils-coreutils
+uutils-findutils
 zlib-shared
