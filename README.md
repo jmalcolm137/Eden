@@ -28,7 +28,7 @@ package is then rebuilt from the templates in this tree. The other binary
 inputs are the official Rust stage0 tarballs used by
 `rust-bootstrap`/`cargo-bootstrap`.
 
-### core templates (127)
+### core templates (128)
 
 ```
 acl acl-devel acl-progs apk-tools apk-tools-cache apk-tools-devel apk-tools-
@@ -36,25 +36,26 @@ interactive apk-tools-static-bin argp-standalone attr attr-devel attr-progs
 awk base-cbuild base-cbuild-progs base-files bearssl bearssl-devel bearssl-
 devel-static bubblewrap byacc bzip2 bzip2-devel ca-certificates clang clang-
 analyzer clang-cpp-libs clang-devel clang-devel-static clang-libs clang-rt-
-devel clang-tools-extra clang-tools-extra-static cmake curl diffutils fakeroot
-fakeroot-core flex fortify-headers git gmake gperf libarchive libarchive-devel
-libarchive-progs libatomic-chimera libatomic-chimera-devel libatomic-chimera-
-devel-static libcap libcap-devel libcap-progs libcxx libcxx-devel libcxx-
-devel-static libcxxabi libcxxabi-devel libcxxabi-devel-static libedit libedit-
-devel libedit-readline-devel libffi8 libffi8-devel libressl libressl-devel
-libunwind libunwind-devel libunwind-devel-static linux-headers linux-
-personality lld lld-devel lld-devel-static llvm llvm-binutils llvm-bootstrap
-llvm-devel llvm-devel-static llvm-libs llvm-linker-tools llvm-runtime llvm-
-tools lz4 lz4-devel m4 mandoc mandoc-apropos muon musl musl-bsd-headers musl-
-devel musl-devel-static musl-fts musl-ldso musl-libssp-static musl-mallocng
-musl-mallocng-devel-static musl-obstack musl-progs nasm netbsd-curses netbsd-
-curses-devel netbsd-curses-devel-static oksh patch perl pigz pkgconf pkgconf-
-devel pkgconf-libs python python-devel python-meta python-tests samurai sbase
-sed ubase ugetopt unzip xz xz-devel zlib-static zstd zstd-devel zstd-devel-
-static zstd-progs
+devel clang-tools-extra clang-tools-extra-static cmake curl fakeroot fakeroot-
+core flex fortify-headers git gmake gperf libarchive-devel libatomic-chimera
+libatomic-chimera-devel libatomic-chimera-devel-static libcap libcap-devel
+libcap-progs libcxx libcxx-devel libcxx-devel-static libcxxabi libcxxabi-devel
+libcxxabi-devel-static libedit libedit-devel libedit-readline-devel libffi8
+libffi8-devel libressl libressl-devel libtls-bearssl libtls-bearssl-devel
+libtls-bearssl-devel-static libunwind libunwind-devel libunwind-devel-static
+linux-headers linux-personality lld lld-devel lld-devel-static llvm llvm-
+binutils llvm-bootstrap llvm-devel llvm-devel-static llvm-libs llvm-linker-
+tools llvm-runtime llvm-tools lz4 lz4-devel mandoc mandoc-apropos muon musl
+musl-bsd-headers musl-devel musl-devel-static musl-fts musl-ldso musl-libssp-
+static musl-mallocng musl-mallocng-devel-static musl-obstack musl-progs nasm
+netbsd-curses netbsd-curses-devel netbsd-curses-devel-static oksh openbsd
+openbsd-devel openbsd-devel-static perl pigz pkgconf pkgconf-devel pkgconf-
+libs python python-devel python-meta python-tests samurai sbase sed ubase
+ugetopt unzip xz xz-devel zlib-static zstd zstd-devel zstd-devel-static zstd-
+progs
 ```
 
-### oasis templates (205)
+### oasis templates (199)
 
 ```
 acme-client acpid adobe-source-fonts alsa-lib alsa-lib-devel as-standalone
@@ -72,24 +73,23 @@ libexpat-devel libexpat-progs libffi libfido2 libfido2-devel libgpiod
 libgpiod-devel libinput libinput-devel libjpeg-turbo libjpeg-turbo-devel
 libliftoff libliftoff-devel libliftoff-devel-static libnl libnl-devel
 libpciaccess libpciaccess-devel libplacebo libplacebo-devel libpng libpng-
-devel libtermkey libtirpc libtirpc-devel libtls-bearssl libtls-bearssl-devel
-libtls-bearssl-devel-static libtool libtool-devel libtool-libs libutp libutp-
-devel libxkbcommon libxkbcommon-devel libxml2 libxml2-devel libxml2-progs lpeg
-lua luaposix make man-pages-posix mblaze mgba mpv msmtp mtdev mtdev-devel
-mupdf mupdf-devel ncompress netsurf nginx nsd openbsd openbsd-devel openbsd-
-devel-static openntpd openssh opus opus-devel opus-devel-static pax pciutils
-pciutils-devel pcre pcre-devel pcre-devel-static pdpmake perp pixman pixman-
-devel pounce pwgen qbe quark rc sdhcp sfeed sinit skeleton sndio snes9x
-squashfs-tools-ng sshfs st strace swc swc-devel syslinux syslogd terminus-font
-texi2mdoc the_silver_searcher tinyalsa tinyalsa-devel tinyalsa-devel-static
-tinyemu transmission tz u-boot u-config udev udev-devel unbound usbids
-utf8proc util-linux util-linux-devel util-linux-devel-static util-linux-libs-
-static velox vis wayland wayland-devel wayland-progs wayland-protocols
-wireguard-tools wl9 wld wld-devel wpa_supplicant x509cert x509cert-devel
-x509cert-devel-static xkeyboard-config yt-dlp zfs
+devel libtermkey libtirpc libtirpc-devel libtool libtool-devel libtool-libs
+libutp libutp-devel libxkbcommon libxkbcommon-devel libxml2 libxml2-devel
+libxml2-progs lpeg lua luaposix make man-pages-posix mblaze mgba mpv msmtp
+mtdev mtdev-devel mupdf mupdf-devel ncompress netsurf nginx nsd openntpd
+openssh opus opus-devel opus-devel-static pax pciutils pciutils-devel pcre
+pcre-devel pcre-devel-static pdpmake perp pixman pixman-devel pounce pwgen qbe
+quark rc sdhcp sfeed sinit skeleton sndio snes9x squashfs-tools-ng sshfs st
+strace swc swc-devel syslinux syslogd terminus-font texi2mdoc
+the_silver_searcher tinyalsa tinyalsa-devel tinyalsa-devel-static tinyemu
+transmission tz u-boot u-config udev udev-devel unbound usbids utf8proc util-
+linux util-linux-devel util-linux-devel-static util-linux-libs-static velox
+vis wayland wayland-devel wayland-progs wayland-protocols wireguard-tools wl9
+wld wld-devel wpa_supplicant x509cert x509cert-devel x509cert-devel-static
+xkeyboard-config yt-dlp zfs
 ```
 
-### pkgsrc templates (124)
+### pkgsrc templates (126)
 
 ```
 adwaita-icon-theme adwaita-icon-theme-legacy atk atk-devel bison brotli
@@ -108,13 +108,13 @@ libogg libogg-devel libpsl libpsl-devel libpulse libpulse-devel libseat
 libseat-devel libseat-progs libsndfile libsndfile-devel libssh2 libssh2-devel
 libtasn1 libtasn1-devel libtasn1-progs libvorbis libvorbis-devel libxslt
 libxslt-devel libxslt-progs libyaml libyaml-devel meson-real nettle nettle-
-devel nettle-progs nghttp2 nghttp2-devel pango pango-devel pcre2 pcre2-devel
-polkit polkit-devel polkit-libs pulseaudio pulseaudio-progs rust rust-
-bootstrap shared-mime-info sqlite sqlite-devel taglib taglib-devel upower
-upower-devel upower-libs zlib-shared
+devel nettle-progs nghttp2 nghttp2-devel nodejs pango pango-devel pcre2
+pcre2-devel polkit polkit-devel polkit-libs pulseaudio pulseaudio-progs ripgrep
+rust rust-bootstrap shared-mime-info sqlite sqlite-devel taglib taglib-devel
+upower upower-devel upower-libs zlib-shared
 ```
 
-### extra templates (102)
+### extra templates (103)
 
 ```
 catfish dbus-glib dbus-glib-devel exo exo-devel fast_float garcon garcon-devel
@@ -122,11 +122,11 @@ gigolo gobject-introspection gobject-introspection-devel gobject-
 introspection-libs gspell gspell-devel gtksourceview4 gtksourceview4-devel
 libsoup3 libsoup3-devel libxfce4ui libxfce4ui-devel libxfce4util libxfce4util-
 devel libxfce4windowing libxfce4windowing-devel mesa mesa-devel mesa-gbm-devel
-mesa-gbm-libs mesa-libgallium mousepad parole python-dbus python-gobject
-python-mako python-markdown python-markupsafe python-packaging python-pexpect
-python-ptyprocess python-pyyaml python-setuptools ristretto smithay thunar
-thunar-archive-plugin thunar-devel thunar-media-tags-plugin thunar-vcs-plugin
-thunar-volman tumbler tumbler-devel vte-gtk3 vte-gtk3-devel xfburn
+mesa-gbm-libs mesa-libgallium mousepad opencode parole python-dbus python-
+gobject python-mako python-markdown python-markupsafe python-packaging python-
+pexpect python-ptyprocess python-pyyaml python-setuptools ristretto smithay
+thunar thunar-archive-plugin thunar-devel thunar-media-tags-plugin thunar-vcs-
+plugin thunar-volman tumbler tumbler-devel vte-gtk3 vte-gtk3-devel xfburn
 xfce4-appfinder xfce4-battery-plugin xfce4-calculator-plugin xfce4-clipman-
 plugin xfce4-cpufreq-plugin xfce4-cpugraph-plugin xfce4-desktop xfce4-dev-
 tools xfce4-dict xfce4-diskperf-plugin xfce4-docklike-plugin xfce4-eyes-plugin
