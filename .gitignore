@@ -6,9 +6,13 @@ __pycache__
 /sources*
 /packages*
 /pkgstage*
+/scratch-repo
+/build-logs
 /.bootstrap-repo
 /.bootstrap-repo-*
 /.tmp-*
 /.tmp.*
 /etc/keys
 void-*.tar.xz
+/bootstrap.log
+/testrepo2

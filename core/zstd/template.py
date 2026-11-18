@@ -1,8 +1,14 @@
 pkgname = "zstd"
 pkgver = "1.5.7"
-pkgrel = 2
+pkgrel = 4
 hostmakedepends = ["pkgconf"]
-makedepends = ["lz4-devel", "xz-devel", "zlib-static"]
+makedepends = [
+    "libatomic-chimera-devel-static",
+    "lz4-devel",
+    "musl-devel-static",
+    "xz-devel",
+    "zlib-static",
+]
 renames = ["libzstd"]
 pkgdesc = "Zstd compression utilities"
 license = "BSD-3-Clause"
@@ -23,8 +29,8 @@ def build(self):
         "PREFIX=/usr",
         "-C",
         "programs",
-        "zstd-dll",
-        "LIB_BINDIR=../lib",
+        "zstd",
+        "LDFLAGS=" + self.get_ldflags(shell=True) + " -static-pie -unwindlib=none",
     )
     self.do("gmake", f"-j{self.make_jobs}", "PREFIX=/usr", "-C", "contrib/pzstd")
 

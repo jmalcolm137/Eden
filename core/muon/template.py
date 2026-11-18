@@ -1,6 +1,11 @@
 pkgname = "muon"
 pkgver = "0.7.1"
-pkgrel = 0
+pkgrel = 1
+makedepends = [
+    "libatomic-chimera-devel-static",
+    "libunwind-devel-static",
+    "musl-devel-static",
+]
 pkgdesc = "Meson-compatible build system from Oasis"
 license = "GPL-3.0-only AND Apache-2.0 AND MIT AND Unlicense"
 url = "https://muon.build"
@@ -14,7 +19,9 @@ def build(self):
     self.do(self.chroot_cwd / "bootstrap.sh", "build")
     self.do(
         self.chroot_cwd / "build/muon-bootstrap",
-        "setup", "-Dprefix=/usr", "build-out",
+        "setup", "-Dprefix=/usr",
+        "-Dc_link_args=-static-pie", "-Dcpp_link_args=-static-pie",
+        "build-out",
         env={"CC": "clang", "CXX": "clang++"},
     )
     self.do(

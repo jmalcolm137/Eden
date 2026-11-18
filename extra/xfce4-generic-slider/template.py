@@ -1,0 +1,23 @@
+pkgname = "xfce4-generic-slider"
+pkgver = "1.1.0"
+pkgrel = 0
+build_style = "meson"
+hostmakedepends = [
+    "gettext",
+    "glib-devel",
+    "muon",
+    "pkgconf",
+    "samurai",
+]
+makedepends = [
+    "gtk+3-devel",
+    "libxfce4ui-devel",
+    "xfce4-panel-devel",
+]
+pkgdesc = "Xfce generic slider panel plugin"
+license = "GPL-3.0-only"
+url = "https://docs.xfce.org/panel-plugins/xfce4-generic-slider/start"
+source = f"https://archive.xfce.org/src/panel-plugins/xfce4-generic-slider/1.1/xfce4-generic-slider-1.1.0.tar.xz"
+sha256 = "0cef3174157621e14d123a9d246ee3b1d7c8ef89579377398305a4eb33636f5f"
+# upstream tests need a display and a running session bus
+options = ["!check"]

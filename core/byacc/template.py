@@ -1,12 +1,18 @@
 pkgname = "byacc"
 pkgver = "20260126"
-pkgrel = 0
+pkgrel = 1
 # Oasis pkg/byacc
+makedepends = [
+    "libatomic-chimera-devel-static",
+    "libunwind-devel-static",
+    "musl-devel-static",
+]
 pkgdesc = "Berkeley yacc, a LALR(1) parser generator"
 license = "custom:byacc"
 url = "https://invisible-island.net/byacc"
 source = f"https://invisible-mirror.net/archives/byacc/byacc-{pkgver}.tgz"
 sha256 = "b618c5fb44c2f5f048843db90f7d1b24f78f47b07913c8c7ba8c942d3eb24b00"
+tool_flags = {"LDFLAGS": ["-static-pie"]}
 # no test suite in the bootstrap environment
 options = ["bootstrap", "!check"]
 

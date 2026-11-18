@@ -3,8 +3,8 @@
 A minimal local [`cports`](https://github.com/chimera-linux/cports) tree that
 assembles an Oasis-flavoured cbuild environment.
 
-**Policy:** Oasis first, pkgsrc second, Chimera only when neither provides what
-is needed.
+**Policy:** Oasis first, pkgsrc second, a local template when neither provides
+what is needed.
 
 ## Repositories
 
@@ -21,61 +21,125 @@ The categories are layered with `.parent` symlinks:
 core <- oasis <- pkgsrc <- extra
 ```
 
-Registry config uses `categories = core oasis pkgsrc extra main`; the
-The `main` entry enables the remote Chimera binary repository.
+Registry config uses `categories = core oasis pkgsrc extra`. There is no
+`main` category and no Chimera repository: the stage-0 bldroot is installed
+from the published Eden mirror at `https://repos.eden-linux.org`, and every
+package is then rebuilt from the templates in this tree. The other binary
+inputs are the official Rust stage0 tarballs used by
+`rust-bootstrap`/`cargo-bootstrap`.
 
-### core templates (55)
-
-```
-acl apk-tools argp-standalone attr awk base-cbuild base-files bearssl bubblewrap byacc bzip2 ca-certificates cmake curl diffutils fakeroot flex fortify-headers git gmake gperf libarchive libatomic-chimera libedit libffi8 libressl linux-headers linux-personality llvm llvm-bootstrap lz4 m4 mandoc muon musl musl-bsd-headers musl-fts musl-obstack nasm netbsd-curses oksh patch perl pigz pkgconf python samurai sbase sed ubase ugetopt unzip xz zlib-static zstd
-```
-
-### oasis templates (181)
+### core templates (127)
 
 ```
-acme-client acpid adobe-source-fonts alsa-lib alsa-lib-devel
-as-standalone atinout b3sum b3sum-devel b3sum-devel-static
-bc binutils blind cacert catgirl
-cmark cmark-devel cmark-devel-static cproc dav1d
-dav1d-devel dmenu dnssec-rr dosfstools e2fsprogs
-e2fsprogs-devel e2fsprogs-devel-static efibootmgr efivar efivar-devel
-elftoolchain elftoolchain-devel expat f2fs-tools farbfeld
-ffmpeg file file-devel fontconfig fontconfig-devel
-fontconfig-devel-static freetype fribidi fribidi-devel fspec-sync
-fuse fuse-devel hotplugd hyx ii
-iproute2 jbig2dec jbig2dec-devel kbd less
-libass libass-devel libbluray libbluray-devel libcbor
-libcbor-devel libdrm libdrm-devel libdrm-devel-static libevdev
-libevdev-devel libevdev-devel-static libevent libevent-devel libevent-devel-static
-libffi libfido2 libfido2-devel libgpiod libgpiod-devel
-libinput libinput-devel libjpeg-turbo libliftoff libliftoff-devel
-libliftoff-devel-static libnl libnl-devel libpciaccess libpciaccess-devel
-libplacebo libplacebo-devel libpng
-libtermkey libtirpc libtirpc-devel libtls-bearssl libutp
-libutp-devel libxkbcommon lpeg lua luaposix
-make man-pages-posix mblaze mgba mpv
-msmtp mtdev mtdev-devel mupdf mupdf-devel
-ncompress netsurf nginx nsd openbsd
-openbsd-devel openbsd-devel-static openntpd openssh opus
-opus-devel opus-devel-static pax pciutils pciutils-devel
-pcre pcre-devel pcre-devel-static pdpmake perp
-pixman pounce pwgen qbe quark
-rc sdhcp sfeed sinit skeleton
-sndio snes9x squashfs-tools-ng sshfs st
-strace swc swc-devel syslinux syslogd
-terminus-font texi2mdoc the_silver_searcher tinyalsa tinyalsa-devel
-tinyalsa-devel-static tinyemu transmission tz u-boot
-u-config unbound usbids utf8proc util-linux
-util-linux-devel util-linux-devel-static util-linux-libs-static velox vis
-wayland wayland-protocols wireguard-tools wl9 wld
-wld-devel wpa_supplicant x509cert x509cert-devel x509cert-devel-static
-xkeyboard-config yt-dlp zfs
+acl acl-devel acl-progs apk-tools apk-tools-cache apk-tools-devel apk-tools-
+interactive apk-tools-static-bin argp-standalone attr attr-devel attr-progs
+awk base-cbuild base-cbuild-progs base-files bearssl bearssl-devel bearssl-
+devel-static bubblewrap byacc bzip2 bzip2-devel ca-certificates clang clang-
+analyzer clang-cpp-libs clang-devel clang-devel-static clang-libs clang-rt-
+devel clang-tools-extra clang-tools-extra-static cmake curl diffutils fakeroot
+fakeroot-core flex fortify-headers git gmake gperf libarchive libarchive-devel
+libarchive-progs libatomic-chimera libatomic-chimera-devel libatomic-chimera-
+devel-static libcap libcap-devel libcap-progs libcxx libcxx-devel libcxx-
+devel-static libcxxabi libcxxabi-devel libcxxabi-devel-static libedit libedit-
+devel libedit-readline-devel libffi8 libffi8-devel libressl libressl-devel
+libunwind libunwind-devel libunwind-devel-static linux-headers linux-
+personality lld lld-devel lld-devel-static llvm llvm-binutils llvm-bootstrap
+llvm-devel llvm-devel-static llvm-libs llvm-linker-tools llvm-runtime llvm-
+tools lz4 lz4-devel m4 mandoc mandoc-apropos muon musl musl-bsd-headers musl-
+devel musl-devel-static musl-fts musl-ldso musl-libssp-static musl-mallocng
+musl-mallocng-devel-static musl-obstack musl-progs nasm netbsd-curses netbsd-
+curses-devel netbsd-curses-devel-static oksh patch perl pigz pkgconf pkgconf-
+devel pkgconf-libs python python-devel python-meta python-tests samurai sbase
+sed ubase ugetopt unzip xz xz-devel zlib-static zstd zstd-devel zstd-devel-
+static zstd-progs
 ```
 
-### pkgsrc templates (1)
+### oasis templates (205)
 
 ```
-rust
+acme-client acpid adobe-source-fonts alsa-lib alsa-lib-devel as-standalone
+atinout autoconf automake b3sum b3sum-devel b3sum-devel-static bc binutils
+blind cacert catgirl cmark cmark-devel cmark-devel-static cproc dav1d
+dav1d-devel dmenu dnssec-rr dosfstools e2fsprogs e2fsprogs-devel e2fsprogs-
+devel-static efibootmgr efivar efivar-devel elftoolchain elftoolchain-devel
+expat f2fs-tools farbfeld ffmpeg ffmpeg-devel file file-devel fontconfig
+fontconfig-devel freetype freetype-devel fribidi fribidi-devel fspec-sync fuse
+fuse-devel gettext gettext-devel hotplugd hyx ii iproute2 jbig2dec jbig2dec-
+devel kbd less libass libass-devel libbluray libbluray-devel libcbor libcbor-
+devel libdrm libdrm-devel libdrm-devel-static libevdev libevdev-devel
+libevdev-devel-static libevent libevent-devel libevent-devel-static libexpat
+libexpat-devel libexpat-progs libffi libfido2 libfido2-devel libgpiod
+libgpiod-devel libinput libinput-devel libjpeg-turbo libjpeg-turbo-devel
+libliftoff libliftoff-devel libliftoff-devel-static libnl libnl-devel
+libpciaccess libpciaccess-devel libplacebo libplacebo-devel libpng libpng-
+devel libtermkey libtirpc libtirpc-devel libtls-bearssl libtls-bearssl-devel
+libtls-bearssl-devel-static libtool libtool-devel libtool-libs libutp libutp-
+devel libxkbcommon libxkbcommon-devel libxml2 libxml2-devel libxml2-progs lpeg
+lua luaposix make man-pages-posix mblaze mgba mpv msmtp mtdev mtdev-devel
+mupdf mupdf-devel ncompress netsurf nginx nsd openbsd openbsd-devel openbsd-
+devel-static openntpd openssh opus opus-devel opus-devel-static pax pciutils
+pciutils-devel pcre pcre-devel pcre-devel-static pdpmake perp pixman pixman-
+devel pounce pwgen qbe quark rc sdhcp sfeed sinit skeleton sndio snes9x
+squashfs-tools-ng sshfs st strace swc swc-devel syslinux syslogd terminus-font
+texi2mdoc the_silver_searcher tinyalsa tinyalsa-devel tinyalsa-devel-static
+tinyemu transmission tz u-boot u-config udev udev-devel unbound usbids
+utf8proc util-linux util-linux-devel util-linux-devel-static util-linux-libs-
+static velox vis wayland wayland-devel wayland-progs wayland-protocols
+wireguard-tools wl9 wld wld-devel wpa_supplicant x509cert x509cert-devel
+x509cert-devel-static xkeyboard-config yt-dlp zfs
+```
+
+### pkgsrc templates (124)
+
+```
+adwaita-icon-theme adwaita-icon-theme-legacy atk atk-devel bison brotli
+brotli-devel brotli-progs cairo cairo-devel cargo-bootstrap dbus dbus-devel
+dbus-libs enchant2 enchant2-devel enchant2-progs gdk-pixbuf gdk-pixbuf-devel
+glib glib-devel glib-networking gmp gmp-cxx gmp-devel gnutls gnutls-devel gst-
+plugins-base gst-plugins-base-devel gstreamer gstreamer-devel gstreamer-progs
+gtk+3 gtk+3-devel gtk-layer-shell gtk-layer-shell-devel harfbuzz harfbuzz-
+devel hicolor-icon-theme hicolor-icon-theme-devel hwdata hwdata-devel hwdata-
+net hwdata-pci hwdata-pnp hwdata-usb icu icu-devel icu-progs iso-codes json-c
+json-c-devel libburn libburn-devel libburn-progs libcanberra libcanberra-devel
+libcurl libcurl-devel libdisplay-info libdisplay-info-devel libepoxy libepoxy-
+devel libexif libexif-devel libglvnd libglvnd-devel libgtop libgtop-devel
+libgudev libgudev-devel libisofs libisofs-devel libnotify libnotify-devel
+libogg libogg-devel libpsl libpsl-devel libpulse libpulse-devel libseat
+libseat-devel libseat-progs libsndfile libsndfile-devel libssh2 libssh2-devel
+libtasn1 libtasn1-devel libtasn1-progs libvorbis libvorbis-devel libxslt
+libxslt-devel libxslt-progs libyaml libyaml-devel meson-real nettle nettle-
+devel nettle-progs nghttp2 nghttp2-devel pango pango-devel pcre2 pcre2-devel
+polkit polkit-devel polkit-libs pulseaudio pulseaudio-progs rust rust-
+bootstrap shared-mime-info sqlite sqlite-devel taglib taglib-devel upower
+upower-devel upower-libs zlib-shared
+```
+
+### extra templates (102)
+
+```
+catfish dbus-glib dbus-glib-devel exo exo-devel fast_float garcon garcon-devel
+gigolo gobject-introspection gobject-introspection-devel gobject-
+introspection-libs gspell gspell-devel gtksourceview4 gtksourceview4-devel
+libsoup3 libsoup3-devel libxfce4ui libxfce4ui-devel libxfce4util libxfce4util-
+devel libxfce4windowing libxfce4windowing-devel mesa mesa-devel mesa-gbm-devel
+mesa-gbm-libs mesa-libgallium mousepad parole python-dbus python-gobject
+python-mako python-markdown python-markupsafe python-packaging python-pexpect
+python-ptyprocess python-pyyaml python-setuptools ristretto smithay thunar
+thunar-archive-plugin thunar-devel thunar-media-tags-plugin thunar-vcs-plugin
+thunar-volman tumbler tumbler-devel vte-gtk3 vte-gtk3-devel xfburn
+xfce4-appfinder xfce4-battery-plugin xfce4-calculator-plugin xfce4-clipman-
+plugin xfce4-cpufreq-plugin xfce4-cpugraph-plugin xfce4-desktop xfce4-dev-
+tools xfce4-dict xfce4-diskperf-plugin xfce4-docklike-plugin xfce4-eyes-plugin
+xfce4-fsguard-plugin xfce4-generic-slider xfce4-genmon-plugin xfce4-goodies
+xfce4-mailwatch-plugin xfce4-mount-plugin xfce4-netload-plugin xfce4-notes-
+plugin xfce4-notifyd xfce4-panel xfce4-panel-devel xfce4-panel-profiles
+xfce4-places-plugin xfce4-power-manager xfce4-pulseaudio-plugin
+xfce4-screenshooter xfce4-sensors-plugin xfce4-session xfce4-session-devel
+xfce4-settings xfce4-smartbookmark-plugin xfce4-stopwatch-plugin
+xfce4-systemload-plugin xfce4-taskmanager xfce4-terminal xfce4-time-out-plugin
+xfce4-timer-plugin xfce4-verve-plugin xfce4-wavelan-plugin xfce4-weather-
+plugin xfce4-whiskermenu-plugin xfconf xfconf-devel xfdesktop xfwl4
+xfwm4-themes
 ```
 
 ### scaffolded Oasis packages (0)
@@ -92,21 +156,17 @@ are now source-built from the local templates:
 
 ```
 acl apk-tools apk-tools-static-bin awk base-cbuild base-files bearssl
-bzip2 ca-certificates diffutils fakeroot-core fortify-headers gmake
-libarchive-progs libatomic-chimera libatomic-chimera-devel libedit
-libffi8 lz4 muon musl musl-devel musl-ldso musl-progs netbsd-curses
-oksh patch pigz pkgconf samurai sbase sed ubase xz zlib-static zstd
-zstd-progs
+bzip2 ca-certificates clang clang-cpp-libs clang-libs clang-rt-devel
+diffutils fakeroot-core fortify-headers gmake libarchive-progs
+libatomic-chimera libatomic-chimera-devel libcxx libcxxabi libcxxabi-devel
+libcxx-devel libedit libffi8 libunwind libunwind-devel lld llvm
+llvm-binutils llvm-libs llvm-linker-tools llvm-runtime lz4 muon musl
+musl-devel musl-ldso musl-progs netbsd-curses oksh patch pigz pkgconf
+samurai sbase sed ubase xz zlib-static zstd zstd-progs
 ```
 
-Still binary from Chimera:
-
-```
-clang clang-cpp-libs clang-libs clang-rt-devel
-libcxx libcxxabi libcxxabi-devel libcxx-devel
-libunwind libunwind-devel lld llvm llvm-binutils
-llvm-libs llvm-linker-tools llvm-runtime
-```
+The stage-0 root itself is installed from the published Eden repositories,
+so even the initial toolchain is ours; no Chimera repository is consulted.
 
 `apk-tools` is now source-built with **BearSSL for both crypto and libfetch
 TLS**. Python uses the core LibreSSL package for `ssl` and `hashlib`, and
@@ -126,6 +186,23 @@ builds.
 `libterminfo`, and the terminfo database. `libedit` is built against it and
 embeds the curses code, so neither `libedit` nor `llvm-libs` pulls in
 `libncursesw.so.6`.
+
+The Oasis Wayland utilities are static-pie linked: `libswc.a` embeds libinput,
+libxkbcommon, wayland-server, wld and their static dependencies, and
+`swc`, `velox`, `dmenu`, `st`, `wl9`, `swc-launch` and the `velox`
+`status_bar` helper have musl linked into the executable with no dynamic
+interpreter. `sbase`, `ubase`, `apk-tools`, `netsurf`, and the LLVM/clang
+toolchain (`clang`, `clang++`, `lld`, `llvm-config`, `opt`, and the other
+tools) are built the same way. The OASIS command-line tools are also
+static-pie: `awk`, `byacc`, `bubblewrap`, `bzip2`, `curl`, `file`, `flex`,
+`fribidi`, `git`, `libpng`'s `pngfix` tools, `muon`, `oksh`, `pciutils`,
+`pigz`, `samurai`, `wayland-scanner`, and `zstd`.
+
+`apk-tools` installs the static-pie `apk` as `/usr/bin/apk`; the separate
+`apk-tools-static-bin` package still provides `apk.static`. The LLVM build
+uses `llvm-bootstrap`'s static C++ runtime archives, links every executable
+with `-static-pie`, and keeps the shared `libLLVM.so` and `libclang-cpp.so`
+only for packages that consume them.
 
 No `chimerautils`, no `debianutils`, no OpenSSL package.
 
@@ -151,11 +228,13 @@ No `chimerautils`, no `debianutils`, no OpenSSL package.
 | `pkgsrc/`, `extra/` | ported/local package repositories |
 | `patches/` | engine patches: gmake, apk TLS cert path, core category, muon/samurai |
 | `etc/build_profiles/` | architecture profiles |
-| `etc/apk/` | Chimera repo config, Chimera keys, local public key |
-| `etc/config.ini` | local config (`categories = core oasis pkgsrc extra main`) |
-| `tools/bootstrap-oasis.sh` | build environment in a temporary Chimera root |
+| `etc/apk/` | Eden repo config and local public key |
+| `etc/config.ini` | local config (`categories = core oasis pkgsrc extra`, Eden mirror) |
+| `tools/bootstrap-oasis.sh` | build environment in a temporary stage-0 root |
 | `tools/sync-engine.sh` | refresh engine/profiles/repo config from cports |
 | `tools/verify-bootstrap-closure.sh` | verify templates, composition, patches |
+| `tools/publish-repo.sh` | publish built repositories to Cloudflare R2 |
+| `docs/r2-repos.md` | R2 bucket, custom domain, cache and client setup |
 | `bootstrap-packages.txt` | core template manifest |
 | `oasis-packages.txt` | oasis template manifest |
 | `pkgsrc-packages.txt`, `extra-packages.txt` | other repo manifests |
@@ -167,11 +246,11 @@ No `chimerautils`, no `debianutils`, no OpenSSL package.
 tools/bootstrap-oasis.sh
 ```
 
-The script creates a temporary Chimera root (`bldroot-chimera`), builds the
-core templates into `.bootstrap-repo` in dependency order (with `base-cbuild`
-last), then creates `bldroot-oasis`.
+The script creates a temporary stage-0 root (`bldroot-stage0`) from the
+published Eden repositories, builds the core templates into `.bootstrap-repo`
+in dependency order (with `base-cbuild` last), then creates `bldroot-oasis`.
 
-Important: build environment packages in `bldroot-chimera`, not in
+Important: build environment packages in `bldroot-stage0`, not in
 `bldroot-oasis`. `sbase`'s install script needs `awk`; rebuilding it inside
 the Oasis root after its own tools were removed produces an empty package.
 
@@ -180,6 +259,21 @@ Then build packages with:
 ```
 ./cbuild -r .bootstrap-repo -b bldroot-oasis pkg extra/<name>
 ```
+
+## Publishing
+
+Built repositories can be published to Cloudflare R2 at
+**https://repos.eden-linux.org**:
+
+```
+tools/publish-repo.sh --dry-run
+tools/publish-repo.sh --prune --verify
+```
+
+The script uploads packages before indexes, keeps the signing key at
+`/keys/oasis-local.rsa.pub`, and sets immutable caching on packages and
+`no-cache` on indexes. See `docs/r2-repos.md` for the bucket, custom domain,
+cache rules, credentials, and client repository configuration.
 
 ## Engine patches
 
@@ -192,6 +286,10 @@ Then build packages with:
 - `patches/0005-cbuild-use-muon-samurai.patch`: invoke `muon` instead of
   `meson`, `samu` instead of `ninja`, and translate meson-only build options
   and dependency names (`meson` -> `muon`, `ninja` -> `samurai`).
+- `patches/0006-cbuild-remote-repo-deps.patch`: include the profile's remote
+  repository categories when collecting dependency repositories.
+- `patches/0007-cbuild-eden-mirror.patch`: default the apk mirror to
+  `https://repos.eden-linux.org` instead of Chimera.
 
 Refresh the engine with:
 
@@ -213,9 +311,12 @@ the Oasis/Chimera split in `base-cbuild`, the gmake rename, and the engine's
 
 ## Validated
 
-- `tools/bootstrap-oasis.sh` completes from a clean state.
-- `bldroot-oasis` builds and contains the 54 packages above.
-- All bottom-layer packages are source-built and selected over the Chimera
+- `tools/bootstrap-oasis.sh` completes from a clean tree using only
+  `https://repos.eden-linux.org`; no Chimera repository is consulted.
+- `bldroot-oasis` is installed from the locally rebuilt stage-0 repository
+  (60 packages) and `./cbuild -r .bootstrap-repo -b bldroot-oasis pkg
+  core/ubase` succeeds in it.
+- All bottom-layer packages are source-built and selected over the stage-0
   binaries.
 - `./cbuild -r .bootstrap-repo -b bldroot-oasis pkg core/ubase` succeeds.
 - `make`, `gmake`, `awk`, `grep`, `sed`, `diff`, `cmp`, `patch`, `cut`, `tar`,
@@ -254,7 +355,9 @@ libhubbub, libnsbmp, libnsgif, libnsutils, libparserutils, libsvgtiny, and
 libwapcaplet, and applies the Oasis patches to them. The system libraries it
 needs are also Oasis ports: `curl`, `expat`, `freetype`, `libffi`,
 `libjpeg-turbo`, `libpng`, `libxkbcommon`, `pixman`, `utf8proc`, `wayland`,
-and `zlib-static`. At runtime it also needs the Adobe Source fonts (packaged as
+and `zlib-static`. The `netsurf` binary is static-pie linked: the bundled
+libraries and all of the listed system libraries are linked from their static
+archives. At runtime it also needs the Adobe Source fonts (packaged as
 `adobe-source-fonts`), xkeyboard-config data, and a Wayland compositor.
 
 ## perp and sinit
@@ -276,9 +379,86 @@ installs the sample configuration; its `swc`, `wld`, `libinput`, `libdrm`,
 `libevdev`, `mtdev`, `fontconfig`, and `util-linux` dependencies still need to
 be ported from Oasis before it can be built in this tree.
 
+## smithay
+
+`extra/smithay` packages the Smithay Wayland compositor library at the commit
+`xfwl4` 4.21.1 pins for its `smithay` and `smithay-drm-extras` git dependencies
+(`0a29aecf9e07a2227712ab470b0ab0ee56752272`). Since Smithay is a Rust library
+with no C ABI, the package installs the crate source tree under
+`/usr/share/cargo/registry/smithay-0.7.0` instead of a shared object. A
+dependent package points its path dependencies at that tree, which also avoids
+fetching the git dependency during its own offline build:
+
+```python
+smithay = { path = "/usr/share/cargo/registry/smithay-0.7.0" }
+smithay-drm-extras = {
+    path = "/usr/share/cargo/registry/smithay-0.7.0/smithay-drm-extras",
+}
+```
+
+The build uses the `desktop` and `wayland_frontend` features, which need no
+system graphics libraries; the test run also enables the renderer test harness
+for the doctests. Compositor-specific backends are enabled by the dependent
+package.
+
+## xfwl4
+
+`extra/xfwl4` packages the 4.21.1 release of the Xfce Wayland compositor. The
+release tarball already carries the `xfce-wayland-protocols` submodule, so it
+is a single source. Upstream's meson build only drives cargo, so the template
+builds with cbuild's cargo style and installs the binary, the session desktop
+entry, the default settings file and the gettext catalogs itself. It is built
+Wayland-only (`udev,egl,gettext-system,xwayland`, no winit/X11; the
+`xwayland` feature is only needed by upstream's unconditionally compiled
+shell code and `start_xwayland()` is patched out) and replaces
+the pinned Smithay git dependency with the source tree from `extra/smithay`,
+so no git checkout is needed during the build.
+
+It builds against the Wayland-only toolkit in `pkgsrc/` and `extra/`: shared
+`wayland` 1.26.0, `libinput` 1.31.3, `pixman` 0.46.4, `libxkbcommon` 1.13.2,
+`libdrm` 2.4.134, plus the GTK3 stack (`glib`, `gtk+3`, `pango`, `cairo`,
+`gdk-pixbuf`), the locally built `mesa` (Wayland/GBM with the llvmpipe and
+softpipe drivers), `libseat`, `udev` and `libdisplay-info`.
+The matching `xfconf`/`libxfce4ui` 4.21 libraries provide
+`libxfce4kbd-private-3`. Window decorations are provided by
+`extra/xfwm4-themes`; the X11 `xfwm4` compositor is not installed.
+
+## Xfce 4
+
+`extra/` also carries the Xfce 4.21 desktop built for Wayland only. The
+umbrella is `xfce4-desktop`; `xfce4-goodies` adds the remaining applications
+and panel plugins. X11 is disabled in every component that has a switch
+(`-Dx11=disabled`, `-Dwayland=enabled`) and the X11-only pieces are not
+packaged: `xfwm4` (only its themes, as `xfwm4-themes`), `xfce4-xkb-plugin`,
+`xfce4-windowck-plugin`, and `xfce4-screensaver` (it needs PAM and X11
+locking). `xfce4-mount-plugin` is not in the umbrellas because the musl base lacks the
+BSD `fstab.h` API. `xfce4-notes-plugin` uses `meson-real` for its Vala rules
+but is still blocked by missing GObject-introspection GIR data in the local
+`glib` build. Python applications use local 3.15 builds of `python-gobject`,
+`python-dbus` and `python-pexpect`; `parole` uses the local `dbus-glib`.
+
+The Wayland-only toolkit closure is local as well. `pixman`, `wayland`,
+`wayland-protocols`, `libxkbcommon`, `libinput`, `libdrm`, `freetype`,
+`fontconfig`, `fribidi` and `libpng` are the Oasis packages, upgraded in
+place, so there are no duplicate X11 and Wayland variants of the same
+library. `glib`, `atk`, `harfbuzz`, `cairo`, `pango`, `gdk-pixbuf`, `gtk+3`,
+`gtk-layer-shell`, `libdisplay-info`, `pcre2`, `libglvnd`, `libepoxy` and
+`meson-real` live in `pkgsrc/`; `gtk+3` is configured with
+`-Dx11_backend=false -Dwayland_backend=true`. `mesa`, `vte`,
+`gtksourceview`, `gspell`, `libsoup3`, gstreamer and the Xfce stack live in
+`extra/`. Every one of these is built from a local template; no `main`
+package is used. See [`extra/XFCE4.md`](extra/XFCE4.md) for the exact
+versions, the excluded components and the optional features that are still
+disabled.
+
 ## Next
 
-The remaining binary set is the LLVM/clang stack. Add an LLVM source template
-that links against the local `libedit` built with netbsd-curses and produces
-clang, lld, libcxx, libunwind, llvm-binutils, and the rest.
+`tools/bootstrap-oasis.sh` builds the local core set (including the
+LLVM/clang stack) into `.bootstrap-repo` and creates the minimal
+`bldroot-oasis`. Build the desktop on top of it in dependency order:
+
+```sh
+./cbuild -b bldroot-oasis pkg extra/xfce4-desktop
+./cbuild -b bldroot-oasis pkg extra/xfce4-goodies
+```
 

@@ -1,71 +1,50 @@
 pkgname = "libpng"
-pkgver = "1.6.43"
+pkgver = "1.6.59"
 pkgrel = 1
-# Oasis pkg/libpng/src
-_commit = "ed217e3e601d8e462f7fd1e04bed43ac42212429"
-makedepends = ["zlib-static"]
-pkgdesc = "PNG image library from Oasis"
+build_style = "gnu_configure"
+configure_args = ["--disable-riscv-rvv"]
+configure_gen = []
+hostmakedepends = ["pkgconf"]
+makedepends = [
+    "libatomic-chimera-devel-static",
+    "libunwind-devel-static",
+    "musl-devel-static",
+    "zlib-static",
+]
+pkgdesc = "Library for manipulating PNG images"
 license = "Libpng"
 url = "https://www.libpng.org/pub/png/libpng.html"
-source = f"https://github.com/glennrp/libpng/archive/{_commit}.tar.gz"
-sha256 = "3179215477e554acc3630b8a508488ade049a359c75253e377e136add1252c9d"
-# no test suite
-options = ["!check", "!lto"]
-
-_sources = [
-    "png.c", "pngerror.c", "pngget.c", "pngmem.c", "pngpread.c",
-    "pngread.c", "pngrio.c", "pngrtran.c", "pngrutil.c", "pngset.c",
-    "pngtrans.c", "pngwio.c", "pngwrite.c", "pngwtran.c", "pngwutil.c",
-]
+source = "https://downloads.sourceforge.net/sourceforge/libpng/libpng-1.6.59.tar.xz"
+sha256 = "d80dd2a38a37f803cb9b6ac7b14bd6e74ddc3b654780a8380bdf93523fdb4389"
+# tests need test images and a display
+options = ["!check", "!splitstatic"]
 
 
-def pre_build(self):
-    self.cp(self.files_path / "config.h", "config.h")
-    self.cp(self.files_path / "libpng.patch", "libpng.patch")
-    self.do("patch", "-p1", "-i", "libpng.patch")
-
-    with open(self.cwd / "pnglibconf.tf4", "w") as f:
-        self.do(
-            "awk", "-f", "scripts/options.awk", "out=/dev/stdout",
-            "version=search", "pngconf.h", "scripts/pnglibconf.dfa",
-            "pngusr.dfa",
-            stdout=f,
-        )
-    with open(self.cwd / "pnglibconf.c", "w") as f:
-        self.do(
-            "awk", "-f", "scripts/options.awk", "out=/dev/stdout",
-            "pnglibconf.tf4",
-            stdout=f,
-        )
-    with open(self.cwd / "pnglibconf.tf1", "w") as f:
-        self.do("clang-cpp", "pnglibconf.c", stdout=f)
-    with open(self.cwd / "pnglibconf.h", "w") as f:
-        self.do(
-            "awk", "-f", "scripts/dfn.awk", "out=/dev/stdout",
-            "pnglibconf.tf1",
-            stdout=f,
-        )
-
-
-def build(self):
+def post_build(self):
+    # Keep libpng16.so for consumers; relink the bundled tools statically.
     from cbuild.util import compiler
 
     cc = compiler.C(self)
-    objs = []
-    flags = ["-DHAVE_CONFIG_H", "-I.", "-I/usr/include"]
-    self.mkdir("obj", parents=True)
+    flags = ["-DHAVE_CONFIG_H", "-I.", "-Ibuild", "-Icontrib/tools"]
+    for src, out in [
+        ("contrib/tools/pngfix.c", "pngfix-static"),
+        ("contrib/tools/png-fix-itxt.c", "png-fix-itxt-static"),
+    ]:
+        cc.invoke(
+            [src],
+            out,
+            flags=flags,
+            ldflags=["build/.libs/libpng16.a", "-lz", "-lm", "-static-pie"],
+        )
 
-    for src in _sources:
-        obj = "obj/" + src.removesuffix(".c") + ".o"
-        cc.invoke([src], obj, obj_file=True, flags=flags)
-        objs.append(obj)
 
-    self.do("ar", "rcs", "libpng.a", *objs)
-
-
-def install(self):
-    self.install_file("libpng.a", "usr/lib")
-    self.install_file("png.h", "usr/include")
-    self.install_file("pngconf.h", "usr/include")
-    self.install_file("pnglibconf.h", "usr/include")
+def post_install(self):
     self.install_license("LICENSE")
+    for name in ["pngfix", "png-fix-itxt"]:
+        self.uninstall(f"usr/bin/{name}", missing_ok=True)
+        self.install_bin(f"{name}-static", name=name)
+
+
+@subpackage("libpng-devel")
+def _(self):
+    return self.default_devel()

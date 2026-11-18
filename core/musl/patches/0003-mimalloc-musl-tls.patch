@@ -1,0 +1,62 @@
+--- a/mimalloc/include/mimalloc/prim/prim-tls.h
++++ b/mimalloc/include/mimalloc/prim/prim-tls.h
+@@ -53,7 +53,9 @@
+ 
+ 
+ // Default TLS model
+-#if !defined(MI_TLS_MODEL_LOCAL) && !defined(MI_TLS_MODEL_PTHREADS) && !defined(MI_TLS_MODEL_FIXED) && !defined(MI_TLS_MODEL_WIN32)
++#if defined(MI_LIBC_MUSL)
++#define MI_TLS_MODEL_MUSL         1
++#elif !defined(MI_TLS_MODEL_LOCAL) && !defined(MI_TLS_MODEL_PTHREADS) && !defined(MI_TLS_MODEL_FIXED) && !defined(MI_TLS_MODEL_WIN32)
+ #if defined(_WIN32)
+ #define MI_TLS_MODEL_WIN32        1
+ #elif defined(__APPLE__) || defined(__OpenBSD__) || defined(__ANDROID__)  // and FreeBSD?
+@@ -320,6 +322,17 @@
+   return __mi_theap_cached;
+ }
+ 
++#elif MI_TLS_MODEL_MUSL
++// The theap pointers live in the musl pthread structure. This is needed
++// because the dynamic linker calls malloc before its own TLS is set up.
++static inline void* mi_prim_theap_default_raw(void) {
++  return __pthread_self()->malloc_tls;
++}
++
++static inline void* mi_prim_theap_cached_raw(void) {
++  return __pthread_self()->malloc_tls_cached;
++}
++
+ #elif MI_TLS_MODEL_PTHREADS
+ // Dynamic pthread slots. This can be fast depending on the platform (default for macOS and OpenBSD)
+ // On some platforms (like macOS), the loader might allocate on thread local declarations which
+--- a/mimalloc/src/prim/prim-tls.c
++++ b/mimalloc/src/prim/prim-tls.c
+@@ -224,6 +224,8 @@
+   void* const x = mi_tls_sign(theap, MI_TLS_TAG_THEAP_CACHED);
+   #if MI_TLS_MODEL_LOCAL
+     __mi_theap_cached = (mi_theap_t*)x;
++  #elif MI_TLS_MODEL_MUSL
++    __pthread_self()->malloc_tls_cached = x;
+   #elif MI_TLS_MODEL_FIXED
+     mi_prim_tls_slot_set(MI_TLS_MODEL_FIXED_CACHED, x);
+   #elif MI_TLS_MODEL_WIN32
+@@ -245,6 +247,8 @@
+   void* const x = mi_tls_sign(theap, MI_TLS_TAG_THEAP_DEFAULT);
+   #if MI_TLS_MODEL_LOCAL
+     __mi_theap_default = (mi_theap_t*)x;
++  #elif MI_TLS_MODEL_MUSL
++    __pthread_self()->malloc_tls = x;
+   #elif MI_TLS_MODEL_FIXED
+     mi_prim_tls_slot_set(MI_TLS_MODEL_FIXED_DEFAULT, x);
+   #elif MI_TLS_MODEL_WIN32
+--- a/mimalloc/src/util/threadlocal.c
++++ b/mimalloc/src/util/threadlocal.c
+@@ -47,7 +47,7 @@
+   initially `NULL` (where `name_get` returns the `initval` instead).
+ ----------------------------------------------------------- */
+ 
+-#if MI_TLS_MODEL_PTHREADS || defined(__APPLE__)   // macOS has fast pthreads
++#if MI_TLS_MODEL_PTHREADS || defined(__APPLE__) || defined(MI_LIBC_MUSL)   // macOS has fast pthreads, musl needs no TLS before init
+ // Use pthreads
+ #define mi_define_thread_local(tp,name,initval,tag) \
+   static pthread_key_t __##name##_key = MI_PTHREAD_KEY_INVALID; \

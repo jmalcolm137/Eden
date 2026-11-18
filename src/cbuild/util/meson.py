@@ -65,6 +65,10 @@ _MUON_UNSUPPORTED_OPTS = (
 
 
 def _meson(pkg):
+    # Templates that need an unimplemented muon feature can request the real
+    # Meson implementation explicitly.
+    if getattr(pkg, "meson_impl", "muon") == "meson":
+        return "meson"
     # Prefer the Oasis tools. Stage 0 builds on the host, so fall back to
     # the host meson when muon has not been installed yet.
     if pkg.stage == 0 and not shutil.which("muon"):

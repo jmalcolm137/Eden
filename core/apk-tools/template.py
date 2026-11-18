@@ -1,6 +1,6 @@
 pkgname = "apk-tools"
 pkgver = "3.0.9"
-pkgrel = 1
+pkgrel = 2
 build_style = "meson"
 configure_args = [
     "-Dcrypto_backend=bearssl",
@@ -78,6 +78,9 @@ def post_install(self):
         return
 
     self.install_bin("build-static/src/apk", name="apk.static")
+    # make the primary apk command static-pie as well
+    self.uninstall("usr/bin/apk")
+    self.install_bin("build-static/src/apk", name="apk")
     self.install_file(self.files_path / "config", "usr/lib/apk")
 
 

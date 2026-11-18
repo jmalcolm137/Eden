@@ -1,9 +1,17 @@
 pkgname = "wl9"
 pkgver = "0_git20221119"
-pkgrel = 0
+pkgrel = 1
 # Oasis pkg/wl9/src
 _commit = "de70033524ef21dd01bde1d5d66a4679c8f34311"
-makedepends = ["wayland", "wayland-protocols", "libffi8-devel-static"]
+makedepends = [
+    "libatomic-chimera-devel-static",
+    "libffi8-devel-static",
+    "libunwind-devel-static",
+    "musl-devel-static",
+    "wayland-devel",
+    "wayland-devel-static",
+    "wayland-protocols",
+]
 pkgdesc = "Plan 9-style window manager for Wayland"
 license = "ISC"
 url = "https://git.sr.ht/~mcf/wl9"
@@ -37,7 +45,11 @@ def build(self):
         ],
         "wl9",
         flags=_cflags,
-        ldflags=["/usr/lib/libwayland-server.a", "/usr/lib/libffi.a"],
+        ldflags=[
+            "-static-pie",
+            "/usr/lib/libwayland-server.a",
+            "/usr/lib/libffi.a",
+        ],
     )
 
 

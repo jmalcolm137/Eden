@@ -1,11 +1,21 @@
 pkgname = "xz"
 pkgver = "5.8.4"
-pkgrel = 1
+pkgrel = 3
 build_style = "gnu_configure"
 configure_args = ["--disable-nls", "--disable-sandbox"]
 configure_gen = []
+make_build_env = {
+    "ACLOCAL": "true",
+    "AUTOCONF": "true",
+    "AUTOHEADER": "true",
+    "AUTOMAKE": "true",
+    "MAKEINFO": "true",
+}
 hostmakedepends = ["pkgconf"]
-makedepends = []
+makedepends = [
+    "libatomic-chimera-devel-static",
+    "musl-devel-static",
+]
 renames = ["liblzma"]
 pkgdesc = "XZ compression utilities"
 license = "0BSD"
@@ -30,8 +40,42 @@ def pre_configure(self):
             p.touch()
 
 
+def post_build(self):
+    # Keep liblzma.so for consumers and relink the command line tools
+    # against the static archive.
+    from cbuild.util import compiler
+
+    cc = compiler.C(self)
+    libs = [
+        "build/src/liblzma/.libs/liblzma.a",
+        "-lpthread",
+        "-lm",
+        "-static-pie",
+        "-unwindlib=none",
+    ]
+    xz_objs = [
+        str(p.relative_to(self.cwd))
+        for p in sorted((self.cwd / "build/src/xz").glob("*.o"))
+    ]
+    cc.invoke(xz_objs, "xz-static", ldflags=libs)
+    for prefix, out in [("xzdec", "xzdec-static"), ("lzmadec", "lzmadec-static")]:
+        objs = [
+            str(p.relative_to(self.cwd))
+            for p in sorted((self.cwd / "build/src/xzdec").glob(prefix + "-*.o"))
+        ]
+        cc.invoke(objs, out, ldflags=libs)
+    objs = [
+        str(p.relative_to(self.cwd))
+        for p in sorted((self.cwd / "build/src/lzmainfo").glob("lzmainfo-*.o"))
+    ]
+    cc.invoke(objs, "lzmainfo-static", ldflags=libs)
+
+
 def post_install(self):
     self.install_license("COPYING")
+    for name in ["xz", "xzdec", "lzmadec", "lzmainfo"]:
+        self.uninstall(f"usr/bin/{name}", missing_ok=True)
+        self.install_bin(f"{name}-static", name=name)
     self.uninstall("usr/share/doc")
     for tool in [
         "xzgrep",

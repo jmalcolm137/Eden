@@ -1,12 +1,17 @@
 pkgname = "libevdev"
 pkgver = "1.12.0"
-pkgrel = 0
+pkgrel = 1
 # Oasis pkg/libevdev/src
 _commit = "69403a63ed29a1ee62edb8d0885fa770dd9a53cf"
 build_style = "meson"
 configure_args = ["-Dtests=disabled", "-Ddocumentation=disabled"]
-hostmakedepends = ["python"]
-makedepends = ["linux-headers"]
+hostmakedepends = ["muon", "pkgconf", "python", "samurai"]
+makedepends = [
+    "libatomic-chimera-devel-static",
+    "libunwind-devel-static",
+    "linux-headers",
+    "musl-devel-static",
+]
 pkgdesc = "Wrapper library for evdev devices"
 license = "MIT"
 url = "https://gitlab.freedesktop.org/libevdev/libevdev"
@@ -26,5 +31,30 @@ def _(self):
     return self.default_devel()
 
 
+def post_build(self):
+    # Keep libevdev.so for libinput; link the bundled tools statically.
+    from cbuild.util import compiler
+
+    cc = compiler.C(self)
+    for src, out in [
+        ("tools/touchpad-edge-detector.c", "touchpad-edge-detector-static"),
+        ("tools/mouse-dpi-tool.c", "mouse-dpi-tool-static"),
+        ("tools/libevdev-tweak-device.c", "libevdev-tweak-device-static"),
+    ]:
+        cc.invoke(
+            [src],
+            out,
+            flags=["-DHAVE_CONFIG_H", "-I.", "-Ilibevdev", "-Ibuild"],
+            ldflags=["build/libevdev.a", "-lm", "-static-pie"],
+        )
+
+
 def post_install(self):
     self.install_license("COPYING")
+    for name in [
+        "touchpad-edge-detector",
+        "mouse-dpi-tool",
+        "libevdev-tweak-device",
+    ]:
+        self.uninstall(f"usr/bin/{name}", missing_ok=True)
+        self.install_bin(f"{name}-static", name=name)

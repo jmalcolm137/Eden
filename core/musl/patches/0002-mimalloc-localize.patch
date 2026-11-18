@@ -1,0 +1,12 @@
+--- a/Makefile
++++ b/Makefile
+@@ -152,7 +152,8 @@
+ 
+ ifneq (mallocng,$(MALLOC_DIR))
+ $(EXTRA_OBJ): $(GENH) $(IMPH)
+-	$(CC) -I$(srcdir)/mimalloc/include $(CFLAGS_ALL) -std=gnu11 -fPIC -O3 -DNDEBUG -fvisibility=hidden -isystem `$(CC) -print-resource-dir`/include -c -o $(EXTRA_OBJ) $(srcdir)/mimalloc/src/mimalloc.c
++	$(CC) -I$(srcdir)/mimalloc/include $(CFLAGS_ALL) -std=gnu11 -fPIC -O3 -DNDEBUG -fvisibility=hidden -DMI_LIBC_MUSL=1 -isystem `$(CC) -print-resource-dir`/include -c -o $(EXTRA_OBJ) $(srcdir)/mimalloc/src/mimalloc.c
++	objcopy $(addprefix --keep-global-symbol=,__malloc_init __malloc_atfork __malloc_donate __malloc_tls_teardown __malloc_tls_default __libc_calloc __libc_free __libc_malloc_impl __libc_realloc aligned_alloc malloc_usable_size) $(EXTRA_OBJ)
+ 	sh $(srcdir)/mimalloc-verify-syms.sh $(EXTRA_OBJ)
+ endif
+ 

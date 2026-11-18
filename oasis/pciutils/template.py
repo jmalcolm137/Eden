@@ -1,14 +1,20 @@
 pkgname = "pciutils"
 pkgver = "3.14.0"
-pkgrel = 0
+pkgrel = 1
 # Oasis pkg/pciutils/src
 _commit = "c6030ae1576b6bf1de9b41f53a9ed76137181d99"
-makedepends = ["linux-headers"]
+makedepends = [
+    "libatomic-chimera-devel-static",
+    "libunwind-devel-static",
+    "linux-headers",
+    "musl-devel-static",
+]
 pkgdesc = "PCI utilities"
 license = "GPL-2.0-or-later"
 url = "https://mj.ucw.cz/sw/pciutils"
 source = f"https://git.kernel.org/pub/scm/utils/pciutils/pciutils.git/snapshot/pciutils-{_commit}.tar.gz"
 sha256 = "253f34a5ecc6a5ea199fda11e1a193433438531d9e2fd9ca3855beafa340b4fc"
+tool_flags = {"LDFLAGS": ["-static-pie"]}
 # static-only library, as in the Oasis recipe
 options = ["!lto", "!check"]
 

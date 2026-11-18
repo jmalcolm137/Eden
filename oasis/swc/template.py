@@ -1,20 +1,42 @@
 pkgname = "swc"
 pkgver = "0_git20200101"
-pkgrel = 0
+pkgrel = 2
 # Oasis pkg/swc/src
 _commit = "19893a5ca3239082b904a04fdb9ac7c3a1fb62e2"
 makedepends = [
     "fontconfig-devel",
-    "freetype",
+    "fontconfig-devel-static",
+    "freetype-devel",
+    "freetype-devel-static",
+    "gettext-devel-static",
+    "libatomic-chimera-devel-static",
     "libdrm-devel",
     "libdrm-devel-static",
+    "libevdev-devel",
+    "libevdev-devel-static",
+    "libexpat-devel-static",
+    "libffi8-devel-static",
     "libinput-devel",
-    "libxkbcommon",
+    "libinput-devel-static",
+    "libunwind-devel-static",
+    "libxkbcommon-devel",
+    "libxkbcommon-devel-static",
+    "libxml2-devel-static",
     "linux-headers",
-    "pixman",
-    "wayland",
+    "mtdev",
+    "mtdev-devel",
+    "musl-devel-static",
+    "pixman-devel",
+    "pixman-devel-static",
+    "udev-devel",
+    "udev-devel-static",
+    "wayland-devel",
+    "wayland-devel-static",
+    "wayland-progs",
     "wayland-protocols",
+    "wld",
     "wld-devel",
+    "zlib-static",
 ]
 pkgdesc = "Wayland compositor library"
 license = "MIT"
@@ -22,10 +44,10 @@ url = "https://github.com/michaelforney/swc"
 source = f"{url}/archive/{_commit}.tar.gz"
 sha256 = "d359df126b40296f6f90d680987f7757c6f50ddd1e7b94f7f5fb21a85a73815d"
 # no test suite in the Oasis recipe
-options = ["!lto", "!check"]
+options = ["!lto", "!check", "!strip"]
 
 _cflags = [
-    "-Wall", "-D_GNU_SOURCE",
+    "-Wall", "-D_GNU_SOURCE", "-DENABLE_LIBUDEV",
     "-Dscreen_new=swc__screen_new",
     "-Dremove_resource=swc__remove_resource",
     "-I.", "-Iinclude",
@@ -110,7 +132,46 @@ def build(self):
         ["launch/launch.c", "launch/devmajor-linux.c", "obj/launch_protocol.o"],
         "swc-launch",
         flags=_cflags,
-        ldflags=["/usr/lib/libdrm.a"],
+        ldflags=[
+            "-static-pie",
+            "/usr/lib/libdrm.a",
+            "/usr/lib/libudev.a",
+            "-lz",
+            "-lm",
+            "-ldl",
+            "-lpthread",
+            "-lrt",
+        ],
+    )
+
+
+def post_build(self):
+    # mirror the Oasis lua recipe: libswc.a embeds the Oasis stack so velox
+    # only has to link libswc.a and the Wayland server library
+    self.do(
+        "sh",
+        "-c",
+        "printf 'create libswc-merged.a\\n"
+        "addlib libswc.a\\n"
+        "addlib /usr/lib/libinput.a\\n"
+        "addlib /usr/lib/libquirks.a\\n"
+        "addlib /usr/lib/liblibinput-util.a\\n"
+        "addlib /usr/lib/liblibinput-util-libinput.a\\n"
+        "addlib /usr/lib/libxkbcommon.a\\n"
+        "addlib /usr/lib/libwayland-server.a\\n"
+        "addlib /usr/lib/libwld.a\\n"
+        "addlib /usr/lib/libevdev.a\\n"
+        "addlib /usr/lib/libmtdev.a\\n"
+        "addlib /usr/lib/libudev.a\\n"
+        "addlib /usr/lib/libdrm.a\\n"
+        "addlib /usr/lib/libpixman-1.a\\n"
+        "addlib /usr/lib/libfontconfig.a\\n"
+        "addlib /usr/lib/libfreetype.a\\n"
+        "addlib /usr/lib/libexpat.a\\n"
+        "addlib /usr/lib/libffi.a\\n"
+        "addlib /usr/lib/libxml2.a\\n"
+        "addlib /usr/lib/libz.a\\n"
+        "save\\nend\\n' | ar -M && mv libswc-merged.a libswc.a",
     )
 
 

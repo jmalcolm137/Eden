@@ -1,76 +1,57 @@
 pkgname = "libxkbcommon"
-pkgver = "1.3.1"
-pkgrel = 0
-# Oasis pkg/libxkbcommon/src
-_commit = "88222c8d40543c29af781f7d7e25d202ff40e4b7"
-pkgdesc = "Keyboard description library from Oasis"
+pkgver = "1.13.2"
+pkgrel = 1
+build_style = "meson"
+configure_args = [
+    "-Denable-bash-completion=false",
+    "-Denable-cool-uris=false",
+    "-Denable-docs=false",
+    "-Denable-tools=false",
+    "-Denable-wayland=false",
+    "-Denable-x11=false",
+    "-Denable-xkbregistry=true",
+]
+hostmakedepends = [
+    "muon",
+    "pkgconf",
+    "samurai",
+]
+makedepends = ["libxml2-devel"]
+depends = [
+    "xkeyboard-config",
+]
+pkgdesc = "Keyboard handling library"
 license = "MIT"
 url = "https://xkbcommon.org"
-source = f"https://github.com/xkbcommon/libxkbcommon/archive/{_commit}.tar.gz"
-sha256 = "c411fbb494e7febad4ad6237065181b8de52619b4d044e583df1ac54c391eea4"
-# no test suite
-options = ["!check", "!lto"]
-
-_sources = [
-    "src/compose/parser.c",
-    "src/compose/paths.c",
-    "src/compose/state.c",
-    "src/compose/table.c",
-    "src/xkbcomp/action.c",
-    "src/xkbcomp/ast-build.c",
-    "src/xkbcomp/compat.c",
-    "src/xkbcomp/expr.c",
-    "src/xkbcomp/include.c",
-    "src/xkbcomp/keycodes.c",
-    "src/xkbcomp/keymap.c",
-    "src/xkbcomp/keymap-dump.c",
-    "src/xkbcomp/keywords.c",
-    "src/xkbcomp/parser.c",
-    "src/xkbcomp/rules.c",
-    "src/xkbcomp/scanner.c",
-    "src/xkbcomp/symbols.c",
-    "src/xkbcomp/types.c",
-    "src/xkbcomp/vmod.c",
-    "src/xkbcomp/xkbcomp.c",
-    "src/atom.c",
-    "src/context.c",
-    "src/context-priv.c",
-    "src/keysym.c",
-    "src/keysym-utf.c",
-    "src/keymap.c",
-    "src/keymap-priv.c",
-    "src/state.c",
-    "src/text.c",
-    "src/utf8.c",
-    "src/utils.c",
-]
+source = "https://github.com/xkbcommon/libxkbcommon/archive/xkbcommon-1.13.2.tar.gz"
+sha256 = "acc4d5f7c3cbba5f9f8d08d8bdbeede84ecede46792f47929aa9321873385528"
+# tests require a display or a full graphics stack
+options = ["!check", "!splitstatic"]
 
 
-def pre_build(self):
-    self.cp(self.files_path / "config.h", "config.h")
-    self.cp(self.files_path / "xkbcommon.patch", "xkbcommon.patch")
-    self.do("patch", "-p1", "-i", "xkbcommon.patch")
+@subpackage("libxkbcommon-devel")
+def _(self):
+    return self.default_devel()
 
 
-def build(self):
-    from cbuild.util import compiler
+def post_patch(self):
+    # parser.c/h are pre-generated with bison 3.8.2 and tracked in
+    # files/ (see files/xkbcommon.patch); use them directly instead
+    # of running bison at build time
+    for f in ("parser.c", "parser.h"):
+        self.cp(self.files_path / f, f"src/xkbcomp/{f}")
+    mf = self.cwd / "meson.build"
+    mtext = mf.read_text()
+    old_bison = "bison = find_program('bison', 'win_bison', required: true, version: '>= 3.6')"
+    assert old_bison in mtext
+    mtext = mtext.replace(
+        old_bison, "bison = find_program('bison', 'win_bison', required: false)"
+    )
+    old_gen = "    yacc_gen.process('src/xkbcomp/parser.y'),"
+    assert old_gen in mtext
+    mtext = mtext.replace(old_gen, "    'src/xkbcomp/parser.c',")
+    mf.write_text(mtext)
 
-    cc = compiler.C(self)
-    objs = []
-    flags = ["-I.", "-Iinclude", "-Isrc"]
-    self.mkdir("obj", parents=True)
 
-    for src in _sources:
-        obj = "obj/" + src.replace("/", "_").removesuffix(".c") + ".o"
-        cc.invoke([src], obj, obj_file=True, flags=flags)
-        objs.append(obj)
-
-    self.do("ar", "rcs", "libxkbcommon.a", *objs)
-
-
-def install(self):
-    self.install_file("libxkbcommon.a", "usr/lib")
-    for src in sorted((self.cwd / "include/xkbcommon").glob("*.h")):
-        self.install_file(f"include/xkbcommon/{src.name}", "usr/include/xkbcommon")
-    self.install_file(self.files_path / "xkbcommon.pc", "usr/lib/pkgconfig")
+def post_install(self):
     self.install_license("LICENSE")

@@ -1,18 +1,29 @@
 pkgname = "dmenu"
 pkgver = "4.9"
-pkgrel = 4
+pkgrel = 5
 makedepends = [
     "e2fsprogs-devel-static",
-    "expat",
     "fontconfig-devel",
-    "freetype",
+    "fontconfig-devel-static",
+    "freetype-devel",
+    "freetype-devel-static",
+    "libatomic-chimera-devel-static",
     "libdrm-devel-static",
+    "libexpat-devel",
+    "libexpat-devel-static",
     "libffi8-devel-static",
-    "libxkbcommon",
-    "pixman",
+    "libunwind-devel-static",
+    "libxkbcommon-devel",
+    "libxkbcommon-devel-static",
+    "musl-devel-static",
+    "pixman-devel",
+    "pixman-devel-static",
     "swc",
     "swc-devel",
-    "wayland",
+    "udev-devel",
+    "wayland-devel",
+    "wayland-devel-static",
+    "wayland-progs",
     "wayland-protocols",
     "wld",
     "wld-devel",
@@ -38,19 +49,13 @@ _files = [
 ]
 
 _ldflags = [
+    "-static-pie",
     "/usr/lib/libswc.a",
-    "/usr/lib/libxkbcommon.a",
-    "/usr/lib/libwld.a",
-    "/usr/lib/libfontconfig.a",
-    "/usr/lib/libfreetype.a",
-    "/usr/lib/libpixman.a",
     "/usr/lib/libwayland-client.a",
-    "/usr/lib/libdrm.a",
-    "/usr/lib/libffi.a",
-    "/usr/lib/libexpat.a",
-    "/usr/lib/libuuid.a",
-    "/usr/lib/libz.a",
-    "-lm", "-lpthread", "-ldl",
+    "-lm",
+    "-lpthread",
+    "-ldl",
+    "-lrt",
 ]
 
 
@@ -80,7 +85,9 @@ def build(self):
         flags=_cflags,
         ldflags=_ldflags,
     )
-    cc.invoke(["stest.c"], "stest", flags=_cflags)
+    cc.invoke(
+        ["stest.c"], "stest", flags=_cflags, ldflags=["-static-pie"]
+    )
 
 
 def install(self):

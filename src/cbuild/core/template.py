@@ -479,6 +479,7 @@ core_fields = [
     ("make_use_env", False, bool, False, False, False),
     # meson
     ("meson_dir", ".", str, False, False, False),
+    ("meson_impl", "muon", str, False, False, False),
     # golang
     ("go_mod_dl", None, str, False, False, False),
     ("go_build_tags", [], list, False, False, False),
@@ -519,6 +520,7 @@ core_fields_priority = [
     ("make_use_env", True),
     ("cmake_dir", False),
     ("meson_dir", False),
+    ("meson_impl", False),
     ("hostmakedepends", True),
     ("makedepends", True),
     ("checkdepends", True),

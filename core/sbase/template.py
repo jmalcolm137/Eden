@@ -1,10 +1,11 @@
 pkgname = "sbase"
 pkgver = "0.1"
-pkgrel = 2
+pkgrel = 3
 build_style = "makefile"
-make_build_args = ["MANPREFIX=/usr/share/man"]
+make_build_args = ["MANPREFIX=/usr/share/man", "LDFLAGS=-static-pie"]
 make_install_args = ["MANPREFIX=/usr/share/man"]
 hostmakedepends = ["byacc"]
+makedepends = ["libatomic-chimera-devel-static", "libunwind-devel-static", "musl-devel-static"]
 pkgdesc = "Suckless core utilities from Oasis"
 license = "MIT"
 url = "https://github.com/michaelforney/sbase"
@@ -13,6 +14,17 @@ source = ("https://github.com/michaelforney/sbase/archive/"
 sha256 = "77ce4f6d66541a548d9b539dadbe1d3d2107af1862472a333c11edc65595e0b8"
 # upstream provides a manual tests target, not a make check target
 options = ["!check", "bootstrap"]
+
+
+def post_patch(self):
+    # cbuild's makefile style passes its own LDFLAGS on the command line;
+    # force the static-pie link for the Oasis base utilities
+    p = self.cwd / "Makefile"
+    text = p.read_text()
+    text = text.replace(
+        "include config.mk", "include config.mk\n\noverride LDFLAGS += -static-pie", 1
+    )
+    p.write_text(text)
 
 
 def post_install(self):

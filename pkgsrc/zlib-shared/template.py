@@ -1,0 +1,9 @@
+pkgname = "zlib-shared"
+pkgver = "1.3.1"
+pkgrel = 2
+build_style = "meta"
+depends = ["zlib-static"]
+pkgdesc = "Shared zlib runtime provided by zlib-static"
+license = "Zlib"
+url = "https://zlib.net"
+options = ["empty"]

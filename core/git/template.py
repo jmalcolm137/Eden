@@ -1,10 +1,17 @@
 pkgname = "git"
 pkgver = "2.54.0"
-pkgrel = 0
+pkgrel = 1
 # Oasis pkg/git/src (git.git v2.54.0)
 _commit = "94f057755b7941b321fd11fec1b2e3ca5313a4e0"
 hostmakedepends = ["pkgconf"]
-makedepends = ["bearssl-devel", "curl", "zlib-static"]
+makedepends = [
+    "bearssl-devel-static",
+    "curl",
+    "libatomic-chimera-devel-static",
+    "libunwind-devel-static",
+    "musl-devel-static",
+    "zlib-static",
+]
 pkgdesc = "Fast, scalable, distributed revision control system"
 license = "GPL-2.0-only"
 url = "https://git-scm.com"
@@ -17,6 +24,7 @@ sha256 = [
     "cfb1944f14aa15bd2f59c0b5774aa63a37a448aa1b1b8ab4d5405ea5f22276ea",
     "2d0950c3dd3346f1072e5791ac308961639828f2b6ba91927e64fed97a1bd550",
 ]
+tool_flags = {"LDFLAGS": ["-static-pie"]}
 # Oasis pkg/git config.h. HTTP/IMAP transport uses the Oasis static
 # libcurl.a from core/curl (BearSSL + zlib).
 # no tests; upstream's suite needs a full test harness

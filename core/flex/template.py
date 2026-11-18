@@ -1,12 +1,18 @@
 pkgname = "flex"
 pkgver = "2.6.4"
-pkgrel = 1
+pkgrel = 2
+makedepends = [
+    "libatomic-chimera-devel-static",
+    "libunwind-devel-static",
+    "musl-devel-static",
+]
 depends = ["m4"]
 pkgdesc = "Fast lexical analyser generator"
 license = "BSD-2-Clause"
 url = "https://github.com/westes/flex"
 source = f"{url}/releases/download/v{pkgver}/flex-{pkgver}.tar.gz"
 sha256 = "e87aae032bf07c26f85ac0ed3250998c37621d95f8bd748b31f15b33c45ee995"
+tool_flags = {"LDFLAGS": ["-static-pie"]}
 # no test suite in the Oasis recipe
 options = ["bootstrap", "!check"]
 

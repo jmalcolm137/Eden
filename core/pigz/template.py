@@ -1,13 +1,19 @@
 pkgname = "pigz"
 pkgver = "2.8"
-pkgrel = 1
+pkgrel = 2
 build_style = "makefile"
-makedepends = ["zlib-static"]
+makedepends = [
+    "libatomic-chimera-devel-static",
+    "libunwind-devel-static",
+    "musl-devel-static",
+    "zlib-static",
+]
 pkgdesc = "Parallel gzip, also providing gzip/gunzip/zcat"
 license = "Zlib"
 url = "https://github.com/madler/pigz"
 source = f"https://zlib.net/pigz/pigz-{pkgver}.tar.gz"
 sha256 = "eb872b4f0e1f0ebe59c9f7bd8c506c4204893ba6a8492de31df416f0d5170fd0"
+tool_flags = {"LDFLAGS": ["-static-pie"]}
 # no tests; upstream only has an interactive test target
 options = ["!check", "bootstrap"]
 

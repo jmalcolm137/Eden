@@ -1,9 +1,17 @@
 pkgname = "curl"
 pkgver = "8.20.0"
-pkgrel = 4
+pkgrel = 5
 # Oasis pkg/curl/src
 _commit = "291c75968e8551a15fe0d3a4418c5db236c46c4b"
-makedepends = ["bearssl-devel", "linux-headers", "zlib-static"]
+makedepends = [
+    "bearssl-devel",
+    "bearssl-devel-static",
+    "libatomic-chimera-devel-static",
+    "libunwind-devel-static",
+    "linux-headers",
+    "musl-devel-static",
+    "zlib-static",
+]
 pkgdesc = "URL transfer library and tool from Oasis"
 license = "curl"
 url = "https://curl.se"
@@ -66,7 +74,7 @@ def build(self):
     cc.invoke(
         tool_objs,
         "curl",
-        ldflags=["libcurl.a", "-lbearssl", "-lz", "-lm", "-ldl", "-lpthread"],
+        ldflags=["-static-pie", "libcurl.a", "-lbearssl", "-lz", "-lm", "-ldl", "-lpthread"],
     )
 
 

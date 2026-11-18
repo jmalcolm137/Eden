@@ -1,8 +1,12 @@
 pkgname = "bzip2"
 # update bzip2.pc if the version changes (and check if upstreamed)
 pkgver = "1.0.8"
-pkgrel = 4
+pkgrel = 6
 hostmakedepends = ["pkgconf"]
+makedepends = [
+    "libatomic-chimera-devel-static",
+    "musl-devel-static",
+]
 provides = [self.with_pkgver("libbz2")]
 pkgdesc = "Freely available, patent free, high-quality data compressor"
 license = "custom:bzip2"
@@ -21,6 +25,17 @@ def build(self):
     ]
     self.do(*cmd, "-f", "Makefile-libbz2_so", *eargs)
     self.do(*cmd, "bzip2recover", "libbz2.a", *eargs)
+    # The shared-lib build produces a dynamically linked bzip2; build the
+    # normal target so the installed tool links libbz2.a into a static-pie
+    # executable instead.
+    self.do(
+        *cmd,
+        "-B",
+        "bzip2",
+        "bzip2recover",
+        *eargs,
+        "LDFLAGS=" + self.get_ldflags(shell=True) + " -static-pie -unwindlib=none",
+    )
 
 
 def check(self):
@@ -28,8 +43,6 @@ def check(self):
 
 
 def install(self):
-    self.cp("bzip2-shared", "bzip2")
-
     self.install_bin("bzip2")
     self.install_bin("bzip2recover")
 

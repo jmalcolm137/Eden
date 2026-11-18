@@ -1,11 +1,16 @@
 pkgname = "llvm"
 pkgver = "22.1.8"
-pkgrel = 0
+pkgrel = 1
 # x86_64 only for the initial source-bootstrap toolchain; other
 # architectures can be restored once this path is working.
 archs = ["x86_64"]
 build_style = "cmake"
 configure_args = [
+    "-DCLANG_LINK_CLANG_DYLIB=OFF",
+    "-DLLVM_LINK_LLVM_DYLIB=OFF",
+    "-DBUILD_SHARED_LIBS=OFF",
+    "-DLLVM_USE_STATIC_ZSTD=ON",
+    "-DZLIB_USE_STATIC_LIBS=ON",
     "-DCMAKE_BUILD_TYPE=Release",
     "-DENABLE_LINKER_BUILD_ID=ON",
     "-DCOMPILER_RT_USE_BUILTINS_LIBRARY=ON",
@@ -25,7 +30,6 @@ configure_args = [
     "-DLLVM_INSTALL_BINUTILS_SYMLINKS=ON",
     "-DLLVM_INSTALL_UTILS=ON",
     "-DLLVM_BUILD_LLVM_DYLIB=ON",
-    "-DLLVM_LINK_LLVM_DYLIB=ON",
     "-DLLVM_ENABLE_RTTI=ON",
     "-DLLVM_ENABLE_PER_TARGET_RUNTIME_DIR=ON",
     "-DCLANG_DEFAULT_RTLIB=compiler-rt",
@@ -85,19 +89,36 @@ _enabled_projects = ["clang", "clang-tools-extra", "lld"]
 _enabled_runtimes = ["compiler-rt", "libcxx", "libcxxabi", "libunwind"]
 
 if self.stage > 0:
-    configure_args += ["-DLLVM_ENABLE_FFI=ON"]
+    configure_args += [
+        "-DLLVM_ENABLE_FFI=ON",
+        # Force the static libffi; the dynamic one cannot be used by a
+        # -static-pie executable and CMake caches the shared path.
+        "-DFFI_LIBRARIES=/usr/lib/libffi.a",
+    ]
+    # static-pie executables need the bootstrap runtime archives too, so
+    # point the link step at them explicitly (CMake ignores LDFLAGS when
+    # CMAKE_EXE_LINKER_FLAGS is set)
+    _exe_ldflags = "-static-pie"
     hostmakedepends += ["libffi8-devel"]
     makedepends += [
+        "libatomic-chimera-devel-static",
+        "libedit-devel-static",
+        "libffi8-devel-static",
+        "linux-headers",
+        "musl-devel-static",
+        "netbsd-curses-devel-static",
         "python-devel",
         "libedit-devel",
         "libffi8-devel",
         "zstd-devel",
-        "linux-headers",
+        "zstd-devel-static",
+        "zlib-static",
     ]
     # enable LTO except on riscv where it's broken
     # also use llvm-bootstrap
     if not self.profile.cross:
         hostmakedepends += ["llvm-bootstrap"]
+        _exe_ldflags += " -L/usr/lib/llvm-bootstrap/lib"
         # set all the stuff that matters
         configure_args += [
             "-DCMAKE_AR=/usr/lib/llvm-bootstrap/bin/llvm-ar",
@@ -123,6 +144,7 @@ if self.stage > 0:
         # don't build flang/mlir for stage 1 to save time
         if self.stage >= 2:
             hostmakedepends += ["llvm", "clang-tools-extra", "mlir"]
+    configure_args.append(f"-DCMAKE_EXE_LINKER_FLAGS={_exe_ldflags}")
 else:
     configure_args += [
         "-DLLVM_ENABLE_LLD=ON",

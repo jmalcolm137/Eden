@@ -42,7 +42,7 @@ def collect_repos(mrepo, intree, arch, use_altrepo, use_stage, use_net):
             # know that remote repos will not be used during this run
             if not use_net:
                 continue
-            for cr in srepos:
+            for cr in set(srepos) | rrepos:
                 if cr not in rrepos:
                     continue
                 ret.append("--repository")

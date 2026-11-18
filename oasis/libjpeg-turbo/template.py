@@ -38,6 +38,7 @@ def build(self):
     objs = []
     flags = [
         "-I.",
+        "-fPIC",
         "-DHAVE__THREAD_LOCAL=1",
         "-DHAVE___BUILTIN_CTZL=1",
     ]
@@ -49,11 +50,49 @@ def build(self):
         objs.append(obj)
 
     self.do("ar", "rcs", "libjpeg-turbo.a", *objs)
+    vmap = self.cwd / "libjpeg8.map"
+    vmap.write_text("LIBJPEG_8.0 {\n    global: *;\n};\n")
+    self.do(
+        self.get_tool("CC"),
+        "-shared",
+        "-fPIC",
+        "-Wl,-soname,libjpeg.so.8",
+        "-Wl,--version-script,libjpeg8.map",
+        "-o",
+        "libjpeg.so.8",
+        *objs,
+    )
 
 
 def install(self):
     self.install_file("libjpeg-turbo.a", "usr/lib")
+    self.install_file("libjpeg.so.8", "usr/lib")
+    self.install_link("usr/lib/libjpeg.so", "libjpeg.so.8")
     self.install_file("jpeglib.h", "usr/include")
     self.install_file("jmorecfg.h", "usr/include")
     self.install_file("jconfig.h", "usr/include")
+    self.install_file("jerror.h", "usr/include")
+
+    pc = self.destdir / "usr/lib/pkgconfig/libjpeg.pc"
+    pc.parent.mkdir(parents=True, exist_ok=True)
+    pc.write_text(
+        "prefix=/usr\n"
+        "exec_prefix=${prefix}\n"
+        "libdir=${exec_prefix}/lib\n"
+        "includedir=${prefix}/include\n"
+        "\n"
+        "Name: libjpeg\n"
+        "Description: JPEG image codec\n"
+        "Version: 2.0.6\n"
+        "Libs: -L${libdir} -ljpeg\n"
+        "Cflags: -I${includedir}\n"
+    )
     self.install_license("LICENSE.md")
+
+
+@subpackage("libjpeg-turbo-devel")
+def _(self):
+    # the static build keeps headers in the main package for Oasis consumers
+    self.depends = [self.parent]
+    self.options = ["empty"]
+    return []

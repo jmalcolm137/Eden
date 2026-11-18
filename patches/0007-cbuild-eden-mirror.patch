@@ -1,0 +1,21 @@
+From: Eden Linux <cports@local>
+Subject: [PATCH] default to the Eden repository mirror
+
+The bootstrap and dependency resolution must never fall back to the Chimera
+repository. The local config sets this explicitly, but keep the engine default
+consistent so a missing [apk] section cannot reach Chimera.
+---
+ src/runner.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/runner.py b/src/runner.py
+--- a/src/runner.py
++++ b/src/runner.py
+@@ -9,6 +9,6 @@
+ 
+ opt_apkcmd = "apk"
+-opt_apkrepo = "https://repo.chimera-linux.org/current"
++opt_apkrepo = "https://repos.eden-linux.org"
+ opt_bwcmd = "bwrap"
+ opt_cflags = "-O2"
+ opt_cxxflags = "-O2"

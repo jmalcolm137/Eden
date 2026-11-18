@@ -1,18 +1,25 @@
 pkgname = "wayland-protocols"
-pkgver = "1.31"
+pkgver = "1.49"
 pkgrel = 0
-# Oasis pkg/wayland-protocols/src
-_commit = "4624cfaaf563cd7be5e2e2087c8de6d3a48ea867"
 build_style = "meson"
-configure_args = ["-Dtests=false"]
-pkgdesc = "Wayland protocol extensions"
+configure_args = [
+    "-Dtests=false",
+]
+hostmakedepends = [
+    "muon",
+    "pkgconf",
+    "samurai",
+    "wayland-progs",
+]
+makedepends = [
+    "wayland-devel",
+]
+pkgdesc = "Wayland protocol specifications"
 license = "MIT"
-url = "https://gitlab.freedesktop.org/wayland/wayland-protocols"
-source = (
-    f"{url}/-/archive/{_commit}/wayland-protocols-{_commit}.tar.gz"
-)
-sha256 = "c9c7364bc59fb9421e3f87c421b87ef910e140b4b8144511106dee4bf5f78f18"
-# no test suite in the Oasis recipe
+url = "https://wayland.freedesktop.org"
+source = "https://gitlab.freedesktop.org/wayland/wayland-protocols/-/archive/1.49/wayland-protocols-1.49.tar.gz"
+sha256 = "8d94eee148db4d8111ccc0d4331de2f82d4b28c38e30eace9f052886480f7d86"
+# tests require a display or a full graphics stack
 options = ["!check"]
 
 

@@ -1,22 +1,34 @@
 pkgname = "velox"
 pkgver = "0_git20201110"
-pkgrel = 0
+pkgrel = 2
 # Oasis pkg/velox/src
 _commit = "2ae5e99dfcccfc10f98b3e1a697201db4a8676f8"
-hostmakedepends = ["wayland"]
+hostmakedepends = ["wayland-progs"]
 makedepends = [
-    "fontconfig",
-    "libdrm",
-    "libevdev",
-    "libinput",
-    "libxkbcommon",
+    "fontconfig-devel",
+    "libatomic-chimera-devel-static",
+    "libdrm-devel",
+    "libdrm-devel-static",
+    "libevdev-devel",
+    "libevdev-devel-static",
+    "libinput-devel",
+    "libinput-devel-static",
+    "libunwind-devel-static",
+    "libxkbcommon-devel",
+    "libxkbcommon-devel-static",
     "linux-headers",
     "mtdev",
-    "pixman",
+    "mtdev-devel",
+    "musl-devel-static",
+    "pixman-devel",
     "swc",
-    "util-linux",
-    "wayland",
+    "swc-devel",
+    "udev-devel",
+    "udev-devel-static",
+    "wayland-devel",
+    "wayland-devel-static",
     "wld",
+    "wld-devel",
 ]
 pkgdesc = "Wayland compositor from Oasis"
 license = "MIT"
@@ -40,18 +52,17 @@ _sources = [
 def build(self):
     from cbuild.util import compiler
 
-    self.mkdir("gen", parents=True)
     self.do(
         "wayland-scanner", "client-header", "protocol/velox.xml",
-        "gen/velox-client-protocol.h",
+        "protocol/velox-client-protocol.h",
     )
     self.do(
         "wayland-scanner", "server-header", "protocol/velox.xml",
-        "gen/velox-server-protocol.h",
+        "protocol/velox-server-protocol.h",
     )
     self.do(
         "wayland-scanner", "private-code", "protocol/velox.xml",
-        "gen/velox-protocol.c",
+        "protocol/velox-protocol.c",
     )
 
     cc = compiler.C(self)
@@ -60,14 +71,13 @@ def build(self):
         "-D_GNU_SOURCE",
         '-DVELOX_LIBEXEC="/usr/lib/velox"',
         "-I.",
-        "-Igen",
         "-I/usr/include/pixman-1",
         "-I/usr/include/freetype2",
     ]
     self.mkdir("obj", parents=True)
 
     objs = []
-    for src in _sources + ["gen/velox-protocol.c"]:
+    for src in _sources + ["protocol/velox-protocol.c"]:
         obj = "obj/" + src.rsplit("/", 1)[-1].removesuffix(".c") + ".o"
         cc.invoke([src], obj, obj_file=True, flags=flags)
         objs.append(obj)
@@ -77,29 +87,41 @@ def build(self):
         "velox",
         flags=flags,
         ldflags=[
-            "-Wl,--start-group",
+            "-static-pie",
             "-lswc",
-            "-lwld",
-            "-lwayland-server",
-            "-lwayland-client",
-            "-linput",
-            "-lxkbcommon",
-            "-lpixman",
-            "-lfontconfig",
-            "-lfreetype",
-            "-lexpat",
-            "-ldrm",
-            "-levdev",
-            "-lmtdev",
-            "-luuid",
-            "-Wl,--end-group",
+            "/usr/lib/libwayland-server.a",
             "-lm",
             "-ldl",
+            "-lpthread",
+            "-lrt",
+        ],
+    )
+
+    # the Lua recipe also builds the static status_bar helper
+    self.do("cp", "/usr/share/swc/swc-protocol.c", "swc-protocol.c")
+    self.do(
+        "cp",
+        "/usr/include/swc-client-protocol.h",
+        "protocol/swc-client-protocol.h",
+    )
+    cc.invoke(
+        ["clients/status_bar.c", "protocol/velox-protocol.c", "swc-protocol.c"],
+        "status_bar",
+        flags=flags,
+        ldflags=[
+            "-static-pie",
+            "-lswc",
+            "/usr/lib/libwayland-client.a",
+            "-lm",
+            "-ldl",
+            "-lpthread",
+            "-lrt",
         ],
     )
 
 
 def install(self):
     self.install_bin("velox")
+    self.install_file("status_bar", "usr/lib/velox", mode=0o755)
     self.install_file("velox.conf.sample", "usr/share/doc/velox")
     self.install_license("LICENSE")

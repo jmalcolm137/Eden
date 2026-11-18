@@ -5,6 +5,7 @@ pkgrel = 1
 _commit = "51b7f2abdade71cd9bb0e7a373ef2610ec6f9daf"
 # Do not provide the bare zlib virtual here: the pre-bootstrapped stage-0
 # root may still contain zlib-ng-compat from older binary packages.
+hostmakedepends = ["pkgconf"]
 provides = [
     f"zlib-devel-static={pkgver}-r{pkgrel}",
     f"pc:zlib={pkgver}",
@@ -58,10 +59,20 @@ def build(self):
         objs.append(obj)
 
     self.do("ar", "rcs", "libz.a", *objs)
+    self.do(
+        self.get_tool("CC"),
+        "-shared",
+        "-Wl,-soname,libz.so.1",
+        "-o",
+        "libz.so.1",
+        *objs,
+    )
 
 
 def install(self):
     self.install_lib("libz.a", mode=0o644)
+    self.install_file("libz.so.1", "usr/lib")
+    self.install_link("usr/lib/libz.so", "libz.so.1")
     self.install_file("zlib.h", "usr/include")
     self.install_file("zconf.h", "usr/include")
     self.install_file(self.files_path / "zlib.pc", "usr/lib/pkgconfig")

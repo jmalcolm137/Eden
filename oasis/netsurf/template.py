@@ -1,20 +1,30 @@
 pkgname = "netsurf"
 pkgver = "3.10"
 pkgrel = 7
-hostmakedepends = ["wayland"]
-makedepends = [
+hostmakedepends = [
     "bearssl",
+    "bearssl-devel-static",
     "curl",
-    "expat",
-    "freetype",
-    "libffi",
+    "freetype-devel",
+    "freetype-devel-static",
+    "libatomic-chimera-devel-static",
+    "libexpat-devel",
+    "libexpat-devel-static",
+    "libffi8-devel-static",
     "libjpeg-turbo",
-    "libpng",
-    "libxkbcommon",
+    "libpng-devel",
+    "libpng-devel-static",
+    "libunwind-devel-static",
+    "libxkbcommon-devel",
+    "libxkbcommon-devel-static",
     "linux-headers",
-    "pixman",
+    "musl-devel-static",
+    "pixman-devel",
+    "pixman-devel-static",
     "utf8proc",
-    "wayland",
+    "wayland-devel",
+    "wayland-devel-static",
+    "wayland-progs",
     "zlib-static",
 ]
 depends = ["adobe-source-fonts"]
@@ -188,7 +198,7 @@ def build(self):
     netsurf_src += _rels(self, "netsurf/utils/nsurl/*.c")
 
     cflags = self.get_cflags(shell=True)
-    ldflags = self.get_ldflags(shell=True)
+    ldflags = self.get_ldflags(shell=True) + " -static-pie"
     cc = self.get_tool("CC")
     ar = self.get_tool("AR")
 
@@ -328,7 +338,7 @@ def build(self):
     mk.append("\tsed s/netsurf-fb/netsurf/g $< > $@")
     mk.append("")
     mk.append("NETSURF_LIBS = -Wl,--start-group " + " ".join(libs) + " -Wl,--end-group")
-    mk.append("NETSURF_SYSLIBS = -lcurl -lfreetype -ljpeg-turbo -lpng -lz -lpixman -lxkbcommon -lutf8proc -lwayland-client -lwayland-cursor -lexpat -lbearssl -lffi -lm -ldl")
+    mk.append("NETSURF_SYSLIBS = -lcurl -lfreetype -ljpeg-turbo -lpng -lz -lpixman-1 -lxkbcommon -lutf8proc -lwayland-client -lwayland-cursor -lexpat -lffi -lbearssl -lm")
     mk.append("")
     mk.append("netsurf.bin: $(NETSURF_OBJS) obj/xdg-shell-protocol.o $(LIBS)")
     mk.append("\t$(CC) $(LDFLAGS) -o $@ $(NETSURF_OBJS) obj/xdg-shell-protocol.o $(NETSURF_LIBS) $(NETSURF_SYSLIBS)")

@@ -32,9 +32,11 @@ def install(self):
 
 @subpackage("bearssl-devel")
 def _(self):
+    self.depends = [self.parent]
     return ["usr/include", "usr/lib/pkgconfig"]
 
 
 @subpackage("bearssl-devel-static")
 def _(self):
+    self.depends = [self.parent]
     return ["usr/lib/*.a"]

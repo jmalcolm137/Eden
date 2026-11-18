@@ -1,8 +1,8 @@
 pkgname = "musl"
 pkgver = "1.2.6"
-pkgrel = 5
+pkgrel = 6
 _commit = "9fa28ece75d8a2191de7c5bb53bed224c5947417"
-_mimalloc_ver = "2.2.7"
+_mimalloc_ver = "3.7.0"
 build_style = "gnu_configure"
 _configure_base = ["--prefix=/usr", "--disable-gcc-wrapper"]
 configure_args = [*_configure_base]
@@ -22,7 +22,7 @@ source = [
 source_paths = [".", "mimalloc"]
 sha256 = [
     "d3baf222d234f2121e71b7eabd0c17667b7a3733b3077e99f9920c69cb5899df",
-    "8e0ed89907a681276bff2e49e9a048b47ba51254ab60daf6b3c220acac456a95",
+    "1b8653b9ff9b841a97f2c50fd996e89e1a0cb712c3c5b0980ef16a027eb7acf8",
 ]
 compression = "deflate"
 # scp makes it segfault

@@ -37,13 +37,20 @@ done
 mkdir -p "$here/etc"
 rm -rf "$here/etc/build_profiles"
 cp -a "$upstream/etc/build_profiles" "$here/etc/build_profiles"
-# The local tree does not use the Chimera user repository.
+# The local tree uses only the Eden repositories.
 sed -i 's/\(repos[[:space:]]*=[[:space:]]*main\)[[:space:]]\+user/\1/' "$here"/etc/build_profiles/*.ini
+sed -i 's|^\(repos[[:space:]]*=\).*|\1 core oasis pkgsrc extra|' "$here/etc/build_profiles/x86_64.ini"
 cp -a "$upstream/etc/config.ini.example" "$here/etc/config.ini.example"
+sed -i 's|repo = https://repo.chimera-linux.org/current|repo = https://repos.eden-linux.org|' "$here/etc/config.ini.example"
 
-# Repository definitions and Chimera signing keys.
+# Repository definitions; keep the Eden mirror and trust only our key.
 rm -rf "$here/etc/apk"
 cp -a "$upstream/etc/apk" "$here/etc/apk"
+rm -f "$here"/etc/apk/keys/*@chimera-linux.org*.pub
+cat > "$here/etc/apk/repositories.d/01-repos-remote.conf" <<'EOF'
+@mirror@/@section@
+@mirror@/@section@/debug
+EOF
 
 for f in COPYING.md .flake8 pyproject.toml; do
     if [ -f "$upstream/$f" ]; then

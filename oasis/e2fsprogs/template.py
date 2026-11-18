@@ -12,6 +12,7 @@ configure_args = [
 ]
 configure_env = {"ac_cv_have_decl_lseek64": "yes", "ac_cv_func_lseek64": "yes"}
 configure_gen = []
+hostmakedepends = ["pkgconf"]
 makedepends = ["linux-headers"]
 pkgdesc = "Ext2/3/4 filesystem utilities"
 license = "GPL-2.0-or-later AND LGPL-2.1-or-later"

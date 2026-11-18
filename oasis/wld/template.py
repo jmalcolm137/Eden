@@ -5,11 +5,12 @@ pkgrel = 0
 _commit = "3fe15e769cf81784215c003b18438184083af8ce"
 makedepends = [
     "fontconfig-devel",
-    "freetype",
+    "freetype-devel",
     "libdrm-devel",
     "linux-headers",
-    "pixman",
-    "wayland",
+    "pixman-devel",
+    "wayland-devel",
+    "wayland-progs",
     "wayland-protocols",
 ]
 pkgdesc = "Wayland display library"

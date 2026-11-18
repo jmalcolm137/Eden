@@ -1,86 +1,86 @@
 pkgname = "fontconfig"
-pkgver = "2.13.1"
-pkgrel = 0
+pkgver = "2.18.3"
+pkgrel = 2
 build_style = "gnu_configure"
-configure_args = ["--disable-docs", "--disable-shared", "--enable-static"]
-configure_env = {
-    "UUID_CFLAGS": "-I/usr/include",
-    "FREETYPE_CFLAGS": "-I/usr/include/freetype2",
-    "FREETYPE_LIBS": "-L/usr/lib -lfreetype",
-    "UUID_LIBS": "-L/usr/lib -luuid",
-}
-configure_gen = []
-make_build_args = [
-    "SUBDIRS=fontconfig fc-case fc-lang src fc-cache fc-cat fc-conflist "
-    "fc-list fc-match fc-pattern fc-query fc-scan fc-validate conf.d its po po-conf"
+configure_args = [
+    "--disable-docs",
+    "--enable-static",
+    "--with-cache-dir=/var/cache/fontconfig",
 ]
-make_install_args = [
-    "SUBDIRS=fontconfig fc-case fc-lang src fc-cache fc-cat fc-conflist "
-    "fc-list fc-match fc-pattern fc-query fc-scan fc-validate conf.d its po po-conf"
+configure_gen = []
+hostmakedepends = [
+    "gettext",
+    "gperf",
+    "pkgconf",
+    "python",
 ]
 makedepends = [
-    "e2fsprogs-devel",
-    "e2fsprogs-devel-static",
-    "expat",
-    "freetype",
-    "gperf",
-    "zlib-static",
+    "freetype-devel",
+    "freetype-devel-static",
+    "libatomic-chimera-devel-static",
+    "libexpat-devel",
+    "libexpat-devel-static",
+    "libunwind-devel-static",
+    "musl-devel-static",
 ]
-pkgdesc = "Font configuration and customisation library"
+triggers = ["/usr/share/fonts/*"]
+pkgdesc = "Library for configuring and customizing font access"
 license = "MIT"
-url = "https://www.freedesktop.org/wiki/Software/fontconfig"
-source = (
-    "https://www.freedesktop.org/software/fontconfig/release/"
-    f"fontconfig-{pkgver}.tar.gz"
-)
-sha256 = "9f0d852b39d75fc655f9f53850eb32555394f36104a044bb2b2fc9e66dbbfa7f"
-# no test suite in the Oasis recipe
-options = ["etcfiles", "!check"]
+url = "https://www.fontconfig.org"
+source = "https://gitlab.freedesktop.org/api/v4/projects/890/packages/generic/fontconfig/2.18.3/fontconfig-2.18.3.tar.xz"
+sha256 = "4f7b554a38cdf78c033f666c8871f3749e14a094f65a07f630c91ed0b43d35e3"
+# tests require a display and test fonts
+options = ["etcfiles", "!check", "!splitstatic"]
 
 
-def pre_build(self):
-    self.cp(self.files_path / "fcobjshash.h", "build/fcobjshash.h")
-    (self.cwd / "build/fcobjshash.h").touch()
-    p = self.cwd / "build/fcobjshash.gperf"
-    if not p.exists():
-        p.write_text("")
-    p.touch()
-    stamp = self.cwd / "build/stamp-fcobjshash.gperf"
-    stamp.write_text("")
-    stamp.touch()
+def post_build(self):
+    # Keep libfontconfig.so for consumers and relink the fc-* tools against
+    # the static archive.
+    from cbuild.util import compiler
 
-    for mk in (self.cwd / "build").glob("fc-*/Makefile"):
-        text = mk.read_text()
-        text = text.replace(
-            "${top_builddir}/src/libfontconfig.la",
-            "${top_builddir}/src/libfontconfig.la /usr/lib/libz.a",
+    cc = compiler.C(self)
+    libs = [
+        "build/src/.libs/libfontconfig.a",
+        "-lfreetype",
+        "-lexpat",
+        "-lz",
+        "-lm",
+        "-lpthread",
+        "-static-pie",
+    ]
+    for name in [
+        "fc-cache",
+        "fc-cat",
+        "fc-conflist",
+        "fc-list",
+        "fc-match",
+        "fc-pattern",
+        "fc-query",
+        "fc-scan",
+        "fc-validate",
+    ]:
+        cc.invoke(
+            [f"build/{name}/{name}.o"], f"{name}-static", ldflags=libs
         )
-        text = text.replace(
-            "$(top_builddir)/src/libfontconfig.la",
-            "$(top_builddir)/src/libfontconfig.la /usr/lib/libz.a",
-        )
-        mk.write_text(text)
 
-    mk = self.cwd / "build/test/Makefile"
-    if mk.exists():
-        text = mk.read_text()
-        text = text.replace(
-            "${top_builddir}/src/libfontconfig.la",
-            "${top_builddir}/src/libfontconfig.la /usr/lib/libz.a",
-        )
-        text = text.replace(
-            "$(top_builddir)/src/libfontconfig.la",
-            "$(top_builddir)/src/libfontconfig.la /usr/lib/libz.a",
-        )
-        mk.write_text(text)
 
+def post_install(self):
+    for name in [
+        "fc-cache",
+        "fc-cat",
+        "fc-conflist",
+        "fc-list",
+        "fc-match",
+        "fc-pattern",
+        "fc-query",
+        "fc-scan",
+        "fc-validate",
+    ]:
+        self.uninstall(f"usr/bin/{name}", missing_ok=True)
+        self.install_bin(f"{name}-static", name=name)
+    self.install_license("COPYING")
 
 
 @subpackage("fontconfig-devel")
 def _(self):
     return self.default_devel()
-
-
-def post_install(self):
-    self.install_license("COPYING")
-    self.install_link("usr/lib/libfontconfig.so", "libfontconfig.a")

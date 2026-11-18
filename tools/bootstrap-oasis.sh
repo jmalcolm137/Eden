@@ -1,12 +1,11 @@
 #!/bin/sh
 # Build the Oasis-composed cbuild environment.
 #
-# 1. Create a temporary Chimera binary bldroot. It provides gzip and the
-#    toolchain needed to build the local packages.
+# 1. Create a temporary stage-0 bldroot from the published Eden repositories.
 # 2. Build the local Oasis packages and the custom base-cbuild meta using
 #    that temporary root.
 # 3. Create bldroot-oasis from the local base-cbuild. The result contains
-#    Chimera clang/llvm/lld, gmake, musl, apk-tools and bsdtar, plus Oasis
+#    clang/llvm/lld, gmake, musl, apk-tools and bsdtar, plus Oasis
 #    sbase/ubase/oksh/pigz userland, without chimerautils.
 #
 # Use -b bldroot-oasis (or move it to bldroot) afterwards.
@@ -26,17 +25,17 @@ if [ ! -f "etc/keys/$key" ]; then
 fi
 
 tmp_repo=.bootstrap-repo
-tmp_root=bldroot-chimera
+tmp_root=bldroot-stage0
 
 if [ ! -f "$tmp_root/.cbuild_chroot_init" ]; then
-    echo "==> creating temporary Chimera bldroot"
+    echo "==> creating temporary stage-0 bldroot"
     rm -rf "$tmp_repo"
     mkdir -p "$tmp_repo"
     ./cbuild -r "$tmp_repo" -b "$tmp_root" bootstrap
 fi
 
-# Build into a separate repo so the temporary root stays a Chimera root
-# (with chimerautils' grep/awk/gzip) until every package has been built.
+# Build into a separate repo so the temporary root stays the stage-0 root
+# (with the base-cbuild userland) until every package has been built.
 # gmake is first: once base-cbuild is built it pulls in the Oasis userland,
 # which intentionally does not provide everything autoconf expects.
 for p in \
@@ -67,6 +66,7 @@ for p in \
     libedit \
     fortify-headers \
     libatomic-chimera \
+    libcap \
     fakeroot \
     libarchive \
     bearssl \

@@ -3,7 +3,7 @@ pkgver = "4"
 pkgrel = 0
 # Oasis pkg/farbfeld/src; GitHub mirror of the same suckless commit
 _commit = "ab5e3dfc9cdb476218538c6687df9f44826d8f11"
-makedepends = ["libjpeg-turbo", "libpng", "zlib-static"]
+makedepends = ["libjpeg-turbo", "libpng-devel", "libpng-devel-static", "zlib-static"]
 pkgdesc = "Lossless image format and utilities"
 license = "ISC"
 url = "https://tools.suckless.org/farbfeld"

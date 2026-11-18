@@ -11,6 +11,8 @@ hostmakedepends = [
     "libressl-devel",
     "llvm-devel",
     "llvm-tools",
+    "musl-devel",
+    "musl-devel-static",
     "pkgconf",
     "python",
     "rust-bootstrap",
@@ -24,8 +26,7 @@ makedepends = [
     "zlib-static",
     "zstd-devel",
 ]
-depends = ["clang", "libressl", "musl-devel"]
-provides = [self.with_pkgver("cargo")]
+depends = ["clang", "libressl", "musl-devel", "zlib-shared"]
 pkgdesc = "Rust programming language"
 license = "MIT OR Apache-2.0"
 url = "https://rust-lang.org"
@@ -38,9 +39,6 @@ env = {
 }
 # skipped: rust's self-check and cross-version LTO
 options = ["!check", "!lto"]
-
-_rlib_dir = f"usr/lib/rustlib/{self.profile.triplet}"
-
 
 def configure(self):
     trip = self.profile.triplet
@@ -136,7 +134,6 @@ def install(self):
         "python",
         "x.py",
         "install",
-        "--prefix=/usr",
         "--jobs",
         str(self.make_jobs),
         env={"DESTDIR": str(self.chroot_destdir)},
@@ -145,12 +142,44 @@ def install(self):
     self.install_license("COPYRIGHT")
     self.install_license("LICENSE-MIT")
 
+    # upstream installs this to /etc; it belongs with the rust data
+    self.rename(
+        "etc/target-spec-json-schema.json",
+        "usr/share/rust/target-spec-json-schema.json",
+        relative=False,
+    )
+    self.uninstall("etc", missing_ok=True)
+
     trip = self.profile.triplet
     self.uninstall(f"usr/lib/rustlib/{trip}/bin", missing_ok=True)
     self.uninstall("usr/etc", missing_ok=True)
 
-    for f in (self.destdir / "usr/lib").glob("*.so"):
-        rlibf = self.destdir / _rlib_dir / "lib" / f.name
-        rlibf.unlink()
-        self.mv(f, rlibf)
-        f.symlink_to(rlibf.relative_to(f.parent))
+
+
+def post_patch(self):
+    # the bootstrap rustc resolves target libraries via lib64; the
+    # stage0 sysroot is assembled from /usr/lib without that compat link
+    p = self.cwd / "src/bootstrap/src/core/build_steps/compile.rs"
+    text = p.read_text()
+    old = """            builder.cp_link_r(
+                &builder.initial_sysroot.join("lib/rustlib"),
+                &sysroot.join("lib/rustlib"),
+            );"""
+    new = old + """
+            let sysroot_lib64 = sysroot.join("lib64");
+            if sysroot_lib64.is_dir() {
+                let _ = std::fs::remove_dir_all(&sysroot_lib64);
+            }
+            if !sysroot_lib64.exists() {
+                let _ = std::os::unix::fs::symlink("lib", &sysroot_lib64);
+            }"""
+    if old not in text:
+        self.error("failed to patch bootstrap stage0 sysroot")
+    p.write_text(text.replace(old, new))
+
+    # patches touch vendored crates, so drop the file checksums
+    from cbuild.util import cargo
+
+    for d in (self.cwd / "vendor").iterdir():
+        if d.is_dir() and (d / ".cargo-checksum.json").is_file():
+            cargo.clear_vendor_checksums(self, d.name)

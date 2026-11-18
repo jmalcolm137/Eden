@@ -1,6 +1,6 @@
 pkgname = "file"
 pkgver = "5.45"
-pkgrel = 0
+pkgrel = 1
 build_style = "gnu_configure"
 configure_args = [
     "--disable-bzlib",
@@ -8,7 +8,12 @@ configure_args = [
     "--disable-lzlib",
 ]
 configure_gen = []
-makedepends = ["zlib-static"]
+makedepends = [
+    "libatomic-chimera-devel-static",
+    "libunwind-devel-static",
+    "musl-devel-static",
+    "zlib-static",
+]
 pkgdesc = "File type identification utility"
 license = "BSD-2-Clause"
 url = "https://www.darwinsys.com/file"
@@ -23,5 +28,30 @@ def _(self):
     return self.default_devel()
 
 
+def post_build(self):
+    # The default build links src/file against libmagic.so; relink it
+    # statically while still shipping the shared libmagic for consumers.
+    from cbuild.util import compiler
+
+    # The libtool build does not leave a static libmagic archive behind, so
+    # fold the PIC objects into one for the static relink.
+    objs = [
+        str(p.relative_to(self.cwd))
+        for p in sorted((self.cwd / "build/src/.libs").glob("*.o"))
+        if p.name != "file.o"
+    ]
+    self.do("ar", "rcs", "libmagic.a", *objs)
+
+    cc = compiler.C(self)
+    cc.invoke(
+        ["src/file.c"],
+        "file-static",
+        flags=["-DHAVE_CONFIG_H", "-I.", "-Isrc", "-Ibuild", "-Ibuild/src"],
+        ldflags=["libmagic.a", "-lz", "-lm", "-static-pie"],
+    )
+
+
 def post_install(self):
     self.install_license("COPYING")
+    self.uninstall("usr/bin/file")
+    self.install_bin("file-static", name="file")

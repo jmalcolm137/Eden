@@ -1,0 +1,31 @@
+From 90f0c17a70fdc9e57330b7479d56f8aae5d9b8b3 Mon Sep 17 00:00:00 2001
+From: q66 <q66@chimera-linux.org>
+Date: Mon, 20 Dec 2021 01:56:48 +0100
+Subject: [PATCH 09/16] use CBUILD_TARGET_SYSROOT to locate llvm when
+ cross-compiling
+
+---
+ compiler/rustc_llvm/build.rs | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
+
+diff --git a/compiler/rustc_llvm/build.rs b/compiler/rustc_llvm/build.rs
+index c6a4013db..4c34f5315 100644
+--- a/compiler/rustc_llvm/build.rs
++++ b/compiler/rustc_llvm/build.rs
+@@ -459,9 +459,11 @@ fn main() {
+     for lib in &quoted_split(cmd) {
+         if is_crossed {
+             if let Some(stripped) = lib.strip_prefix("-LIBPATH:") {
+-                println!("cargo:rustc-link-search=native={}", stripped.replace(&host, &target));
++                println!("cargo:rustc-link-search=native={}{}",
++                         env::var("CBUILD_TARGET_SYSROOT").unwrap(), stripped);
+             } else if let Some(stripped) = lib.strip_prefix("-L") {
+-                println!("cargo:rustc-link-search=native={}", stripped.replace(&host, &target));
++                println!("cargo:rustc-link-search=native={}{}",
++                         env::var("CBUILD_TARGET_SYSROOT").unwrap(), stripped);
+             }
+         } else if let Some(stripped) = lib.strip_prefix("-LIBPATH:") {
+             println!("cargo:rustc-link-search=native={stripped}");
+-- 
+2.55.0
+

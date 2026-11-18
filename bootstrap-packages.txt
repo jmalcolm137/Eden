@@ -1,11 +1,12 @@
 # Core cports templates (source-bootstrap bldroot).
 #
-# Policy: Oasis first, pkgsrc second, Chimera only when neither provides what
-# is needed. Binary Chimera packages are used for the toolchain/remaining
-# runtime pieces; these templates are the packages we build from source.
+# Policy: Oasis first, pkgsrc second, local templates when neither provides
+# what is needed. The initial stage-0 root is installed from the published Eden
+# mirror at https://repos.eden-linux.org; these templates are the packages we
+# then rebuild from source.
 #
 # Keep this sorted. One source template directory name per line, relative to
-# main/.
+# core/.
 acl
 apk-tools
 argp-standalone
@@ -29,6 +30,7 @@ gmake
 gperf
 libarchive
 libatomic-chimera
+libcap
 libedit
 libffi8
 libressl

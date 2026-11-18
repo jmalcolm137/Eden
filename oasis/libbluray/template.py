@@ -1,7 +1,7 @@
 pkgname = "libbluray"
 pkgver = "1.3.4"
 pkgrel = 0
-makedepends = ["freetype"]
+makedepends = ["freetype-devel"]
 pkgdesc = "Blu-ray disc playback library"
 license = "LGPL-2.1-or-later"
 url = "https://www.videolan.org/developers/libbluray.html"
@@ -13,7 +13,7 @@ options = ["!lto", "!check"]
 _cflags = [
     "-std=c99", "-Wall", "-Wpedantic", "-Wno-error", "-DHAVE_CONFIG_H", "-D_GNU_SOURCE",
     "-I.", "-Isrc", "-Isrc/libbluray", "-Ijni", "-Ijni/linux",
-    "-Icontrib/libudfread/src", "-Iinclude",
+    "-Icontrib/libudfread/src", "-Iinclude", "-I/usr/include/freetype2",
 ]
 
 _sources = [

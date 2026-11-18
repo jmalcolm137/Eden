@@ -16,9 +16,8 @@
  * some way to make it acceptable...
  */
 #define MI_PADDING 0
-
-/* use smaller segments to accommodate smaller arenas */
-#define MI_SEGMENT_SHIFT (7 + MI_SEGMENT_SLICE_SHIFT)
+/* the libc provides its own C++ new handler */
+#define MI_NO_CXX_NEW_HANDLER 1
 
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunused-function"
@@ -43,7 +42,6 @@
 #error Words and bytes must always be lock-free in this context
 #endif
 
-/* arena purge timing stuff (may fix later), stats (can patch out) */
 #if ATOMIC_LLONG_LOCK_FREE != 2
 #error 64-bit atomics must be lock-free for now
 #endif
@@ -58,28 +56,21 @@
 extern int __malloc_replaced;
 extern int __aligned_alloc_replaced;
 
-void * const __malloc_tls_default = (void *)&_mi_heap_empty;
+void * const __malloc_tls_default = (void *)&_mi_theap_empty;
 
 void __malloc_init(pthread_t p) {
+    (void)p;
     _mi_auto_process_init();
 }
 
 void __malloc_tls_teardown(pthread_t p) {
-    /* if we never allocated on it, don't do anything */
-    if (p->malloc_tls == (void *)&_mi_heap_empty)
-        return;
-    /* otherwise finalize the thread and reset */
+    /* the theap lives in the pthread structure in this configuration */
     _mi_thread_done(p->malloc_tls);
-    p->malloc_tls = (void *)&_mi_heap_empty;
 }
 
 /* we have nothing to do here, mimalloc is lock-free */
 void __malloc_atfork(int who) {
-    if (who < 0) {
-        /* disable */
-    } else {
-        /* enable */
-    }
+    (void)who;
 }
 
 /* we have no way to implement this AFAICT */
