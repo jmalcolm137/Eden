@@ -13,7 +13,7 @@ configure_args = [
     "-Dfishcompletiondir=no",
     "-Dzshcompletiondir=no",
 ]
-hostmakedepends = ["meson", "pkgconf"]
+hostmakedepends = ["muon", "pkgconf", "samurai"]
 makedepends = ["xz-devel", "zlib-static", "zstd-devel"]
 depends = ["ubase"]
 pkgdesc = "Linux kernel module handling"
