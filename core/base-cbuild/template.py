@@ -1,10 +1,11 @@
 pkgname = "base-cbuild"
 pkgver = "0.1"
-pkgrel = 22
+pkgrel = 28
 build_style = "meta"
 # musl must be built first to provide shlibs for later packages during stage 0
 depends = [
     "apk-tools",
+    "argp-standalone",
     "awk",
     "base-files",
     "bearssl",
@@ -12,16 +13,21 @@ depends = [
     "byacc",
     "bzip2",
     "clang",
+    "elfutils-devel",
     "fakeroot-core",
     "flex",
     "git",
     "gmake",
     "gsed",
+    "libressl",
+    "linux-headers",
     "linux-personality",
     "lld",
     "llvm",
     "muon",
     "musl-devel",
+    "musl-fts",
+    "musl-obstack",
     "netbsd-curses",
     "oksh",
     "openbsd",

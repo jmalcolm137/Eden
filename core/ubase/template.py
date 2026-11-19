@@ -1,6 +1,6 @@
 pkgname = "ubase"
 pkgver = "0.1"
-pkgrel = 1
+pkgrel = 3
 build_style = "makefile"
 make_build_args = ["MANPREFIX=/usr/share/man", "LDFLAGS=-static-pie"]
 make_install_args = ["MANPREFIX=/usr/share/man"]

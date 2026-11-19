@@ -12,6 +12,7 @@ configure_args = [
     "--disable-sim",
     "--disable-libdecnumber",
     "--with-system-zlib",
+    "--bindir=/usr/gnulib",
 ]
 configure_gen = []
 make_build_env = {"MAKEINFO": "true"}
@@ -25,14 +26,3 @@ sha256 = "d75a94f4d73e7a4086f7513e67e439e8fcdcbb726ffe63f4661744e6256b2cf2"
 # no test suite in the Oasis recipe
 options = ["hardlinks", "!lto", "!check"]
 
-
-@subpackage("as-standalone")
-def _(self):
-    self.subdesc = "GNU assembler"
-
-    return [
-        "usr/bin/as",
-        "?usr/bin/*-as",
-        "usr/share/man/man1/as.1",
-        "?usr/*-linux-musl/bin/as",
-    ]

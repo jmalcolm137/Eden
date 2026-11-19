@@ -1,6 +1,6 @@
 pkgname = "sbase"
 pkgver = "0.1"
-pkgrel = 3
+pkgrel = 5
 build_style = "makefile"
 make_build_args = ["MANPREFIX=/usr/share/man", "LDFLAGS=-static-pie"]
 make_install_args = ["MANPREFIX=/usr/share/man"]
@@ -37,7 +37,7 @@ def post_install(self):
     # provides strings/strip/objcopy, and bsdtar is needed for compressed
     # sources. sed stays: GNU sed is packaged as gsed and autoconf prefers it.
     for f in [
-        "usr/bin/cmp",
+        "usr/bin/bc",
         "usr/bin/getconf",
         "usr/bin/strings",
         "usr/bin/tar",

@@ -1,0 +1,13 @@
+--- a/meson.build
++++ b/meson.build
+@@ -513,7 +513,9 @@
+   mkdir_p = 'mkdir -p "$DESTDIR@0@"'
+   meson.add_install_script('sh', '-c', mkdir_p.format(sbindir))
+ 
+-  ln_s = 'ln -sfr "$DESTDIR@0@/kmod" "$DESTDIR@1@"'
++  # the Oasis ln has no GNU -r; bindir and sbindir are the same directory,
++  # so a plain relative link to kmod is enough
++  ln_s = 'ln -sf kmod "$DESTDIR@1@"'
+   foreach tool : _tools
+     meson.add_install_script('sh', '-c', ln_s.format(bindir, sbindir / tool))
+   endforeach

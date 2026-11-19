@@ -28,90 +28,90 @@ package is then rebuilt from the templates in this tree. The other binary
 inputs are the official Rust stage0 tarballs used by
 `rust-bootstrap`/`cargo-bootstrap`.
 
-### core templates (128)
+### core templates (139)
 
 ```
 acl acl-devel acl-progs apk-tools apk-tools-cache apk-tools-devel apk-tools-
 interactive apk-tools-static-bin argp-standalone attr attr-devel attr-progs
-awk base-cbuild base-cbuild-progs base-files bearssl bearssl-devel bearssl-
-devel-static bubblewrap byacc bzip2 bzip2-devel ca-certificates clang clang-
-analyzer clang-cpp-libs clang-devel clang-devel-static clang-libs clang-rt-
-devel clang-tools-extra clang-tools-extra-static cmake curl fakeroot fakeroot-
-core flex fortify-headers git gmake gsed gperf libarchive-devel libatomic-chimera
-libatomic-chimera-devel libatomic-chimera-devel-static libcap libcap-devel
-libcap-progs libcxx libcxx-devel libcxx-devel-static libcxxabi libcxxabi-devel
-libcxxabi-devel-static libedit libedit-devel libedit-readline-devel libffi8
+awk base-cbuild base-cbuild-progs base-files base-kernel base-kernel-devel bc
+bearssl bearssl-devel bearssl-devel-static bubblewrap byacc bzip2 bzip2-devel
+ca-certificates clang clang-analyzer clang-cpp-libs clang-devel clang-devel-
+static clang-libs clang-rt-devel clang-tools-extra clang-tools-extra-static
+cmake curl elfutils elfutils-devel fakeroot fakeroot-core flang flang-devel
+flang-devel-static flex fortify-headers git gmake gperf gsed kmod kmod-devel
+libatomic-chimera libatomic-chimera-devel libcap libcap-devel libcap-progs
+libcxx libcxx-devel libcxx-devel-static libcxxabi libcxxabi-devel libcxxabi-
+devel-static libedit libedit-devel libedit-readline-devel libffi8
 libffi8-devel libressl libressl-devel libtls-bearssl libtls-bearssl-devel
 libtls-bearssl-devel-static libunwind libunwind-devel libunwind-devel-static
-linux-headers linux-personality lld lld-devel lld-devel-static llvm llvm-
-binutils llvm-bootstrap llvm-devel llvm-devel-static llvm-libs llvm-linker-
-tools llvm-runtime llvm-tools lz4 lz4-devel mandoc mandoc-apropos muon musl
-musl-bsd-headers musl-devel musl-devel-static musl-fts musl-ldso musl-libssp-
-static musl-mallocng musl-mallocng-devel-static musl-obstack musl-progs nasm
-netbsd-curses netbsd-curses-devel netbsd-curses-devel-static oksh openbsd
-openbsd-devel openbsd-devel-static perl pigz pkgconf pkgconf-devel pkgconf-
-libs python python-devel python-meta python-tests samurai sbase ubase
-ugetopt unzip xz xz-devel zlib-static zstd zstd-devel zstd-devel-static zstd-
-progs
+linux-headers linux-kernel linux-personality lld lld-devel lld-devel-static
+llvm llvm-binutils llvm-bootstrap llvm-devel llvm-devel-static llvm-libs llvm-
+linker-tools llvm-runtime llvm-tools lz4 lz4-devel mandoc mandoc-apropos mlir
+mlir-devel mlir-devel-static mlir-libs muon musl musl-bsd-headers musl-devel
+musl-devel-static musl-fts musl-ldso musl-libssp-static musl-mallocng musl-
+mallocng-devel-static musl-obstack musl-progs nasm netbsd-curses netbsd-
+curses-devel netbsd-curses-devel-static oksh openbsd openbsd-devel perl pigz
+pkgconf pkgconf-devel pkgconf-libs python python-devel python-meta python-
+tests samurai sbase ubase ugetopt unzip xz xz-devel zlib-static zstd zstd-
+devel zstd-progs
 ```
 
-### oasis templates (199)
+### oasis templates (191)
 
 ```
-acme-client acpid adobe-source-fonts alsa-lib alsa-lib-devel as-standalone
-atinout autoconf automake b3sum b3sum-devel b3sum-devel-static bc binutils
-blind cacert catgirl cmark cmark-devel cmark-devel-static cproc dav1d
-dav1d-devel dmenu dnssec-rr dosfstools e2fsprogs e2fsprogs-devel e2fsprogs-
-devel-static efibootmgr efivar efivar-devel elftoolchain elftoolchain-devel
-expat f2fs-tools farbfeld ffmpeg ffmpeg-devel file file-devel fontconfig
-fontconfig-devel freetype freetype-devel fribidi fribidi-devel fspec-sync fuse
-fuse-devel gettext gettext-devel hotplugd hyx ii iproute2 jbig2dec jbig2dec-
-devel kbd less libass libass-devel libbluray libbluray-devel libcbor libcbor-
-devel libdrm libdrm-devel libdrm-devel-static libevdev libevdev-devel
-libevdev-devel-static libevent libevent-devel libevent-devel-static libexpat
-libexpat-devel libexpat-progs libffi libfido2 libfido2-devel libgpiod
-libgpiod-devel libinput libinput-devel libjpeg-turbo libjpeg-turbo-devel
-libliftoff libliftoff-devel libliftoff-devel-static libnl libnl-devel
-libpciaccess libpciaccess-devel libplacebo libplacebo-devel libpng libpng-
-devel libtermkey libtirpc libtirpc-devel libtool libtool-devel libtool-libs
-libutp libutp-devel libxkbcommon libxkbcommon-devel libxml2 libxml2-devel
-libxml2-progs lpeg lua luaposix make man-pages-posix mblaze mgba mpv msmtp
-mtdev mtdev-devel mupdf mupdf-devel ncompress netsurf nginx nsd openntpd
-openssh opus opus-devel opus-devel-static pax pciutils pciutils-devel pcre
-pcre-devel pcre-devel-static pdpmake perp pixman pixman-devel pounce pwgen qbe
-quark rc sdhcp sfeed sinit skeleton sndio snes9x squashfs-tools-ng sshfs st
-strace swc swc-devel syslinux syslogd terminus-font texi2mdoc
-the_silver_searcher tinyalsa tinyalsa-devel tinyalsa-devel-static tinyemu
-transmission tz u-boot u-config udev udev-devel unbound usbids utf8proc util-
-linux util-linux-devel util-linux-devel-static util-linux-libs-static velox
-vis wayland wayland-devel wayland-progs wayland-protocols wireguard-tools wl9
-wld wld-devel wpa_supplicant x509cert x509cert-devel x509cert-devel-static
-xkeyboard-config yt-dlp zfs
+acme-client acpid adobe-source-fonts alsa-lib alsa-lib-devel atinout autoconf
+automake b3sum b3sum-devel binutils blind cacert catgirl cmark cmark-devel
+cmark-devel-static cproc dav1d dav1d-devel dmenu dnssec-rr dosfstools
+e2fsprogs e2fsprogs-devel efibootmgr efivar efivar-devel expat f2fs-tools
+farbfeld ffmpeg ffmpeg-devel file file-devel fontconfig fontconfig-devel
+freetype freetype-devel fribidi fribidi-devel fspec-sync fuse fuse-devel
+gettext gettext-devel hotplugd hyx ii iproute2 jbig2dec jbig2dec-devel kbd
+less libass libass-devel libbluray libbluray-devel libcbor libcbor-devel
+libdrm libdrm-devel libevdev libevdev-devel libevent libevent-devel libevent-
+devel-static libexpat libexpat-devel libexpat-progs libffi libfido2
+libfido2-devel libgpiod libgpiod-devel libinput libinput-devel libjpeg-turbo
+libjpeg-turbo-devel libliftoff libliftoff-devel libnl libnl-devel libpciaccess
+libpciaccess-devel libplacebo libplacebo-devel libpng libpng-devel libtermkey
+libtirpc libtirpc-devel libtool libtool-devel libtool-libs libutp libutp-devel
+libxkbcommon libxkbcommon-devel libxml2 libxml2-devel libxml2-progs lpeg lua
+luaposix make man-pages-posix mblaze mcpp mcpp-doc mgba mpv msmtp mtdev mtdev-
+devel mupdf mupdf-devel ncompress netsurf nginx nsd openntpd openssh opus
+opus-devel opus-devel-static pax pciutils pciutils-devel pcre pcre-devel pcre-
+devel-static pdpmake perp pixman pixman-devel pounce pwgen qbe quark rc sdhcp
+sfeed sinit skeleton sndio snes9x squashfs-tools-ng sshfs st strace swc swc-
+devel syslinux syslogd terminus-font texi2mdoc the_silver_searcher tinyalsa
+tinyalsa-devel tinyalsa-devel-static tinyemu transmission tz u-boot u-config
+udev udev-devel unbound usbids utf8proc util-linux util-linux-devel util-
+linux-libs-static velox vis wayland wayland-devel wayland-progs wayland-
+protocols wireguard-tools wl9 wld wld-devel wpa_supplicant x509cert x509cert-
+devel x509cert-devel-static xkeyboard-config yt-dlp zfs
 ```
 
-### pkgsrc templates (128)
+### pkgsrc templates (136)
 
 ```
-adwaita-icon-theme adwaita-icon-theme-legacy atk atk-devel bison brotli
+adwaita-icon-theme adwaita-icon-theme-legacy atk atk-devel bash bison brotli
 brotli-devel brotli-progs cairo cairo-devel cargo-bootstrap dbus dbus-devel
 dbus-libs enchant2 enchant2-devel enchant2-progs gdk-pixbuf gdk-pixbuf-devel
-glib glib-devel glib-networking gmp gmp-cxx gmp-devel gnutls gnutls-devel gst-
-plugins-base gst-plugins-base-devel gstreamer gstreamer-devel gstreamer-progs
-gtk+3 gtk+3-devel gtk-layer-shell gtk-layer-shell-devel harfbuzz harfbuzz-
-devel hicolor-icon-theme hicolor-icon-theme-devel hwdata hwdata-devel hwdata-
-net hwdata-pci hwdata-pnp hwdata-usb icu icu-devel icu-progs iso-codes json-c
-json-c-devel libburn libburn-devel libburn-progs libcanberra libcanberra-devel
-libcurl libcurl-devel libdisplay-info libdisplay-info-devel libepoxy libepoxy-
-devel libexif libexif-devel libglvnd libglvnd-devel libgtop libgtop-devel
-libgudev libgudev-devel libisofs libisofs-devel libnotify libnotify-devel
-libogg libogg-devel libpsl libpsl-devel libpulse libpulse-devel libseat
-libseat-devel libseat-progs libsndfile libsndfile-devel libssh2 libssh2-devel
-libtasn1 libtasn1-devel libtasn1-progs libvorbis libvorbis-devel libxslt
-libxslt-devel libxslt-progs libyaml libyaml-devel meson-real nettle nettle-
-devel nettle-progs nghttp2 nghttp2-devel nodejs pango pango-devel pcre2
-pcre2-devel polkit polkit-devel polkit-libs pulseaudio pulseaudio-progs ripgrep
-rust rust-bootstrap shared-mime-info sqlite sqlite-devel taglib taglib-devel
-upower upower-devel upower-libs uutils-coreutils uutils-findutils zlib-shared
+glib glib-devel glib-networking gm4 gmp gmp-cxx gmp-devel gnutls gnutls-devel
+gst-plugins-base gst-plugins-base-devel gstreamer gstreamer-devel gstreamer-
+progs gtk+3 gtk+3-devel gtk-layer-shell gtk-layer-shell-devel harfbuzz
+harfbuzz-devel hicolor-icon-theme hicolor-icon-theme-devel hwdata hwdata-devel
+hwdata-net hwdata-pci hwdata-pnp hwdata-usb icu icu-devel icu-progs iso-codes
+json-c json-c-devel libburn libburn-devel libburn-progs libcanberra
+libcanberra-devel libcurl libcurl-devel libdisplay-info libdisplay-info-devel
+libepoxy libepoxy-devel libexif libexif-devel libglvnd libglvnd-devel libgtop
+libgtop-devel libgudev libgudev-devel libisofs libisofs-devel libnotify
+libnotify-devel libogg libogg-devel libpsl libpsl-devel libpulse libpulse-
+devel libseat libseat-devel libseat-progs libsndfile libsndfile-devel libssh2
+libssh2-devel libtasn1 libtasn1-devel libtasn1-progs libvorbis libvorbis-devel
+libxslt libxslt-devel libxslt-progs libyaml libyaml-devel linux-firmware
+linux-firmware-amdgpu linux-firmware-broadcom linux-firmware-intel linux-
+firmware-nvidia linux-firmware-radeon meson-real nettle nettle-devel nettle-
+progs nghttp2 nghttp2-devel nodejs pango pango-devel pcre2 pcre2-devel polkit
+polkit-devel polkit-libs pulseaudio pulseaudio-progs ripgrep rust rust-
+bootstrap shared-mime-info sqlite sqlite-devel taglib taglib-devel upower
+upower-devel upower-libs uutils-coreutils uutils-findutils zlib-shared
 ```
 
 ### extra templates (103)

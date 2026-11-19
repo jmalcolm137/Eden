@@ -4,14 +4,11 @@ acpid
 adobe-source-fonts
 alsa-lib
 alsa-lib-devel
-as-standalone
 atinout
 autoconf
 automake
 b3sum
 b3sum-devel
-b3sum-devel-static
-bc
 binutils
 blind
 cacert
@@ -27,12 +24,9 @@ dnssec-rr
 dosfstools
 e2fsprogs
 e2fsprogs-devel
-e2fsprogs-devel-static
 efibootmgr
 efivar
 efivar-devel
-elftoolchain
-elftoolchain-devel
 expat
 f2fs-tools
 farbfeld
@@ -67,10 +61,8 @@ libcbor
 libcbor-devel
 libdrm
 libdrm-devel
-libdrm-devel-static
 libevdev
 libevdev-devel
-libevdev-devel-static
 libevent
 libevent-devel
 libevent-devel-static
@@ -88,7 +80,6 @@ libjpeg-turbo
 libjpeg-turbo-devel
 libliftoff
 libliftoff-devel
-libliftoff-devel-static
 libnl
 libnl-devel
 libpciaccess
@@ -116,6 +107,8 @@ luaposix
 make
 man-pages-posix
 mblaze
+mcpp
+mcpp-doc
 mgba
 mpv
 msmtp
@@ -179,7 +172,6 @@ usbids
 utf8proc
 util-linux
 util-linux-devel
-util-linux-devel-static
 util-linux-libs-static
 velox
 vis

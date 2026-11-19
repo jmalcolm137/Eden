@@ -3,6 +3,7 @@ adwaita-icon-theme
 adwaita-icon-theme-legacy
 atk
 atk-devel
+bash
 bison
 brotli
 brotli-devel
@@ -21,6 +22,7 @@ gdk-pixbuf-devel
 glib
 glib-devel
 glib-networking
+gm4
 gmp
 gmp-cxx
 gmp-devel
@@ -97,6 +99,12 @@ libxslt-devel
 libxslt-progs
 libyaml
 libyaml-devel
+linux-firmware
+linux-firmware-amdgpu
+linux-firmware-broadcom
+linux-firmware-intel
+linux-firmware-nvidia
+linux-firmware-radeon
 meson-real
 nettle
 nettle-devel

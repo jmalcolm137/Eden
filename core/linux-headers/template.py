@@ -1,5 +1,5 @@
 pkgname = "linux-headers"
-pkgver = "7.0.12"
+pkgver = "7.3.5"
 pkgrel = 0
 # x86_64 only for the initial source-bootstrap toolchain; other
 # architectures can be restored once this path is working.
@@ -8,8 +8,8 @@ hostmakedepends = ["gmake", "perl"]
 pkgdesc = "Linux API headers for userland development"
 license = "GPL-2.0-only"
 url = "https://www.kernel.org"
-source = f"$(KERNEL_SITE)/kernel/v{pkgver[0]}.x/linux-{pkgver}.tar.xz"
-sha256 = "57edc9a41efc1ca6b797afa8f4a587a30da2af6bca7356eb56e1e1a4ada265da"
+source = f"https://github.com/CachyOS/linux/releases/download/cachyos-{pkgver}-2/cachyos-{pkgver}-2.tar.gz"
+sha256 = "bb22ad99e1042fae883bab71366f8339367b74c045004fe92ad4923339092e07"
 # nothing to test
 options = ["bootstrap", "!check"]
 
