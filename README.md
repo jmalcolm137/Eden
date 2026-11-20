@@ -45,7 +45,7 @@ cbuild does not directly build and install software. Instead, it builds binary p
 
 It is possible to build all packages from source and to install them locally but apk defaults to retrieving packages from the cloud.
 
-Are the "suckless" utilies too limiting? `apk add gnu-compat` installs fully GNU compatible userland.
+Are the "suckless" utilies too limiting? `apk add gnu-compat` installs a fully GNU compatible userland.
 
 Do you need more advanced development capabilities?
 
@@ -59,7 +59,7 @@ Do you need more advanced development capabilities?
 
 The Velox tiling compositor is not your thing? `apk add xfce4-desktop` and you have an advanced Wayland desktop in moments.
 
-Compiling all the above from source could take days. Much of this software is difficult to port.
+Compiling all the above from source could take days. Much of this software is difficult to port (especially to musl/libc++).
 
 NetBSD pkgsrc, while excellent, can be hit-or-miss on a system like OASIS. Of course, it is still there if you want it.
 
