@@ -1,4 +1,4 @@
-# Linux Eden Project
+# The Linux Eden Project
 
 Eden is a Linux distribution heavily inspired by OASIS Linux. It could be considered a port. Compared to OASIS Linux, it is significantly more "batteries included".
 
@@ -8,8 +8,8 @@ The ISO released on November 20, 2026 boots into a live environment almost ident
 
 The live environment boots to a Wayland desktop running in 100 MB of RAM.
 
-The 400 MB ISO includes a tiling Wayland compositor, fully working C compiler, Python, media player, BitTorrent client, web browser, web server, and a comprehensive suite of utilities.
-But OASIS offer all this as well.
+The 400 MB ISO includes a tiling Wayland compositor, fully working C compiler, Python, media player, BitTorrent client, web browser, web server, OpenSSH client/server, and a comprehensive suite of utilities.
+But OASIS offers all this as well.
 
 Relative to OASIS, what extra batteries are included?
 
