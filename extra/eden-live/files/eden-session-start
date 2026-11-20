@@ -12,6 +12,10 @@ export XDG_SESSION_TYPE=wayland
 export XDG_CURRENT_DESKTOP=XFCE
 export XDG_SESSION_DESKTOP=xfce
 export XKB_CONFIG_ROOT=/usr/share/X11/xkb
+export XCURSOR_THEME=Adwaita
+export XCURSOR_SIZE=24
+# render the pointer in software so VM framebuffers show it
+export WLR_NO_HARDWARE_CURSORS=1
 unset DISPLAY
 unset WAYLAND_DISPLAY
 

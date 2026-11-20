@@ -8,4 +8,11 @@ while [ ! -S /run/seatd.sock ] && [ "$i" -lt 10 ]; do
     i=$((i + 1))
 done
 
+# wait for udev to classify the input devices (libinput needs ID_INPUT)
+i=0
+while [ ! -e /run/udev/ready ] && [ "$i" -lt 15 ]; do
+    sleep 1
+    i=$((i + 1))
+done
+
 exec /usr/bin/runuid action /usr/local/bin/eden-session-start

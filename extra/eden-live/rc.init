@@ -17,7 +17,7 @@ mount -t tmpfs -o mode=1777 tmpfs /dev/shm 2>/dev/null
 echo eden-live > /proc/sys/kernel/hostname
 
 # runtime state
-mkdir -p /run/dbus /run/user /run/wpa_supplicant /run/hostapd /run/seatd
+mkdir -p /run/dbus /run/user /run/wpa_supplicant /run/hostapd /run/seatd /run/udev
 mkdir -p /var/lib/NetworkManager /var/lib/wpa_supplicant /var/run /var/log
 
 # unprivileged session

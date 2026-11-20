@@ -19,17 +19,18 @@ runtime directories and the session user's home, runs a coldplug pass over
 hands the system to `perpd /etc/perp`; `sinit` stays PID 1 and reaps orphans
 while `perp` supervises the long-running daemons. A small static helper
 (`extra/eden-live/hotplug.c`) provides the coldplug pass and a netlink uevent
-listener so kernel modules load without udev.
+listener so kernel modules load without relying on udev.
 
 The perp services (directories under `/etc/perp`, activated by the sticky bit)
 are:
 
 - `dbus` - system bus
+- `udev` - eudev daemon; classifies input devices for libinput
 - `seatd` - seat and device access for the compositor
 - `hotplug` - the uevent listener
 - `wpa_supplicant` - global D-Bus control interface
 - `hostapd` - open demo AP `eden-test` on `wlan1`
-- `networkmanager` - NetworkManager plus the udev-less link poke
+- `networkmanager` - NetworkManager plus the link poke
 - `session` - `runuid action` starts the session bus, `xfconfd` and
   `xfwl4 --backend tty --session /usr/local/bin/eden-session`
 - `console` - root shell on `ttyS0`
@@ -50,6 +51,8 @@ The desktop is 100% Wayland and does not use X11 or Xwayland at all:
 - `xfdesktop` (Wayland support via libxfce4windowing) and `thunar --daemon`
   are started directly by `eden-session`.
 - `xfce4-session`, `xfwm4` and Xwayland are not run.
+- The pointer uses the Adwaita cursor theme and is rendered in software
+  (`WLR_NO_HARDWARE_CURSORS=1`) so VM framebuffers show it.
 
 ## Accounts
 
@@ -60,8 +63,8 @@ The desktop is 100% Wayland and does not use X11 or Xwayland at all:
 
 Assembled from the local `core`, `oasis`, `pkgsrc` and `extra` repositories:
 
-- kernel/base: `linux-kernel`, `base-kernel`, `kmod`, `sinit`, `perp`,
-  `base-cbuild` deps
+- kernel/base: `linux-kernel`, `base-kernel`, `kmod`, `udev`, `sinit`,
+  `perp`, `base-cbuild` deps
 - X11 libraries used by the Wayland clients: `libx11`, `libxcb`, ...
   (`xwayland` is built but unused)
 - desktop: `xfwl4`, `xfce4-panel`, `xfdesktop`, `thunar`, `xfconf`,
@@ -92,9 +95,12 @@ Host tools required: `mksquashfs`, `zstd`, `mkfs.vfat`, `mmd`, `mcopy`.
   explicitly (`mkiso.sh` does this).
 - NetworkManager is patched to clear `NM_UNMANAGED_PLATFORM_INIT` without a
   udev event; combined with the `rc.init` coldplug, the hotplug service and
-  the link poke this lets it manage devices on a udev-less live image.
+  the link poke this lets it manage devices even without udev module events.
 - NetworkManager refuses to load device plugins whose files are not owned by
   root. The squashfs is built with `-all-root` for this reason.
+- libinput ignores input devices unless udev has set `ID_INPUT`. The image
+  runs eudev (built with its programs and rules) for this; module loading
+  stays with the `hotplug` helper, so udev is configured without kmod.
 - Desktop output goes to `/run/user/1000/eden-session.log` so it does not
   flood the serial console.
 
@@ -106,4 +112,3 @@ Host tools required: `mksquashfs`, `zstd`, `mkfs.vfat`, `mmd`, `mcopy`.
   network profile (SSID/credentials) needs to be provided.
 - llvmpipe rendering is slow; no hardware EGL device is required, `xfwl4`
   is patched to accept software devices.
-- No cursor theme is installed, so the pointer is invisible.

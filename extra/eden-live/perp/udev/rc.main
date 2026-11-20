@@ -1,0 +1,19 @@
+#!/bin/sh
+[ "$1" = reset ] && exit 0
+
+mkdir -p /run/udev
+/usr/bin/udevd &
+pid=$!
+
+i=0
+while [ ! -S /run/udev/control ] && [ "$i" -lt 10 ]; do
+    sleep 1
+    i=$((i + 1))
+done
+
+# coldplug: replay "add" for all devices so udev records properties
+/usr/bin/udevadm trigger --action=add >/dev/null 2>&1
+/usr/bin/udevadm settle --timeout=5 >/dev/null 2>&1
+touch /run/udev/ready
+
+wait "$pid"
