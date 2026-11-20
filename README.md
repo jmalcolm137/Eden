@@ -7,6 +7,7 @@ The ISO released on November 20, 2026 boots into a live environment almost ident
 The live environment boots to a Wayland desktop running in 100 MB of RAM.
 
 The 400 MB ISO includes a tiling Wayland compositor, fully working C compiler, Python, media player, BitTorrent client, web browser, web server, and a comprehensive suite of utilities.
+But OASIS offer all this as well.
 
 Relative to OASIS, what extra batteries are included?
 
@@ -20,7 +21,7 @@ cbuild brings Eden complete dependency management for the entire distribution. A
 
 The entire distribution, including the bootable ISO, can be built from source with a single script.
 
-cports makes it very easy to port software to Eden.
+cbuild makes it very easy to port software to Eden.
 
 ## A complete toolchain
 
@@ -28,7 +29,7 @@ OASIS Linux includes the cproc C compiler but it is broken as OASIS does not inc
 
 Eden uses Clang/LLVM as the system compiler and it is included as part of the distribution. All software is built and tested with this version. This includes libc++, compiler-rt, libunwind, lld, and llvm-binutils.
 
-Like Alpine, Adelie, OASIS, and Chimera Linux, Eden uses musl as its C library. Like Chimera Linux, it uses mimalloc as the memory allocator in musl. Unlike Chimera Linux, Eden uses the 3.x release.
+Like Alpine, Adelie, OASIS, and Chimera Linux, Eden uses musl as its C library. Like Chimera Linux, it uses mimalloc as the memory allocator in musl. Unlike Chimera Linux, Eden uses the mimalloc 3.x release.
 
 ## A fully specified kernel
 
@@ -36,21 +37,21 @@ Eden includes cbuild instructions for a Linux kernel based on the kernel from Ca
 
 ## A package manager with online repositories
 
-Eden uses apk, the Alpine Package Keeper package manager from Alpine Linux.
+Eden uses apk, the Alpine Package Keeper package management system from Alpine Linux.
 
-cbuild does not directly build and install software. Instead, it builds binary packages which are then managed by apk (installed, removed, upgraded, etc).
+cbuild does not directly build and install software. Instead, it builds binary packages which are made available to apk to install, upgrade, remove, etc.
 
-It is possible to build all packages from source and to install them locally but apk is also configured to retrieve packages from the cloud.
+It is possible to build all packages from source and to install them locally but apk defaults to retrieving packages from the cloud.
 
-Do you find the "suckless" utilies too limiting? apk add gnu-compat will install a fully GNU compatible userland.
+Are the "suckless" utilies too limiting? `apk add gnu-compat` installs fully GNU compatible userland.
 
 Do you want more advanced development capabilities?
-apk add clang
-apk add rust
-apk add zig
-apk add dotnet
+`apk add clang`
+`apk add rust`
+`apk add zig`
+`apk add dotnet`
 
-Not into the Velox tiling compositor? apk add xfce4-desktop and you have a more advanced desktop in moments.
+Not into the Velox tiling compositor? `apk add xfce4-desktop` and you have a more advanced desktop in moments.
 
 Compiling all the above from source could take days. Much of this software is difficult to port.
 
