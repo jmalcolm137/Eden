@@ -1,0 +1,58 @@
+#!/bin/sh
+# sinit (PID 1) runs this, which prepares the live root and hands the
+# system over to perpd. sinit stays PID 1 and reaps orphans.
+
+export PATH=/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
+
+mkdir -p /dev /proc /sys /run /tmp
+mount -t devtmpfs devtmpfs /dev 2>/dev/null
+mount -t proc proc /proc 2>/dev/null
+mount -t sysfs sysfs /sys 2>/dev/null
+mount -t tmpfs -o mode=0755 tmpfs /run 2>/dev/null
+mount -t tmpfs -o mode=1777 tmpfs /tmp 2>/dev/null
+mkdir -p /dev/pts /dev/shm
+mount -t devpts -o mode=0620,gid=5 devpts /dev/pts 2>/dev/null
+mount -t tmpfs -o mode=1777 tmpfs /dev/shm 2>/dev/null
+
+echo eden-live > /proc/sys/kernel/hostname
+
+# runtime state
+mkdir -p /run/dbus /run/user /run/wpa_supplicant /run/hostapd /run/seatd
+mkdir -p /var/lib/NetworkManager /var/lib/wpa_supplicant /var/run /var/log
+
+# unprivileged session
+mkdir -p /run/user/1000
+chown 1000:1000 /run/user/1000
+chmod 0700 /run/user/1000
+
+mkdir -p /home/action/.config
+mkdir -p /home/action/.local/share /home/action/.local/state
+mkdir -p /home/action/.cache /home/action/Desktop
+chown -R 1000:1000 /home/action
+
+# D-Bus activation helper needs to be setuid root
+chmod 04750 /usr/lib/dbus-daemon-launch-helper 2>/dev/null
+
+# seatd and the Wayland session need access to these nodes
+chmod 0755 /dev/dri /dev/input 2>/dev/null
+chmod 0666 /dev/uinput 2>/dev/null
+for i in 0 1 2 3; do
+    chmod 0666 "/dev/dri/card$i" "/dev/dri/renderD$((128 + i))" 2>/dev/null
+done
+for e in /dev/input/event*; do
+    [ -e "$e" ] && chmod 0666 "$e"
+done
+
+# udev-less: load drivers for devices that are already present
+/usr/local/bin/eden-hotplug coldplug
+
+# simulated 802.11 pair used by the demo AP and NetworkManager
+/usr/bin/modprobe mac80211_hwsim radios=2 2>/dev/null
+i=0
+while [ ! -e /sys/class/net/wlan1 ] && [ "$i" -lt 50 ]; do
+    sleep 0.1
+    i=$((i + 1))
+done
+
+# supervisor: services live in /etc/perp, activated by the sticky bit
+exec /usr/bin/perpd /etc/perp

@@ -3,26 +3,35 @@
 ## Boot
 
 Kernel (`core/linux-kernel`, CachyOS 7.3.5, baseline x86-64 v1), limine and a
-gzip cpio initramfs. `init.c` is PID 1: it mounts `devtmpfs`, `procfs`,
-`sysfs`, tmpfs on `/run` and `/tmp`, runs a coldplug pass over
-`/sys/bus/*/devices/*/modalias` and then keeps a netlink uevent listener so
-kernel modules load without udev.
+gzip cpio initramfs. `sinit` is PID 1. It runs `/etc/rc.init`, which mounts
+`devtmpfs`, `procfs`, `sysfs` and tmpfs on `/run`, `/tmp`, `/dev/pts` and
+`/dev/shm`, sets the hostname, prepares the runtime directories and the
+session user's home, runs a coldplug pass over
+`/sys/bus/*/devices/*/modalias` and loads `mac80211_hwsim radios=2`. It then
+hands the system to `perpd /etc/perp`; `sinit` stays PID 1 and reaps orphans
+while `perp` supervises the long-running daemons. A small static helper
+(`extra/eden-live/hotplug.c`) provides the coldplug pass and a netlink uevent
+listener so kernel modules load without udev.
 
-It starts `seatd`, the system D-Bus and NetworkManager, pokes existing network
-links so NetworkManager picks them up, then drops to uid 1000 (`action`) and
-starts the session bus, `xfconfd` and `xfwl4 --backend tty --session
-/usr/local/bin/eden-session`.
+The perp services (directories under `/etc/perp`, activated by the sticky bit)
+are:
 
-Before NetworkManager starts, the init loads `mac80211_hwsim radios=2`, runs
-`hostapd` on `wlan1` (open AP `eden-test`) and starts a global D-Bus
-`wpa_supplicant`. `wlan0` is left to NetworkManager, which autoconnects it to
-`eden-test` with the stored profile; `eth0` comes up through DHCP as usual.
-This exercises the complete real path (Netlink, `wpa_supplicant` D-Bus,
-NetworkManager device plugins) even in QEMU, which has no 802.11 hardware.
+- `dbus` - system bus
+- `seatd` - seat and device access for the compositor
+- `hotplug` - the uevent listener
+- `wpa_supplicant` - global D-Bus control interface
+- `hostapd` - open demo AP `eden-test` on `wlan1`
+- `networkmanager` - NetworkManager plus the udev-less link poke
+- `session` - `runuid action` starts the session bus, `xfconfd` and
+  `xfwl4 --backend tty --session /usr/local/bin/eden-session`
+- `console` - root shell on `ttyS0`
 
-There is no login prompt: the session starts directly for `action`.
-`sinit` and `perp` are packaged in the tree, but this image still uses the
-custom init; moving to sinit as PID 1 and perp services is the next step.
+`wlan0` is left to NetworkManager, which autoconnects it to `eden-test` with
+the stored profile; `eth0` comes up through DHCP as usual. This exercises the
+complete real path (netlink, `wpa_supplicant` D-Bus, NetworkManager device
+plugins) even in QEMU, which has no 802.11 hardware.
+
+There is no login prompt: the `session` service starts directly for `action`.
 
 ## Session: Wayland only
 
@@ -43,7 +52,8 @@ The desktop is 100% Wayland and does not use X11 or Xwayland at all:
 
 Assembled from the local `core`, `oasis`, `pkgsrc` and `extra` repositories:
 
-- kernel/base: `linux-kernel`, `base-kernel`, `kmod`, `base-cbuild` deps
+- kernel/base: `linux-kernel`, `base-kernel`, `kmod`, `sinit`, `perp`,
+  `base-cbuild` deps
 - X11 libraries used by the Wayland clients: `libx11`, `libxcb`, ...
   (`xwayland` is built but unused)
 - desktop: `xfwl4`, `xfce4-panel`, `xfdesktop`, `thunar`, `xfconf`,
@@ -55,9 +65,11 @@ Assembled from the local `core`, `oasis`, `pkgsrc` and `extra` repositories:
 
 ## Build
 
-`mkiso.sh` compiles `init.c` against the musl build root, installs the
-session defaults, generates the mime/schema/icon caches, packs `$ROOT`
-(default `/tmp/eden-root`) and writes `$OUT` (default `/tmp/eden-live.iso`).
+`mkiso.sh` installs `sinit` as `/init`, installs `/etc/rc.init` and the perp
+service tree, compiles the hotplug helper against the musl build root,
+installs the session defaults, generates the mime/schema/icon caches, packs
+`$ROOT` (default `/tmp/eden-root`) and writes `$OUT` (default
+`/tmp/eden-live.iso`).
 
 ## Fixes worth knowing
 
@@ -69,8 +81,8 @@ session defaults, generates the mime/schema/icon caches, packs `$ROOT`
   `mime.cache`, `gschemas.compiled` and icon caches must be generated
   explicitly (`mkiso.sh` does this).
 - NetworkManager is patched to clear `NM_UNMANAGED_PLATFORM_INIT` without a
-  udev event; combined with the init coldplug/hotplug and link pokes this
-  lets it manage devices on a udev-less live image.
+  udev event; combined with the `rc.init` coldplug, the hotplug service and
+  the link poke this lets it manage devices on a udev-less live image.
 
 ## Known limitations
 

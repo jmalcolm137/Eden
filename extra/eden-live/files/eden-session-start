@@ -1,0 +1,36 @@
+#!/bin/sh
+# Session startup for uid 1000, run by the perp "session" service.
+# Starts the session bus and xfconfd, then hands over to the compositor.
+
+export HOME=/home/action
+export USER=action
+export LOGNAME=action
+export SHELL=/bin/bash
+export PATH=/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
+export XDG_RUNTIME_DIR=/run/user/1000
+export XDG_SESSION_TYPE=wayland
+export XDG_CURRENT_DESKTOP=XFCE
+export XDG_SESSION_DESKTOP=xfce
+export XKB_CONFIG_ROOT=/usr/share/X11/xkb
+unset DISPLAY
+unset WAYLAND_DISPLAY
+
+mkdir -p "$XDG_RUNTIME_DIR"
+rm -f "$XDG_RUNTIME_DIR/bus"
+
+/usr/bin/dbus-daemon --session --nofork \
+    --address="unix:path=$XDG_RUNTIME_DIR/bus" --nopidfile &
+
+i=0
+while [ ! -S "$XDG_RUNTIME_DIR/bus" ] && [ "$i" -lt 100 ]; do
+    sleep 0.05
+    i=$((i + 1))
+done
+
+export DBUS_SESSION_BUS_ADDRESS="unix:path=$XDG_RUNTIME_DIR/bus"
+
+# minimal Xfconf daemon on the session bus
+/usr/lib/xfce4/xfconf/xfconfd &
+sleep 1
+
+exec /usr/bin/xfwl4 --backend tty --session /usr/local/bin/eden-session

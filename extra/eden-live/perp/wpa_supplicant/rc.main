@@ -1,0 +1,4 @@
+#!/bin/sh
+[ "$1" = reset ] && exit 0
+mkdir -p /run/wpa_supplicant
+exec /usr/bin/wpa_supplicant -u -g /run/wpa_supplicant/global

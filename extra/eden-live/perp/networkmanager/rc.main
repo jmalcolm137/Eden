@@ -1,0 +1,18 @@
+#!/bin/sh
+[ "$1" = reset ] && exit 0
+
+# wait for the system bus started by the dbus service
+i=0
+while [ ! -S /run/dbus/system_bus_socket ] && [ "$i" -lt 100 ]; do
+    sleep 0.1
+    i=$((i + 1))
+done
+
+/usr/bin/NetworkManager --no-daemon &
+nm=$!
+
+# no udev: let NM notice the links, then manage the wifi device
+sleep 2
+[ -x /usr/local/bin/eden-netpoke ] && /usr/local/bin/eden-netpoke
+
+wait "$nm"

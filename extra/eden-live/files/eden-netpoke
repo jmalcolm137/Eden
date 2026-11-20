@@ -1,0 +1,16 @@
+#!/bin/sh
+# udev-less: poke links so NetworkManager's platform layer sees them,
+# and force-manage the demo wifi interface.
+
+for d in /sys/class/net/*; do
+    n=${d##*/}
+    case "$n" in
+    lo | wlan1)
+        continue
+        ;;
+    esac
+    /usr/bin/ip link set "$n" down 2>/dev/null
+    /usr/bin/ip link set "$n" up 2>/dev/null
+done
+
+/usr/bin/nmcli device set wlan0 managed yes >/dev/null 2>&1

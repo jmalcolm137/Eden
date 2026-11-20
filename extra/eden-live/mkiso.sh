@@ -1,7 +1,8 @@
 #!/bin/sh
-# Build the Eden live ISO: compiles the init in a musl build root, installs the
-# Wayland session defaults, packs the image root as a gzip cpio initramfs and
-# wraps kernel + initramfs with limine.
+# Build the Eden live ISO: installs sinit as PID 1 with a perp service tree,
+# compiles the hotplug helper in a musl build root, installs the Wayland
+# session defaults, packs the image root as a gzip cpio initramfs and wraps
+# kernel + initramfs with limine.
 set -eu
 
 repo=$(cd "$(dirname "$0")/../.." && pwd)
@@ -16,16 +17,35 @@ if [ ! -x "$bldroot/usr/bin/clang" ]; then
     exit 1
 fi
 
-# 1. init (static-pie, PID 1)
-cp "$here/init.c" /tmp/eden-live-init.c
+# 1. sinit is PID 1; /etc/rc.init prepares the root and execs perpd
+[ -x "$root/usr/bin/sinit" ] || {
+    echo "missing $root/usr/bin/sinit (install the sinit package first)" >&2
+    exit 1
+}
+install -m755 "$root/usr/bin/sinit" "$root/init"
+install -Dm755 "$here/rc.init" "$root/etc/rc.init"
+install -Dm755 "$here/rc.shutdown" "$root/etc/rc.shutdown"
+
+# udev-less coldplug/uevent helper (static-pie)
+cp "$here/hotplug.c" /tmp/eden-live-hotplug.c
 bwrap --unshare-all --hostname cbuild \
     --ro-bind "$bldroot" / \
     --bind /tmp /builddir \
     --dev /dev --proc /proc --tmpfs /run --tmpfs /tmp \
     --new-session --die-with-parent --uid 0 --gid 0 --chdir /builddir \
     -- /bin/sh -c "/usr/bin/clang -O2 -static-pie -unwindlib=none \
-        -o /builddir/eden-init /builddir/eden-live-init.c"
-install -m755 /tmp/eden-init "$root/init"
+        -o /builddir/eden-hotplug /builddir/eden-live-hotplug.c"
+install -Dm755 /tmp/eden-hotplug "$root/usr/local/bin/eden-hotplug"
+
+# perp service tree; the sticky bit marks a service as active
+for svc in "$here"/perp/*; do
+    name=$(basename "$svc")
+    install -Dm755 "$svc/rc.main" "$root/etc/perp/$name/rc.main"
+    chmod 1755 "$root/etc/perp/$name"
+done
+
+install -Dm755 "$here/files/eden-session-start" "$root/usr/local/bin/eden-session-start"
+install -Dm755 "$here/files/eden-netpoke" "$root/usr/local/bin/eden-netpoke"
 
 # 2. session defaults (Wayland only; no X11 session manager)
 install -Dm755 "$here/files/eden-session" "$root/usr/local/bin/eden-session"

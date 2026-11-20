@@ -1,0 +1,24 @@
+#!/bin/sh
+[ "$1" = reset ] && exit 0
+
+mkdir -p /run/seatd
+/usr/bin/seatd &
+pid=$!
+
+i=0
+while [ ! -S /run/seatd.sock ] && [ "$i" -lt 100 ]; do
+    sleep 0.05
+    i=$((i + 1))
+done
+
+chmod 0666 /run/seatd.sock 2>/dev/null
+chmod 0755 /dev/dri /dev/input 2>/dev/null
+for i in 0 1 2 3; do
+    chmod 0666 "/dev/dri/card$i" "/dev/dri/renderD$((128 + i))" 2>/dev/null
+done
+for e in /dev/input/event*; do
+    [ -e "$e" ] && chmod 0666 "$e"
+done
+chmod 0666 /dev/uinput 2>/dev/null
+
+wait "$pid"

@@ -1,0 +1,11 @@
+#!/bin/sh
+[ "$1" = reset ] && exit 0
+
+# the compositor needs the seat daemon
+i=0
+while [ ! -S /run/seatd.sock ] && [ "$i" -lt 100 ]; do
+    sleep 0.1
+    i=$((i + 1))
+done
+
+exec /usr/bin/runuid action /usr/local/bin/eden-session-start

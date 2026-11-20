@@ -1,0 +1,11 @@
+#!/bin/sh
+# Called by sinit on SIGINT (reboot) / SIGUSR1 (poweroff).
+
+case "$1" in
+reboot)
+    exec /usr/lib/sinit/shutdown -r
+    ;;
+*)
+    exec /usr/lib/sinit/shutdown -p
+    ;;
+esac
