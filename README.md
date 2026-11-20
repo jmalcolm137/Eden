@@ -8,7 +8,7 @@ The live environment boots to a Wayland desktop running in 100 MB of RAM.
 
 The 400 MB ISO includes a tiling Wayland compositor, fully working C compiler, Python, media player, BitTorrent client, web browser, web server, and a comprehensive suite of utilities.
 
-What batteries are included?
+Relative to OASIS, what extra batteries are included?
 
 ## Complete build system
 
@@ -22,7 +22,41 @@ The entire distribution, including the bootable ISO, can be built from source wi
 
 cports makes it very easy to port software to Eden.
 
+## A complete toolchain
 
+OASIS Linux includes the cproc C compiler but it is broken as OASIS does not include a pre-processor. Eden ships mcpp so cproc is fully working out-of-the-box. But even on OASIS, cproc is not meant to be the system compiler. OASIS Linux does not ship or specify one.
+
+Eden uses Clang/LLVM as the system compiler and it is included as part of the distribution. All software is built and tested with this version. This includes libc++, compiler-rt, libunwind, lld, and llvm-binutils.
+
+Like Alpine, Adelie, OASIS, and Chimera Linux, Eden uses musl as its C library. Like Chimera Linux, it uses mimalloc as the memory allocator in musl. Unlike Chimera Linux, Eden uses the 3.x release.
+
+## A fully specified kernel
+
+Eden includes cbuild instructions for a Linux kernel based on the kernel from CachyOS. A complementary suite of tools is also provided including kmod, mkinitramfs, ckms (from Chimera Linux), and the limine boot manager.
+
+## A package manager with online repositories
+
+Eden uses apk, the Alpine Package Keeper package manager from Alpine Linux.
+
+cbuild does not directly build and install software. Instead, it builds binary packages which are then managed by apk (installed, removed, upgraded, etc).
+
+It is possible to build all packages from source and to install them locally but apk is also configured to retrieve packages from the cloud.
+
+Do you find the "suckless" utilies too limiting? apk add gnu-compat will install a fully GNU compatible userland.
+
+Do you want more advanced development capabilities?
+apk add clang
+apk add rust
+apk add zig
+apk add dotnet
+
+Not into the Velox tiling compositor? apk add xfce4-desktop and you have a more advanced desktop in moments.
+
+Compiling all the above from source could take days. Much of this software is difficult to port.
+
+NetBSD pkgsrc, while excellent, can be hit-or-miss on a system like OASIS. Of course, it is still there if you want it.
+
+All Eden packages can be built from source using cbuild if you prefer.
 
 ## cbuild repositories
 
@@ -39,8 +73,7 @@ The categories are layered with `.parent` symlinks:
 core <- oasis <- pkgsrc <- extra
 ```
 
-Registry config uses `categories = core oasis pkgsrc extra`. There is no
-`main` category and no Chimera repository: the stage-0 bldroot is installed
+Registry config uses `categories = core oasis pkgsrc extra`. The stage-0 bldroot is installed
 from the published Eden mirror at `https://repos.eden-linux.org`, and every
 package is then rebuilt from the templates in this tree. The other binary
 inputs are the official Rust stage0 tarballs used by
@@ -160,13 +193,6 @@ plugin xfce4-whiskermenu-plugin xfconf xfconf-devel xfdesktop xfwl4
 xfwm4-themes
 ```
 
-### scaffolded Oasis packages (0)
-
-No Oasis package is metadata-only anymore: every Oasis `pkg/` entry has a
-`template.py`, and no template is currently marked `broken`.
-
-See [`oasis/SCAFFOLDING.md`](oasis/SCAFFOLDING.md) for details.
-
 ## Current bldroot
 
 `bldroot-oasis` is built from the Oasis-composed `base-cbuild`. The following
@@ -184,9 +210,9 @@ samurai sbase ubase xz zlib-static zstd zstd-progs
 ```
 
 The stage-0 root itself is installed from the published Eden repositories,
-so even the initial toolchain is ours; no Chimera repository is consulted.
+so even the initial toolchain is ours.
 
-`apk-tools` is now source-built with **BearSSL for both crypto and libfetch
+`apk-tools` is source-built with **BearSSL for both crypto and libfetch
 TLS**. Python uses the core LibreSSL package for `ssl` and `hashlib`, and
 `cbuild keygen` uses LibreSSL's `openssl` CLI; no OpenSSL package is used.
 
@@ -221,8 +247,6 @@ static-pie: `awk`, `byacc`, `bubblewrap`, `bzip2`, `curl`, `file`, `flex`,
 uses `llvm-bootstrap`'s static C++ runtime archives, links every executable
 with `-static-pie`, and keeps the shared `libLLVM.so` and `libclang-cpp.so`
 only for packages that consume them.
-
-No `chimerautils`, no `debianutils`, no OpenSSL package.
 
 ## Deliberate exceptions
 
