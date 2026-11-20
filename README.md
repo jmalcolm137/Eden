@@ -46,9 +46,13 @@ It is possible to build all packages from source and to install them locally but
 Are the "suckless" utilies too limiting? `apk add gnu-compat` installs fully GNU compatible userland.
 
 Do you want more advanced development capabilities?
+
 `apk add clang`
+
 `apk add rust`
+
 `apk add zig`
+
 `apk add dotnet`
 
 Not into the Velox tiling compositor? `apk add xfce4-desktop` and you have a more advanced desktop in moments.
