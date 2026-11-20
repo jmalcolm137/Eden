@@ -1,6 +1,8 @@
 # Linux Eden Project
 
-Eden is a Linux distribution heavily inspired by OASIS Linux. It could be considered a port. It is significantly more "batteries included".
+Eden is a Linux distribution heavily inspired by OASIS Linux. It could be considered a port. Compared to OASIS Linux, it is significantly more "batteries included".
+
+The goal is a Linux distribution that is fully capable but also simple enough to fully inspect and understand. While not a fully "suckless" distribution, Eden does prefer minimalism where possible.
 
 The ISO released on November 20, 2026 boots into a live environment almost identical to OASIS Linux on that date.
 
@@ -15,7 +17,7 @@ Relative to OASIS, what extra batteries are included?
 
 Eden leverages the excellent [`cbuild`](https://github.com/chimera-linux/cports) system from Chimera Linux.
 
-"suckless" fans will be horrified that this requires Python to compile a C program. But OASIS was already using LUA and Eden embraces minimalism where possible. For example, cbuild replaces meson/ninja with muon/samurai and OpenSSL has been fully supplanted by BearSSL (or LibreSSL where required).
+"suckless" fans will be horrified that this requires Python to compile a C program. But OASIS relies on LUA for the same purpose (LUA not required on Eden) and Eden continues to embrace minimalism. For example, cbuild replaces meson/ninja with muon/samurai and OpenSSL has been fully supplanted by BearSSL (or LibreSSL where required).
 
 cbuild brings Eden complete dependency management for the entire distribution. All software is built in a container, isolating the build from contamination and ensuring complete reproducibility.
 
