@@ -7,6 +7,8 @@
 
 #include <errno.h>
 #include <fcntl.h>
+#include <limits.h>
+#include <linux/cdrom.h>
 #include <linux/loop.h>
 #include <stdio.h>
 #include <string.h>
@@ -72,39 +74,100 @@ load_modules(void)
 }
 
 static int
+try_iso(const char *dev)
+{
+    if (mount(dev, ISO_DIR, "iso9660", MS_RDONLY, NULL) != 0)
+        return -1;
+    if (access(SQUASH_PATH, R_OK) == 0)
+        return 0;
+    umount2(ISO_DIR, MNT_DETACH);
+    errno = ENOENT;
+    return -1;
+}
+
+/*
+ * Optical drives can take several seconds to spin up, and USB devices may
+ * not have been enumerated yet when the initramfs starts. Ask the drive for
+ * its status so an empty or still-spinning drive is not mounted in a loop,
+ * and keep retrying until the ISO shows up.
+ */
+static int
+cdrom_status(const char *dev)
+{
+    int fd, st;
+
+    if (strncmp(dev, "/dev/sr", 7) != 0)
+        return -1;
+    fd = open(dev, O_RDONLY | O_NONBLOCK | O_CLOEXEC);
+    if (fd < 0)
+        return 0;
+    st = ioctl(fd, CDROM_DRIVE_STATUS, CDSL_CURRENT);
+    close(fd);
+    if (st == CDS_DISC_OK)
+        return 1;
+    if (st == CDS_NO_DISC || st == CDS_TRAY_OPEN)
+        return 0;
+    return -1;
+}
+
+static int
 find_iso(void)
 {
-    DIR *d = opendir("/sys/class/block");
-    struct dirent *de;
+    int waited = 0;
 
-    if (!d)
-        return -1;
-    while ((de = readdir(d)) != NULL) {
-        char dev[128];
-        struct stat st;
+    msg("looking for boot media");
+    for (;;) {
+        DIR *d = opendir("/sys/class/block");
+        struct dirent *de;
 
-        if (de->d_name[0] == '.')
-            continue;
-        if (!strncmp(de->d_name, "loop", 4) ||
-            !strncmp(de->d_name, "ram", 3) ||
-            !strncmp(de->d_name, "zram", 4) ||
-            !strncmp(de->d_name, "dm-", 3) ||
-            !strncmp(de->d_name, "md", 2))
-            continue;
-        snprintf(dev, sizeof(dev), "/dev/%s", de->d_name);
-        if (stat(dev, &st) != 0 || !S_ISBLK(st.st_mode))
-            continue;
-        if (mount(dev, ISO_DIR, "iso9660", MS_RDONLY, NULL) != 0)
-            continue;
-        if (access(SQUASH_PATH, R_OK) == 0) {
-            dprintf(1, "eden-liveinit: ISO on %s\n", dev);
+        if (d) {
+            while ((de = readdir(d)) != NULL) {
+                char dev[128];
+                struct stat st;
+                int media, err;
+
+                if (de->d_name[0] == '.')
+                    continue;
+                if (!strncmp(de->d_name, "loop", 4) ||
+                    !strncmp(de->d_name, "ram", 3) ||
+                    !strncmp(de->d_name, "zram", 4) ||
+                    !strncmp(de->d_name, "dm-", 3) ||
+                    !strncmp(de->d_name, "md", 2))
+                    continue;
+                snprintf(dev, sizeof(dev), "/dev/%s", de->d_name);
+                if (stat(dev, &st) != 0 || !S_ISBLK(st.st_mode))
+                    continue;
+                if (waited == 0)
+                    dprintf(1, "eden-liveinit: block device %s\n", dev);
+                media = cdrom_status(dev);
+                if (media == 0) {
+                    if (waited == 0)
+                        dprintf(1, "eden-liveinit: %s: no media yet\n",
+                                dev);
+                    continue;
+                }
+                errno = 0;
+                if (try_iso(dev) == 0) {
+                    dprintf(1, "eden-liveinit: ISO on %s after %d s\n",
+                            dev, waited);
+                    closedir(d);
+                    return 0;
+                }
+                err = errno;
+                if (waited == 0 || waited % 30 == 0)
+                    dprintf(1, "eden-liveinit: %s: %s\n", dev,
+                            strerror(err));
+            }
             closedir(d);
-            return 0;
         }
-        umount2(ISO_DIR, MNT_DETACH);
+        if (waited == 0 || waited % 10 == 0)
+            dprintf(1, "eden-liveinit: waiting for boot media (%d s)\n",
+                    waited);
+        if (waited > 0 && waited % 60 == 0)
+            msg("still waiting; check that the ISO is in the drive or USB stick");
+        sleep(1);
+        waited++;
     }
-    closedir(d);
-    return -1;
 }
 
 static int
