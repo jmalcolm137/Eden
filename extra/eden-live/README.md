@@ -13,6 +13,13 @@ links so NetworkManager picks them up, then drops to uid 1000 (`action`) and
 starts the session bus, `xfconfd` and `xfwl4 --backend tty --session
 /usr/local/bin/eden-session`.
 
+Before NetworkManager starts, the init loads `mac80211_hwsim radios=2`, runs
+`hostapd` on `wlan1` (open AP `eden-test`) and starts a global D-Bus
+`wpa_supplicant`. `wlan0` is left to NetworkManager, which autoconnects it to
+`eden-test` with the stored profile; `eth0` comes up through DHCP as usual.
+This exercises the complete real path (Netlink, `wpa_supplicant` D-Bus,
+NetworkManager device plugins) even in QEMU, which has no 802.11 hardware.
+
 There is no login prompt: the session starts directly for `action`.
 `sinit` and `perp` are packaged in the tree, but this image still uses the
 custom init; moving to sinit as PID 1 and perp services is the next step.
@@ -41,7 +48,7 @@ Assembled from the local `core`, `oasis`, `pkgsrc` and `extra` repositories:
   (`xwayland` is built but unused)
 - desktop: `xfwl4`, `xfce4-panel`, `xfdesktop`, `thunar`, `xfconf`,
   `gtk3`, `mesa` (llvmpipe), `adwaita-icon-theme`, fonts
-- network: `networkmanager`, `wpa_supplicant`
+- network: `networkmanager`, `wpa_supplicant`, `hostapd` (demo AP)
 
 `xfconfd-lite` (`extra/xfconfd-lite`) provides the session
 `org.xfce.Xfconf` service.
@@ -67,9 +74,10 @@ session defaults, generates the mime/schema/icon caches, packs `$ROOT`
 
 ## Known limitations
 
-- QEMU has no 802.11 emulation, so Wi-Fi association cannot be exercised
-  there. With a real wireless NIC the driver loads through the uevent
-  helper and NetworkManager uses `wpa_supplicant` (the default backend).
+- The WiFi path is demonstrated with `mac80211_hwsim` and a local `hostapd`
+  AP. With a real wireless NIC the driver loads through the uevent helper
+  and NetworkManager uses the same `wpa_supplicant` backend; only the
+  network profile (SSID/credentials) needs to be provided.
 - llvmpipe rendering is slow; no hardware EGL device is required, `xfwl4`
   is patched to accept software devices.
 - No cursor theme is installed, so the pointer is invisible.
