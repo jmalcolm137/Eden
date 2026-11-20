@@ -64,6 +64,10 @@ install -Dm644 "$here/files/99-live.conf" \
     "$root/etc/NetworkManager/conf.d/99-live.conf"
 install -Dm644 "$here/files/eden.conf" "$root/etc/hostapd/eden.conf"
 
+# clear/reset wrappers (netbsd-curses ships tput but not these)
+install -Dm755 "$here/files/clear" "$root/usr/bin/clear"
+install -Dm755 "$here/files/reset" "$root/usr/bin/reset"
+
 # 3. caches that package triggers normally generate (we install with --no-scripts)
 bwrap --unshare-all --hostname eden --bind "$root" / \
     --dev /dev --proc /proc --tmpfs /run --tmpfs /tmp \

@@ -41,6 +41,7 @@ harfbuzz
 harfbuzz-devel
 hicolor-icon-theme
 hicolor-icon-theme-devel
+htop
 hwdata
 hwdata-devel
 hwdata-net

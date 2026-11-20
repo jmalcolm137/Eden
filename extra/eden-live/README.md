@@ -59,6 +59,7 @@ Assembled from the local `core`, `oasis`, `pkgsrc` and `extra` repositories:
 - desktop: `xfwl4`, `xfce4-panel`, `xfdesktop`, `thunar`, `xfconf`,
   `gtk3`, `mesa` (llvmpipe), `adwaita-icon-theme`, fonts
 - network: `networkmanager`, `wpa_supplicant`, `hostapd` (demo AP)
+- tools: `htop` (static-pie, built against `netbsd-curses`), `xfce4-terminal`
 
 `xfconfd-lite` (`extra/xfconfd-lite`) provides the session
 `org.xfce.Xfconf` service.
