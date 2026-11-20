@@ -12,7 +12,12 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <sys/wait.h>
+#include <sys/resource.h>
 #include <ftw.h>
+#include <glob.h>
+#include <dirent.h>
+#include <sys/socket.h>
+#include <linux/netlink.h>
 #include <unistd.h>
 
 #define USER_UID 1000
@@ -20,6 +25,103 @@
 #define USER_NAME "action"
 #define HOME_DIR "/home/action"
 #define RUNTIME_DIR "/run/user/1000"
+
+static void
+modprobe_alias(const char *alias)
+{
+    pid_t p;
+    if (!alias || !*alias)
+        return;
+    p = fork();
+    if (p == 0) {
+        execl("/usr/bin/modprobe", "modprobe", "-q", alias, (char *)NULL);
+        _exit(127);
+    }
+    if (p > 0)
+        waitpid(p, NULL, 0);
+}
+
+static void
+coldplug(void)
+{
+    glob_t g;
+    if (glob("/sys/bus/*/devices/*/modalias", 0, NULL, &g) != 0)
+        return;
+    for (size_t i = 0; i < g.gl_pathc; i++) {
+        char buf[256];
+        int fd = open(g.gl_pathv[i], O_RDONLY);
+        ssize_t n;
+        if (fd < 0)
+            continue;
+        n = read(fd, buf, sizeof(buf) - 1);
+        close(fd);
+        if (n <= 0)
+            continue;
+        buf[n] = 0;
+        char *nl = strchr(buf, '\n');
+        if (nl)
+            *nl = 0;
+        modprobe_alias(buf);
+    }
+    globfree(&g);
+}
+
+static void
+kick_links(void)
+{
+    DIR *d = opendir("/sys/class/net");
+    struct dirent *de;
+    if (!d)
+        return;
+    while ((de = readdir(d)) != NULL) {
+        char *dn;
+        pid_t p;
+        if (de->d_name[0] == '.' || !strcmp(de->d_name, "lo"))
+            continue;
+        dn = de->d_name;
+        for (int up = 0; up < 2; up++) {
+            p = fork();
+            if (p == 0) {
+                execl("/usr/sbin/ip", "ip", "link", "set", dn,
+                      up ? "up" : "down", (char *)NULL);
+                _exit(127);
+            }
+            if (p > 0)
+                waitpid(p, NULL, 0);
+        }
+    }
+    closedir(d);
+}
+
+static void
+hotplug_loop(void)
+{
+    int fd = socket(AF_NETLINK, SOCK_DGRAM, NETLINK_KOBJECT_UEVENT);
+    struct sockaddr_nl sa;
+    char buf[4096];
+    if (fd < 0)
+        return;
+    memset(&sa, 0, sizeof(sa));
+    sa.nl_family = AF_NETLINK;
+    sa.nl_groups = 1;
+    if (bind(fd, (struct sockaddr *)&sa, sizeof(sa)) != 0)
+        return;
+    for (;;) {
+        ssize_t n = recv(fd, buf, sizeof(buf) - 1, 0);
+        char *action = NULL, *modalias = NULL;
+        if (n <= 0)
+            continue;
+        buf[n] = 0;
+        for (char *p = buf; p < buf + n; p += strlen(p) + 1) {
+            if (!strncmp(p, "ACTION=", 7))
+                action = p + 7;
+            else if (!strncmp(p, "MODALIAS=", 9))
+                modalias = p + 9;
+        }
+        if (action && !strcmp(action, "add") && modalias)
+            modprobe_alias(modalias);
+    }
+}
 
 static int chown_cb(const char *path, const struct stat *st, int flag,
                     struct FTW *ftw) {
@@ -78,6 +180,10 @@ static pid_t spawn(char *const argv[], uid_t uid, gid_t gid) {
 
 int main(void) {
     logmsg("start");
+    {
+        struct rlimit crl = { RLIM_INFINITY, RLIM_INFINITY };
+        setrlimit(RLIMIT_CORE, &crl);
+    }
 
     mkdir_p("/dev", 0755);
     mkdir_p("/proc", 0555);
@@ -96,6 +202,16 @@ int main(void) {
     try_mount("tmpfs", "/dev/shm", "tmpfs", 0, "mode=1777");
 
     sethostname("eden-live", 9);
+
+    /* bring up drivers for devices already present, then watch hotplug */
+    coldplug();
+    {
+        pid_t hp = fork();
+        if (hp == 0) {
+            hotplug_loop();
+            _exit(0);
+        }
+    }
 
     mkdir_p("/run/dbus", 0755);
     mkdir_p("/run/user", 0755);
@@ -157,6 +273,10 @@ int main(void) {
     spawn(nm_argv, 0, 0);
     logmsg("started NetworkManager");
 
+    /* devices already present have no udev event; poke the links so
+     * NetworkManager's platform layer picks them up */
+    sleep(2);
+    kick_links();
     sleep(1);
 
     /* root debug console on the serial line */
@@ -195,7 +315,6 @@ int main(void) {
         setenv("XDG_CURRENT_DESKTOP", "XFCE", 1);
         setenv("XDG_SESSION_DESKTOP", "xfce", 1);
         setenv("XKB_CONFIG_ROOT", "/usr/share/X11/xkb", 1);
-        setenv("RUST_LOG", "xfwl4=debug", 1);
         unsetenv("DISPLAY");
         unsetenv("WAYLAND_DISPLAY");
 
@@ -219,7 +338,7 @@ int main(void) {
 
         logmsg("starting xfwl4 with session");
         char *wl_argv[] = {"/usr/bin/xfwl4", "--backend", "tty",
-                           "--session", "xfce4-session", NULL};
+                           "--session", "/usr/local/bin/eden-session", NULL};
         execv(wl_argv[0], wl_argv);
         dprintf(1, "eden-init: xfwl4 failed: %s\n", strerror(errno));
         _exit(127);

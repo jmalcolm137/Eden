@@ -1,6 +1,6 @@
 pkgname = "xfce4-panel"
 pkgver = "4.21.3"
-pkgrel = 1
+pkgrel = 3
 build_style = "meson"
 configure_args = [
     "-Dx11=disabled",

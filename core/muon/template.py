@@ -6,6 +6,7 @@ makedepends = [
     "libunwind-devel-static",
     "musl-devel-static",
 ]
+provides = ["meson"]
 pkgdesc = "Meson-compatible build system from Oasis"
 license = "GPL-3.0-only AND Apache-2.0 AND MIT AND Unlicense"
 url = "https://muon.build"
@@ -38,3 +39,7 @@ def install(self):
         env={"DESTDIR": str(self.chroot_destdir)},
     )
     self.install_license("LICENSES/MIT.txt")
+
+
+def post_install(self):
+    self.install_link("usr/bin/meson", "muon")

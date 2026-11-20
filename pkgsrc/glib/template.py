@@ -1,9 +1,10 @@
 pkgname = "glib"
 pkgver = "2.90.1"
-pkgrel = 0
+pkgrel = 12
 build_style = "meson"
 configure_args = [
     "-Ddocumentation=false",
+    "-Ddefault_library=shared",
     "-Ddtrace=disabled",
     "-Dinstalled_tests=false",
     "-Dintrospection=disabled",

@@ -1,0 +1,11 @@
+--- a/src/core/devices/nm-device.c
++++ b/src/core/devices/nm-device.c
+@@ -7644,7 +7644,7 @@
+     was_up   = priv->up;
+     priv->up = NM_FLAGS_HAS(pllink->n_ifi_flags, IFF_UP);
+ 
+-    if (pllink->initialized && nm_device_get_unmanaged_flags(self, NM_UNMANAGED_PLATFORM_INIT)) {
++    if (nm_device_get_unmanaged_flags(self, NM_UNMANAGED_PLATFORM_INIT)) {
+         nm_device_set_unmanaged_by_user_udev(self);
+         nm_device_set_unmanaged_by_user_conf(self);
+ 

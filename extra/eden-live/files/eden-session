@@ -1,0 +1,13 @@
+#!/bin/sh
+# Eden's Wayland-only Xfce session: no X11, no session manager.
+export GDK_BACKEND=wayland
+export XDG_CURRENT_DESKTOP=XFCE
+export XDG_SESSION_DESKTOP=xfce
+export XDG_SESSION_TYPE=wayland
+export QT_QPA_PLATFORM=wayland
+
+# Desktop and panel are native Wayland clients of xfwl4.
+xfce4-panel &
+xfdesktop &
+thunar --daemon &
+wait
