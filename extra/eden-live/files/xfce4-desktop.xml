@@ -27,6 +27,18 @@
           </property>
         </property>
       </property>
+      <property name="monitorVirtual-1" type="empty">
+        <property name="workspace0" type="empty">
+          <property name="color-style" type="int" value="0"/>
+          <property name="image-style" type="int" value="0"/>
+          <property name="rgba1" type="array">
+            <value type="double" value="0.06"/>
+            <value type="double" value="0.14"/>
+            <value type="double" value="0.18"/>
+            <value type="double" value="1.0"/>
+          </property>
+        </property>
+      </property>
     </property>
   </property>
   <property name="desktop-icons" type="empty">

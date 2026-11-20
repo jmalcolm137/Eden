@@ -2,11 +2,19 @@
 
 ## Boot
 
-Kernel (`core/linux-kernel`, CachyOS 7.3.5, baseline x86-64 v1), limine and a
-gzip cpio initramfs. `sinit` is PID 1. It runs `/etc/rc.init`, which mounts
-`devtmpfs`, `procfs`, `sysfs` and tmpfs on `/run`, `/tmp`, `/dev/pts` and
-`/dev/shm`, sets the hostname, prepares the runtime directories and the
-session user's home, runs a coldplug pass over
+Kernel (`core/linux-kernel`, CachyOS 7.3.5, baseline x86-64 v1) and limine on
+a hybrid ISO (BIOS El Torito plus a FAT EFI system partition).
+
+The initramfs is small: a static `liveinit` plus the storage and filesystem
+modules required to find the ISO (`sr_mod`, `usb-storage`, `nvme`, `isofs`,
+`loop`, `squashfs`, `overlay`, ...). `liveinit` mounts the ISO, loop-mounts
+`/eden/rootfs.squashfs`, builds a tmpfs-backed overlay for writes and
+`pivot_root`s into it. The squashfs root stays on the ISO and is read on
+demand, so the image booted with 512 MB RAM in both BIOS and UEFI tests.
+
+After the switch, `sinit` is PID 1. It runs `/etc/rc.init`, which mounts
+`devpts` and tmpfs on `/tmp` and `/dev/shm`, sets the hostname, prepares the
+runtime directories and the session user's home, runs a coldplug pass over
 `/sys/bus/*/devices/*/modalias` and loads `mac80211_hwsim radios=2`. It then
 hands the system to `perpd /etc/perp`; `sinit` stays PID 1 and reaps orphans
 while `perp` supervises the long-running daemons. A small static helper
@@ -66,11 +74,12 @@ Assembled from the local `core`, `oasis`, `pkgsrc` and `extra` repositories:
 
 ## Build
 
-`mkiso.sh` installs `sinit` as `/init`, installs `/etc/rc.init` and the perp
-service tree, compiles the hotplug helper against the musl build root,
-installs the session defaults, generates the mime/schema/icon caches, packs
-`$ROOT` (default `/tmp/eden-root`) and writes `$OUT` (default
-`/tmp/eden-live.iso`).
+`mkiso.sh` builds `/eden/rootfs.squashfs` from `$ROOT` (default
+`/tmp/eden-root`) with `mksquashfs -all-root`, compiles `liveinit` and the
+hotplug helper against the musl build root, assembles the initramfs module
+list (`mkinitramfs.py`), creates the FAT ESP with `mkfs.vfat`/mtools and
+writes a hybrid BIOS/UEFI ISO to `$OUT` (default `/tmp/eden-live.iso`).
+Host tools required: `mksquashfs`, `zstd`, `mkfs.vfat`, `mmd`, `mcopy`.
 
 ## Fixes worth knowing
 
@@ -84,6 +93,10 @@ installs the session defaults, generates the mime/schema/icon caches, packs
 - NetworkManager is patched to clear `NM_UNMANAGED_PLATFORM_INIT` without a
   udev event; combined with the `rc.init` coldplug, the hotplug service and
   the link poke this lets it manage devices on a udev-less live image.
+- NetworkManager refuses to load device plugins whose files are not owned by
+  root. The squashfs is built with `-all-root` for this reason.
+- Desktop output goes to `/run/user/1000/eden-session.log` so it does not
+  flood the serial console.
 
 ## Known limitations
 

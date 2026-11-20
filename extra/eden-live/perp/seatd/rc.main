@@ -6,8 +6,8 @@ mkdir -p /run/seatd
 pid=$!
 
 i=0
-while [ ! -S /run/seatd.sock ] && [ "$i" -lt 100 ]; do
-    sleep 0.05
+while [ ! -S /run/seatd.sock ] && [ "$i" -lt 10 ]; do
+    sleep 1
     i=$((i + 1))
 done
 

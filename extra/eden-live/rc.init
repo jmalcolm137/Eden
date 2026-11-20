@@ -8,7 +8,7 @@ mkdir -p /dev /proc /sys /run /tmp
 mount -t devtmpfs devtmpfs /dev 2>/dev/null
 mount -t proc proc /proc 2>/dev/null
 mount -t sysfs sysfs /sys 2>/dev/null
-mount -t tmpfs -o mode=0755 tmpfs /run 2>/dev/null
+grep -qs ' /run ' /proc/mounts || mount -t tmpfs -o mode=0755 tmpfs /run 2>/dev/null
 mount -t tmpfs -o mode=1777 tmpfs /tmp 2>/dev/null
 mkdir -p /dev/pts /dev/shm
 mount -t devpts -o mode=0620,gid=5 devpts /dev/pts 2>/dev/null
@@ -49,8 +49,8 @@ done
 # simulated 802.11 pair used by the demo AP and NetworkManager
 /usr/bin/modprobe mac80211_hwsim radios=2 2>/dev/null
 i=0
-while [ ! -e /sys/class/net/wlan1 ] && [ "$i" -lt 50 ]; do
-    sleep 0.1
+while [ ! -e /sys/class/net/wlan1 ] && [ "$i" -lt 10 ]; do
+    sleep 1
     i=$((i + 1))
 done
 
