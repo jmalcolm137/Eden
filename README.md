@@ -12,11 +12,11 @@ Relative to OASIS, what extra batteries are included?
 
 ## Complete build system
 
-Eden leverages the excellent [`cports`](https://github.com/chimera-linux/cports) from Chimera Linux.
+Eden leverages the excellent [`cbuild`](https://github.com/chimera-linux/cports) system from Chimera Linux.
 
-"suckless" fans will be horrified that this requires Python to compile a C program. But OASIS was already using LUA.
+"suckless" fans will be horrified that this requires Python to compile a C program. But OASIS was already using LUA and Eden embraces minimalism where possible. For example, cbuild replaces meson/ninja with muon/samurai and OpenSSL has been fully supplanted by BearSSL (or LibreSSL where required).
 
-This brings Eden complete dependencies management for the entire distribution. cports builds software in a container, isolating the build from contamination and ensuring complete reproducibility.
+cbuild brings Eden complete dependency management for the entire distribution. All software is built in a container, isolating the build from contamination and ensuring complete reproducibility.
 
 The entire distribution, including the bootable ISO, can be built from source with a single script.
 
