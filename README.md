@@ -55,7 +55,7 @@ Do you need more advanced development capabilities?
 
 `apk add dotnet`
 
-The Velox tiling compositor is not your thing? `apk add xfce4-desktop` and you have a more advanced desktop in moments.
+The Velox tiling compositor is not your thing? `apk add xfce4-desktop` and you have an advanced Wayland desktop in moments.
 
 Compiling all the above from source could take days. Much of this software is difficult to port.
 
