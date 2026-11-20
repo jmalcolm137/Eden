@@ -76,7 +76,8 @@ kick_links(void)
     while ((de = readdir(d)) != NULL) {
         char *dn;
         pid_t p;
-        if (de->d_name[0] == '.' || !strcmp(de->d_name, "lo"))
+        if (de->d_name[0] == '.' || !strcmp(de->d_name, "lo") ||
+            !strcmp(de->d_name, "wlan1"))
             continue;
         dn = de->d_name;
         for (int up = 0; up < 2; up++) {
@@ -205,14 +206,8 @@ int main(void) {
 
     /* bring up drivers for devices already present, then watch hotplug */
     coldplug();
-    {
-        pid_t hp = fork();
-        if (hp == 0) {
-            hotplug_loop();
-            _exit(0);
-        }
-    }
 
+    /* runtime dirs and session user's home skeleton */
     mkdir_p("/run/dbus", 0755);
     mkdir_p("/run/user", 0755);
     mkdir(RUNTIME_DIR, 0700);
@@ -223,7 +218,6 @@ int main(void) {
     mkdir_p("/var/lib/wpa_supplicant", 0755);
     mkdir_p("/var/run", 0755);
 
-    /* home skeleton for the unprivileged session user */
     mkdir_p(HOME_DIR "/.config", 0700);
     mkdir_p(HOME_DIR "/.local/share", 0700);
     mkdir_p(HOME_DIR "/.local/state", 0700);
@@ -237,6 +231,37 @@ int main(void) {
     chown(HOME_DIR "/Desktop", USER_UID, USER_GID);
     chown(HOME_DIR, USER_UID, USER_GID);
     nftw(HOME_DIR, chown_cb, 32, FTW_PHYS);
+
+    /* udev-less hotplug listener: load modules on new devices */
+    {
+        pid_t hp = fork();
+        if (hp == 0) {
+            hotplug_loop();
+            _exit(0);
+        }
+    }
+
+    /* simulated 802.11: wlan1 runs a hostapd open AP "eden-test",
+     * wlan0 is managed by NetworkManager and autoconnects to it */
+    {
+        char *mpargv[] = {"/usr/bin/modprobe", "mac80211_hwsim", "radios=2", NULL};
+        char *hp_argv[] = {"/usr/bin/hostapd", "-B", "/etc/hostapd/eden.conf", NULL};
+        char *ipaddr[] = {"/usr/sbin/ip", "addr", "add", "10.99.0.2/24",
+                          "dev", "wlan1", NULL};
+        pid_t mp;
+        mkdir_p("/run/hostapd", 0755);
+        mp = spawn(mpargv, 0, 0);
+        if (mp > 0)
+            waitpid(mp, NULL, 0);
+        sleep(1);
+        mp = spawn(hp_argv, 0, 0);
+        if (mp > 0)
+            waitpid(mp, NULL, 0);
+        sleep(2);
+        mp = spawn(ipaddr, 0, 0);
+        if (mp > 0)
+            waitpid(mp, NULL, 0);
+    }
 
     /* display/seat management */
     char *seatd_argv[] = {"/usr/bin/seatd", NULL};
@@ -263,10 +288,23 @@ int main(void) {
     chmod("/dev/input", 0755);
 
     /* system bus (NetworkManager etc.) */
+    chmod("/usr/lib/dbus-daemon-launch-helper", 04750);
     char *sysbus_argv[] = {"/usr/bin/dbus-daemon", "--system", "--nofork", NULL};
     spawn(sysbus_argv, 0, 0);
     logmsg("started system dbus");
     sleep(1);
+
+    /* global D-Bus wpa_supplicant for NetworkManager (no activation helper) */
+    {
+        char *garg[] = {"/usr/bin/wpa_supplicant", "-B", "-u", "-g",
+                        "/run/wpa_supplicant/global", NULL};
+        pid_t gp;
+        mkdir_p("/run/wpa_supplicant", 0755);
+        gp = spawn(garg, 0, 0);
+        if (gp > 0)
+            waitpid(gp, NULL, 0);
+        sleep(1);
+    }
 
     /* NetworkManager (brings up wired/wifi automatically) */
     char *nm_argv[] = {"/usr/bin/NetworkManager", "--no-daemon", NULL};
@@ -277,7 +315,14 @@ int main(void) {
      * NetworkManager's platform layer picks them up */
     sleep(2);
     kick_links();
-    sleep(1);
+    {
+        char *nmargv[] = {"/usr/bin/nmcli", "device", "set", "wlan0",
+                          "managed", "yes", NULL};
+        pid_t np = spawn(nmargv, 0, 0);
+        if (np > 0)
+            waitpid(np, NULL, 0);
+    }
+    sleep(2);
 
     /* root debug console on the serial line */
     {

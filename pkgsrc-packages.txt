@@ -74,6 +74,8 @@ libgudev
 libgudev-devel
 libisofs
 libisofs-devel
+libndp
+libndp-devel
 libnotify
 libnotify-devel
 libogg
@@ -92,6 +94,8 @@ libssh2-devel
 libtasn1
 libtasn1-devel
 libtasn1-progs
+libuuid
+libuuid-devel
 libvorbis
 libvorbis-devel
 libxslt
@@ -99,6 +103,7 @@ libxslt-devel
 libxslt-progs
 libyaml
 libyaml-devel
+limine
 linux-firmware
 linux-firmware-amdgpu
 linux-firmware-broadcom
@@ -106,9 +111,14 @@ linux-firmware-intel
 linux-firmware-nvidia
 linux-firmware-radeon
 meson-real
+mkinitcpio
+mtools
 nettle
 nettle-devel
 nettle-progs
+networkmanager
+networkmanager-devel
+networkmanager-libs
 nghttp2
 nghttp2-devel
 nodejs

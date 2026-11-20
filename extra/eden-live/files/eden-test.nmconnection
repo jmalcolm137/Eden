@@ -1,0 +1,17 @@
+[connection]
+id=eden-test
+uuid=8a1a6f5e-3f5c-4d0e-9a3e-7e2b1c4d5e6f
+type=wifi
+autoconnect=true
+autoconnect-priority=100
+
+[wifi]
+mode=infrastructure
+ssid=eden-test
+
+[ipv4]
+method=manual
+addresses=10.99.0.1/24
+
+[ipv6]
+method=disabled

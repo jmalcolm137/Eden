@@ -1,9 +1,9 @@
 pkgname = "networkmanager"
 pkgver = "1.51.4"
-pkgrel = 2
+pkgrel = 7
 build_style = "meson"
 configure_args = [
-    "-Dc_link_args=-Wl,--undefined-version",
+    "-Dc_link_args=-Wl,--undefined-version,--export-dynamic",
     "-Dconfig_dhcp_default=internal",
     "-Dconfig_logging_backend_default=syslog",
     "-Dconfig_wifi_backend_default=wpa_supplicant",
@@ -66,8 +66,10 @@ sha256 = "865a7cc5686a51d7efe81d7dcb3c5246bfa3b996a58629135354972804ff4d3c"
 tool_flags = {
     "CFLAGS": ["-Wno-incompatible-function-pointer-types"],
 }
+# the daemon exports symbols for its dlopened device/settings plugins
+nostrip_files = ["usr/bin/NetworkManager"]
 # tests need a live sysfs/dbus environment
-options = ["etcfiles", "!check"]
+options = ["etcfiles", "!check", "!lto"]
 
 
 @subpackage("networkmanager-devel")

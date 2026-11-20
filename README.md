@@ -28,20 +28,20 @@ package is then rebuilt from the templates in this tree. The other binary
 inputs are the official Rust stage0 tarballs used by
 `rust-bootstrap`/`cargo-bootstrap`.
 
-### core templates (139)
+### core templates (140)
 
 ```
 acl acl-devel acl-progs apk-tools apk-tools-cache apk-tools-devel apk-tools-
 interactive apk-tools-static-bin argp-standalone attr attr-devel attr-progs
 awk base-cbuild base-cbuild-progs base-files base-kernel base-kernel-devel bc
 bearssl bearssl-devel bearssl-devel-static bubblewrap byacc bzip2 bzip2-devel
-ca-certificates clang clang-analyzer clang-cpp-libs clang-devel clang-devel-
-static clang-libs clang-rt-devel clang-tools-extra clang-tools-extra-static
-cmake curl elfutils elfutils-devel fakeroot fakeroot-core flang flang-devel
-flang-devel-static flex fortify-headers git gmake gperf gsed kmod kmod-devel
-libatomic-chimera libatomic-chimera-devel libcap libcap-devel libcap-progs
-libcxx libcxx-devel libcxx-devel-static libcxxabi libcxxabi-devel libcxxabi-
-devel-static libedit libedit-devel libedit-readline-devel libffi8
+ca-certificates ckms clang clang-analyzer clang-cpp-libs clang-devel clang-
+devel-static clang-libs clang-rt-devel clang-tools-extra clang-tools-extra-
+static cmake curl elfutils elfutils-devel fakeroot fakeroot-core flang flang-
+devel flang-devel-static flex fortify-headers git gmake gperf gsed kmod kmod-
+devel libatomic-chimera libatomic-chimera-devel libcap libcap-devel libcap-
+progs libcxx libcxx-devel libcxx-devel-static libcxxabi libcxxabi-devel
+libcxxabi-devel-static libedit libedit-devel libedit-readline-devel libffi8
 libffi8-devel libressl libressl-devel libtls-bearssl libtls-bearssl-devel
 libtls-bearssl-devel-static libunwind libunwind-devel libunwind-devel-static
 linux-headers linux-kernel linux-personality lld lld-devel lld-devel-static
@@ -87,7 +87,7 @@ protocols wireguard-tools wl9 wld wld-devel wpa_supplicant x509cert x509cert-
 devel x509cert-devel-static xkeyboard-config yt-dlp zfs
 ```
 
-### pkgsrc templates (136)
+### pkgsrc templates (146)
 
 ```
 adwaita-icon-theme adwaita-icon-theme-legacy atk atk-devel bash bison brotli
@@ -101,28 +101,31 @@ hwdata-net hwdata-pci hwdata-pnp hwdata-usb icu icu-devel icu-progs iso-codes
 json-c json-c-devel libburn libburn-devel libburn-progs libcanberra
 libcanberra-devel libcurl libcurl-devel libdisplay-info libdisplay-info-devel
 libepoxy libepoxy-devel libexif libexif-devel libglvnd libglvnd-devel libgtop
-libgtop-devel libgudev libgudev-devel libisofs libisofs-devel libnotify
-libnotify-devel libogg libogg-devel libpsl libpsl-devel libpulse libpulse-
-devel libseat libseat-devel libseat-progs libsndfile libsndfile-devel libssh2
-libssh2-devel libtasn1 libtasn1-devel libtasn1-progs libvorbis libvorbis-devel
-libxslt libxslt-devel libxslt-progs libyaml libyaml-devel linux-firmware
-linux-firmware-amdgpu linux-firmware-broadcom linux-firmware-intel linux-
-firmware-nvidia linux-firmware-radeon meson-real nettle nettle-devel nettle-
-progs nghttp2 nghttp2-devel nodejs pango pango-devel pcre2 pcre2-devel polkit
-polkit-devel polkit-libs pulseaudio pulseaudio-progs ripgrep rust rust-
-bootstrap shared-mime-info sqlite sqlite-devel taglib taglib-devel upower
-upower-devel upower-libs uutils-coreutils uutils-findutils zlib-shared
+libgtop-devel libgudev libgudev-devel libisofs libisofs-devel libndp libndp-
+devel libnotify libnotify-devel libogg libogg-devel libpsl libpsl-devel
+libpulse libpulse-devel libseat libseat-devel libseat-progs libsndfile
+libsndfile-devel libssh2 libssh2-devel libtasn1 libtasn1-devel libtasn1-progs
+libuuid libuuid-devel libvorbis libvorbis-devel libxslt libxslt-devel libxslt-
+progs libyaml libyaml-devel limine linux-firmware linux-firmware-amdgpu linux-
+firmware-broadcom linux-firmware-intel linux-firmware-nvidia linux-firmware-
+radeon meson-real mkinitcpio mtools nettle nettle-devel nettle-progs
+networkmanager networkmanager-devel networkmanager-libs nghttp2 nghttp2-devel
+nodejs pango pango-devel pcre2 pcre2-devel polkit polkit-devel polkit-libs
+pulseaudio pulseaudio-progs ripgrep rust rust-bootstrap shared-mime-info
+sqlite sqlite-devel taglib taglib-devel upower upower-devel upower-libs
+uutils-coreutils uutils-findutils zlib-shared
 ```
 
-### extra templates (103)
+### extra templates (108)
 
 ```
 catfish dbus-glib dbus-glib-devel exo exo-devel fast_float garcon garcon-devel
 gigolo gobject-introspection gobject-introspection-devel gobject-
 introspection-libs gspell gspell-devel gtksourceview4 gtksourceview4-devel
-libsoup3 libsoup3-devel libxfce4ui libxfce4ui-devel libxfce4util libxfce4util-
-devel libxfce4windowing libxfce4windowing-devel mesa mesa-devel mesa-gbm-devel
-mesa-gbm-libs mesa-libgallium mousepad opencode parole python-dbus python-
+libnma libnma-devel libsecret libsecret-devel libsoup3 libsoup3-devel
+libxfce4ui libxfce4ui-devel libxfce4util libxfce4util-devel libxfce4windowing
+libxfce4windowing-devel mesa mesa-devel mesa-gbm-devel mesa-gbm-libs mesa-
+libgallium mousepad network-manager-applet opencode parole python-dbus python-
 gobject python-mako python-markdown python-markupsafe python-packaging python-
 pexpect python-ptyprocess python-pyyaml python-setuptools ristretto smithay
 thunar thunar-archive-plugin thunar-devel thunar-media-tags-plugin thunar-vcs-

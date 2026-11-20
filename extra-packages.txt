@@ -15,6 +15,10 @@ gspell
 gspell-devel
 gtksourceview4
 gtksourceview4-devel
+libnma
+libnma-devel
+libsecret
+libsecret-devel
 libsoup3
 libsoup3-devel
 libxfce4ui
@@ -29,6 +33,7 @@ mesa-gbm-devel
 mesa-gbm-libs
 mesa-libgallium
 mousepad
+network-manager-applet
 opencode
 parole
 python-dbus

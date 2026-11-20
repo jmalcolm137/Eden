@@ -143,6 +143,31 @@ GObject-introspection GIR data. The local `glib` build has introspection
 disabled, and `g-ir-scanner` currently crashes while generating the GLib GIR
 under this toolchain, so the plugin is not in the umbrella yet.
 
+## NetworkManager
+
+`pkgsrc/networkmanager` provides the daemon, `nmcli` and `libnm`. It is built
+without ModemManager, PPP, oFNM/oFono, Bluetooth DUN, teamd, OVS, eBPF,
+SELinux, audit, systemd-journal, introspection, docs, `nmtui` and the wireless
+extensions; crypto is GnuTLS and `nmcli` uses libedit. DHCP is the internal
+client, and the daemon uses the keyfile plugin with `dns=default`.
+
+The service is supervised by **perp**:
+
+```
+/etc/perp/networkmanager/rc
+```
+
+It runs `NetworkManager --no-daemon`. There is no `down` file, so
+`perpboot` starts it by default; `perpctl` starts/stops it.
+
+The GTK frontend is `network-manager-applet` (with `libnma` and `libsecret`),
+added to the `xfce4-desktop` umbrella. It installs `/usr/bin/nm-applet` plus
+its XDG autostart entry, and appears in the panel through the default
+**Status Tray** plugin that `xfce4-panel` already ships in
+`/etc/xdg/xfce4/panel/default.xml`. The applet is built without the
+AppIndicator, WWAN and teamd options and with the unused `gdk/gdkx.h`
+includes guarded for the X11-free GTK3 build.
+
 ## Toolkit stack
 
 The Wayland-only toolkit closure now lives in `pkgsrc/` (the lower-level

@@ -5,6 +5,8 @@ build_style = "meta"
 depends = [
     "catfish",
     "mousepad",
+    "network-manager-applet",
+    "networkmanager",
     "parole",
     "ristretto",
     "thunar",

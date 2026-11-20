@@ -1,7 +1,7 @@
 pkgname = "wpa_supplicant"
 pkgver = "2.11"
-pkgrel = 3
-makedepends = ["bearssl-devel-static", "libnl", "libnl-devel", "linux-headers"]
+pkgrel = 6
+makedepends = ["bearssl-devel", "bearssl-devel-static", "dbus-devel", "libnl", "libnl-devel", "linux-headers"]
 pkgdesc = "WPA supplicant"
 license = "BSD-3-Clause"
 url = "https://w1.fi/wpa_supplicant"
@@ -13,6 +13,8 @@ options = ["!check"]
 _cflags = [
     "-include", "config.h",
     "-I.", "-Isrc", "-Isrc/utils", "-I/usr/include/libnl3",
+    "-I/usr/include/dbus-1.0",
+    "-I/usr/lib/dbus-1.0/include",
 ]
 
 _common_sources = [
@@ -68,6 +70,11 @@ _wpa_sources = [
     "wpa_supplicant/config_file.c",
     "wpa_supplicant/ctrl_iface.c",
     "wpa_supplicant/ctrl_iface_unix.c",
+    "wpa_supplicant/dbus/dbus_common.c",
+    "wpa_supplicant/dbus/dbus_dict_helpers.c",
+    "wpa_supplicant/dbus/dbus_new.c",
+    "wpa_supplicant/dbus/dbus_new_handlers.c",
+    "wpa_supplicant/dbus/dbus_new_helpers.c",
     "wpa_supplicant/eap_register.c",
     "wpa_supplicant/events.c",
     "wpa_supplicant/ibss_rsn.c",
@@ -117,6 +124,7 @@ def build(self):
             "/usr/lib/libnl-genl-3.a",
             "-lm",
             "-lpthread",
+            "-ldbus-1",
         ],
     )
     cc.invoke(
@@ -130,6 +138,15 @@ def build(self):
 def install(self):
     self.install_bin("out/wpa_supplicant", name="wpa_supplicant")
     self.install_bin("wpa_cli")
+    self.install_file(
+        self.cwd / "wpa_supplicant/dbus/dbus-wpa_supplicant.conf",
+        "usr/share/dbus-1/system.d",
+        name="wpa_supplicant.conf",
+    )
+    self.install_file(
+        self.files_path / "fi.w1.wpa_supplicant1.service",
+        "usr/share/dbus-1/system-services",
+    )
     self.install_man("wpa_supplicant/doc/docbook/wpa_supplicant.8")
     self.install_man("wpa_supplicant/doc/docbook/wpa_cli.8")
     self.install_man("wpa_supplicant/doc/docbook/wpa_supplicant.conf.5")

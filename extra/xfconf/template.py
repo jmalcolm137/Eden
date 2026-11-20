@@ -1,6 +1,6 @@
 pkgname = "xfconf"
 pkgver = "4.21.2"
-pkgrel = 32
+pkgrel = 33
 build_style = "meson"
 configure_args = [
     "-Dintrospection=false",
@@ -28,7 +28,7 @@ url = "https://docs.xfce.org/xfce/xfconf/start"
 source = f"https://archive.xfce.org/src/xfce/xfconf/4.21/xfconf-4.21.2.tar.xz"
 sha256 = "99aa4366e909ba7b9f746aba48b610b9e9d2933aeb283c7fa5f37a7c3dc7a3a6"
 # upstream tests need a display and a running session bus
-options = ["!check", "etcfiles", "!lto"]
+options = ["!check", "etcfiles", "!lto", "!strip"]
 
 
 def post_install(self):

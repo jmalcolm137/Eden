@@ -18,7 +18,7 @@ make_build_env = {
 make_install_args = ["CC=clang", "HOSTCC=clang"]
 make_install_env = dict(make_build_env)
 make_use_env = True
-makedepends = ["byacc", "flex", "linux-headers", "m4"]
+makedepends = ["byacc", "flex", "linux-headers"]
 pkgdesc = "IP routing utilities"
 license = "GPL-2.0-or-later"
 url = "https://www.kernel.org/pub/linux/utils/net/iproute2"
