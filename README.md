@@ -1,19 +1,37 @@
 # Linux Eden Project
 
-A minimal local [`cports`](https://github.com/chimera-linux/cports) tree that
-assembles an Oasis-flavoured cbuild environment.
+Eden is a Linux distribution heavily inspired by OASIS Linux. It could be considered a port. It is significantly more "batteries included".
 
-**Policy:** Oasis first, pkgsrc second, a local template when neither provides
-what is needed.
+The ISO released on November 20, 2026 boots into a live environment almost identical to OASIS Linux on that date.
 
-## Repositories
+The live environment boots to a Wayland desktop running in 100 MB of RAM.
+
+The 400 MB ISO includes a tiling Wayland compositor, fully working C compiler, Python, media player, BitTorrent client, web browser, web server, and a comprehensive suite of utilities.
+
+What batteries are included?
+
+## Complete build system
+
+Eden leverages the excellent [`cports`](https://github.com/chimera-linux/cports) from Chimera Linux.
+
+"suckless" fans will be horrified that this requires Python to compile a C program. But OASIS was already using LUA.
+
+This brings Eden complete dependencies management for the entire distribution. cports builds software in a container, isolating the build from contamination and ensuring complete reproducibility.
+
+The entire distribution, including the bootable ISO, can be built from source with a single script.
+
+cports makes it very easy to port software to Eden.
+
+
+
+## cbuild repositories
 
 | Repo | Purpose |
 |---|---|
 | `core/` | Everything needed to source-bootstrap the bldroot |
 | `oasis/` | Packages required to build a full OASIS system |
 | `pkgsrc/` | Packages ported from pkgsrc that do not belong in core/oasis |
-| `extra/` | Locally created packages not present in the other repos |
+| `extra/` | Additional packages not present in the other repos |
 
 The categories are layered with `.parent` symlinks:
 
