@@ -3,8 +3,8 @@ static const char target[]         = "x86_64-linux-musl";
 static const char *const startfiles[]    = {"-l", ":crt1.o", "-l", ":crti.o"};
 static const char *const endfiles[]      = {"-l", "c", "-l", ":crtn.o"};
 static const char *const preprocesscmd[] = {
-	/* Oasis uses cpp; the Chimera clang package provides clang-cpp */
-	"clang-cpp",
+	/* use the standalone mcpp preprocessor */
+	"mcpp",
 
 	/* clear preprocessor GNU C version */
 	"-U", "__GNUC__",
@@ -24,6 +24,6 @@ static const char *const preprocesscmd[] = {
 	"-D", "__extension__=",
 };
 static const char *const codegencmd[]    = {"qbe"};
-/* use clang's integrated assembler and lld instead of GNU binutils */
-static const char *const assemblecmd[]   = {"clang", "-c", "-x", "assembler"};
-static const char *const linkcmd[]       = {"ld.lld", "-L", "/usr/lib", "-L", "/lib", "--dynamic-linker", "/lib/ld-musl-x86_64.so.1"};
+/* GNU binutils from /usr/gnulib (no clang/llvm) */
+static const char *const assemblecmd[]   = {"/usr/gnubin/as"};
+static const char *const linkcmd[]       = {"/usr/gnubin/ld", "-L", "/usr/lib", "-L", "/lib", "--dynamic-linker", "/lib/ld-musl-x86_64.so.1"};

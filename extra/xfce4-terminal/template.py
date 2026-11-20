@@ -29,7 +29,7 @@ makedepends = [
 pkgdesc = "Xfce terminal emulator"
 license = "GPL-2.0-or-later"
 url = "https://docs.xfce.org/apps/xfce4-terminal/start"
-source = f"https://archive.xfce.org/src/apps/xfce4-terminal/1.2/xfce4-terminal-1.2.0.tar.xz"
+source = "https://archive.xfce.org/src/apps/xfce4-terminal/1.2/xfce4-terminal-1.2.0.tar.xz"
 sha256 = "6874c7b975cc3dc3bd636d57ffec723de7458202defe65377593d3a7e0734b94"
 # upstream tests need a display and a running session bus
 options = ["!check"]

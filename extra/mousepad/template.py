@@ -20,7 +20,7 @@ makedepends = [
 pkgdesc = "Xfce text editor"
 license = "GPL-2.0-or-later"
 url = "https://docs.xfce.org/apps/mousepad/start"
-source = f"https://archive.xfce.org/src/apps/mousepad/0.7/mousepad-0.7.0.tar.xz"
+source = "https://archive.xfce.org/src/apps/mousepad/0.7/mousepad-0.7.0.tar.xz"
 sha256 = "e86c59feb08126d4cace368432c16b2dee8e519aaca8a9d2b409ae1cdd200802"
 # upstream tests need a display and a running session bus
 options = ["!check"]

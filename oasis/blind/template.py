@@ -18,7 +18,7 @@ _scripts = ["blind-rotate-90", "blind-rotate-180", "blind-rotate-270"]
 def pre_build(self):
     self.cp(self.files_path / "src", "src", recursive=True)
     self.cp(self.files_path / "man", "man", recursive=True)
-    for name in _scripts + ["LICENSE"]:
+    for name in [*_scripts, "LICENSE"]:
         self.cp(self.files_path / name, name)
 
 
@@ -43,7 +43,7 @@ def build(self):
 def install(self):
     for src in sorted((self.cwd / "src").glob("blind-*.c")):
         self.install_bin(f"bin/{src.stem}", name=src.stem)
-    for name in _scripts + ["LICENSE"]:
+    for name in [*_scripts, "LICENSE"]:
         self.install_bin(name)
     self.install_man("man/*.1", glob=True)
     self.install_man("man/blind.7")

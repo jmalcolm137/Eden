@@ -192,7 +192,8 @@ switch_to_root(void)
         return;
     }
     if (syscall(SYS_pivot_root, ".", ".oldroot") == 0) {
-        umount2("/.oldroot", MNT_DETACH);
+        /* Keep the old root mounted: it holds the ISO and squashfs mounts
+         * that back the live root, so detaching it can break later reads. */
     } else {
         dprintf(1, "eden-liveinit: pivot_root: %s (using chroot)\n",
                 strerror(errno));

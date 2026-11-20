@@ -22,7 +22,7 @@ makedepends = [
 pkgdesc = "Xfce notes panel plugin"
 license = "GPL-2.0-or-later"
 url = "https://docs.xfce.org/panel-plugins/xfce4-notes-plugin/start"
-source = f"https://archive.xfce.org/src/panel-plugins/xfce4-notes-plugin/1.12/xfce4-notes-plugin-1.12.0.tar.xz"
+source = "https://archive.xfce.org/src/panel-plugins/xfce4-notes-plugin/1.12/xfce4-notes-plugin-1.12.0.tar.xz"
 sha256 = "cf4cc8f2e9785b7032aef6a74f316b8d7945457982295f8465a872b75da46a2a"
 # upstream tests need a display and a running session bus
 options = ["!check"]

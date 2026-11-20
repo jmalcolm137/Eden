@@ -31,7 +31,7 @@ makedepends = [
 pkgdesc = "Xfce media player"
 license = "GPL-2.0-or-later"
 url = "https://docs.xfce.org/xfce/parole/start"
-source = f"https://archive.xfce.org/src/apps/parole/4.20/parole-4.20.0.tar.xz"
+source = "https://archive.xfce.org/src/apps/parole/4.20/parole-4.20.0.tar.xz"
 sha256 = "5cf753e670d6518701133eb860d8bceb3a08a496af6a2b7cc67b93320230c983"
 # upstream tests need a display and a running session bus
 options = ["!check"]

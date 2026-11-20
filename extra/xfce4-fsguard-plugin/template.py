@@ -18,7 +18,7 @@ makedepends = [
 pkgdesc = "Xfce free space guard panel plugin"
 license = "BSD-2-Clause"
 url = "https://docs.xfce.org/panel-plugins/xfce4-fsguard-plugin/start"
-source = f"https://archive.xfce.org/src/panel-plugins/xfce4-fsguard-plugin/1.2/xfce4-fsguard-plugin-1.2.0.tar.xz"
+source = "https://archive.xfce.org/src/panel-plugins/xfce4-fsguard-plugin/1.2/xfce4-fsguard-plugin-1.2.0.tar.xz"
 sha256 = "9e40cf3ce7b34e1c27d6b442f3a067886c35154b5d0c4d644a239038611da64f"
 # upstream tests need a display and a running session bus
 options = ["!check"]

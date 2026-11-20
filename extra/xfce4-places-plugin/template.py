@@ -21,7 +21,7 @@ makedepends = [
 pkgdesc = "Xfce folders and media quick access panel plugin"
 license = "GPL-2.0-or-later"
 url = "https://docs.xfce.org/panel-plugins/xfce4-places-plugin/start"
-source = f"https://archive.xfce.org/src/panel-plugins/xfce4-places-plugin/1.9/xfce4-places-plugin-1.9.0.tar.xz"
+source = "https://archive.xfce.org/src/panel-plugins/xfce4-places-plugin/1.9/xfce4-places-plugin-1.9.0.tar.xz"
 sha256 = "76d95687e0bea267465e832eea6266563a18d2219192f9e8af6f88e899262e43"
 # upstream tests need a display and a running session bus
 options = ["!check"]

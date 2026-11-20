@@ -24,7 +24,7 @@ makedepends = [
 pkgdesc = "Xfce task manager"
 license = "GPL-2.0-or-later"
 url = "https://docs.xfce.org/apps/xfce4-taskmanager/start"
-source = f"https://archive.xfce.org/src/apps/xfce4-taskmanager/1.6/xfce4-taskmanager-1.6.0.tar.xz"
+source = "https://archive.xfce.org/src/apps/xfce4-taskmanager/1.6/xfce4-taskmanager-1.6.0.tar.xz"
 sha256 = "29bdc7840ab8b9025f6c0e456a83a31090d1c9fd9e26b359baa4a4010cfb0b90"
 # upstream tests need a display and a running session bus
 options = ["!check"]

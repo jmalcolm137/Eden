@@ -24,7 +24,7 @@ makedepends = [
 pkgdesc = "Xfce implementation of the freedesktop compliant menu spec"
 license = "LGPL-2.0-or-later"
 url = "https://docs.xfce.org/xfce/garcon/start"
-source = f"https://archive.xfce.org/src/xfce/garcon/4.21/garcon-4.21.0.tar.xz"
+source = "https://archive.xfce.org/src/xfce/garcon/4.21/garcon-4.21.0.tar.xz"
 sha256 = "3acc3f6b81059199f4e6646da7b6ca39edf84ea90dd3ff87088ffca6aa108269"
 # upstream tests need a display and a running session bus
 options = ["!check", "etcfiles"]

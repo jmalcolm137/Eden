@@ -1,6 +1,6 @@
 pkgname = "vis"
 pkgver = "0.9"
-pkgrel = 1
+pkgrel = 2
 # Oasis pkg/vis/src
 _commit = "50a7673370fa037960e9d2c3a8d6aed1bb9c39c4"
 archs = ["aarch64", "riscv64", "x86_64"]
@@ -102,6 +102,7 @@ def build(self):
 
 def install(self):
     self.install_bin("vis")
+    self.install_link("usr/bin/vi", "vis")
     self.install_bin("vis-menu")
     self.install_bin("vis-digraph")
     self.install_file("vis-open", "usr/bin", mode=0o755)

@@ -45,6 +45,7 @@ fuse
 fuse-devel
 gettext
 gettext-devel
+hostapd
 hotplugd
 hyx
 ii

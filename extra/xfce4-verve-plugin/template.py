@@ -18,7 +18,7 @@ makedepends = [
 pkgdesc = "Xfce command line panel plugin"
 license = "GPL-2.0-or-later"
 url = "https://docs.xfce.org/panel-plugins/xfce4-verve-plugin/start"
-source = f"https://archive.xfce.org/src/panel-plugins/xfce4-verve-plugin/2.1/xfce4-verve-plugin-2.1.0.tar.xz"
+source = "https://archive.xfce.org/src/panel-plugins/xfce4-verve-plugin/2.1/xfce4-verve-plugin-2.1.0.tar.xz"
 sha256 = "237e0da802cdc02e0ec0c3cdefecb6fa2992ade9f59ce2999779cc30d59c9f24"
 # upstream tests need a display and a running session bus
 options = ["!check"]

@@ -7,6 +7,7 @@
 #
 # Keep this sorted. One source template directory name per line, relative to
 # core/.
+
 acl
 apk-tools
 argp-standalone
@@ -14,20 +15,26 @@ attr
 awk
 base-cbuild
 base-files
+base-kernel
+bc
 bearssl
 bubblewrap
 byacc
 bzip2
 ca-certificates
+ckms
 cmake
 curl
+elfutils
 fakeroot
 flex
 fortify-headers
 git
 gmake
-gsed
+gnu-m4
 gperf
+gsed
+kmod
 libatomic-chimera
 libcap
 libedit
@@ -35,6 +42,7 @@ libffi8
 libressl
 libtls-bearssl
 linux-headers
+linux-kernel
 linux-personality
 llvm
 llvm-bootstrap

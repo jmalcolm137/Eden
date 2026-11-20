@@ -25,7 +25,7 @@ makedepends = [
 pkgdesc = "Xfce configuration system"
 license = "GPL-2.0-only AND LGPL-2.0-or-later"
 url = "https://docs.xfce.org/xfce/xfconf/start"
-source = f"https://archive.xfce.org/src/xfce/xfconf/4.21/xfconf-4.21.2.tar.xz"
+source = "https://archive.xfce.org/src/xfce/xfconf/4.21/xfconf-4.21.2.tar.xz"
 sha256 = "99aa4366e909ba7b9f746aba48b610b9e9d2933aeb283c7fa5f37a7c3dc7a3a6"
 # upstream tests need a display and a running session bus
 options = ["!check", "etcfiles", "!lto", "!strip"]

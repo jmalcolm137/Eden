@@ -40,7 +40,7 @@ makedepends = [
 pkgdesc = "Xfce desktop manager"
 license = "GPL-2.0-or-later"
 url = "https://docs.xfce.org/xfce/xfdesktop/start"
-source = f"https://archive.xfce.org/src/xfce/xfdesktop/4.21/xfdesktop-4.21.1.tar.xz"
+source = "https://archive.xfce.org/src/xfce/xfdesktop/4.21/xfdesktop-4.21.1.tar.xz"
 sha256 = "a1b798d045c8b188af49503e2b015632b460cd179e1893cb3d2eec93eb59a33f"
 # upstream tests need a display and a running session bus
 def post_patch(self):

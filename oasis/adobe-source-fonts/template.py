@@ -7,8 +7,10 @@ url = "https://github.com/adobe-fonts"
 source = [
     "https://github.com/adobe-fonts/source-sans/archive/3.028R.tar.gz",
     "https://github.com/adobe-fonts/source-serif/archive/4.004R.tar.gz",
-    "https://github.com/adobe-fonts/source-code-pro/archive/"
-    "2.038R-ro/1.058R-it/1.018R-VAR.tar.gz",
+    (
+        "https://github.com/adobe-fonts/source-code-pro/archive/"
+        "2.038R-ro/1.058R-it/1.018R-VAR.tar.gz"
+    ),
 ]
 source_paths = ["sans", "serif", "codepro"]
 sha256 = [

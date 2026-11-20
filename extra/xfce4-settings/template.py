@@ -41,7 +41,7 @@ makedepends = [
 pkgdesc = "Xfce settings app"
 license = "GPL-2.0-only"
 url = "https://docs.xfce.org/xfce/xfce4-settings/start"
-source = f"https://archive.xfce.org/src/xfce/xfce4-settings/4.21/xfce4-settings-4.21.3.tar.xz"
+source = "https://archive.xfce.org/src/xfce/xfce4-settings/4.21/xfce4-settings-4.21.3.tar.xz"
 sha256 = "2f620939359dc9737800adfcb88fa86cad89b02d83f182ad1704bbebcd86b609"
 # upstream tests need a display and a running session bus
 def post_patch(self):

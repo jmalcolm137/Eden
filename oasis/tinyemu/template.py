@@ -39,14 +39,14 @@ def build(self):
     cc = compiler.C(self)
     self.mkdir("obj", parents=True)
     cc.invoke(["riscv_cpu.c"], "obj/riscv_cpu32.o", obj_file=True,
-              flags=_cflags + ["-DMAX_XLEN=32"])
+              flags=[*_cflags, "-DMAX_XLEN=32"])
     cc.invoke(["riscv_cpu.c"], "obj/riscv_cpu64.o", obj_file=True,
-              flags=_cflags + ["-DMAX_XLEN=64"])
+              flags=[*_cflags, "-DMAX_XLEN=64"])
     cc.invoke(
-        _sources + ["obj/riscv_cpu32.o", "obj/riscv_cpu64.o"],
+        [*_sources, "obj/riscv_cpu32.o", "obj/riscv_cpu64.o"],
         "temu",
         flags=_cflags,
-        ldflags=["/usr/lib/libbearssl.a", "/usr/lib/libcurl.a", "/usr/lib/libz.a", "-lpthread"],
+        ldflags=["/usr/lib/libbearssl.a", "/usr/lib/libcurl.so", "/usr/lib/libz.a", "-lpthread"],
     )
 
 

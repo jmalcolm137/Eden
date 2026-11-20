@@ -29,7 +29,7 @@ makedepends = [
 pkgdesc = "Xfce pulseaudio panel plugin"
 license = "GPL-2.0-or-later"
 url = "https://docs.xfce.org/panel-plugins/xfce4-pulseaudio-plugin/start"
-source = f"https://archive.xfce.org/src/panel-plugins/xfce4-pulseaudio-plugin/0.5/xfce4-pulseaudio-plugin-0.5.1.tar.xz"
+source = "https://archive.xfce.org/src/panel-plugins/xfce4-pulseaudio-plugin/0.5/xfce4-pulseaudio-plugin-0.5.1.tar.xz"
 sha256 = "8e1f3a505f37aa3bc2816a58bec5f9555366f1c476f10eab59fd0e6581d08c47"
 # upstream tests need a display and a running session bus
 options = ["!check"]

@@ -9,6 +9,29 @@ configure_args = [
     "--with-pid-dir=/run",
     "--with-maildir=/var/mail",
 ]
+# let portable OpenSSH provide its own compat implementations
+configure_env = {
+    "ac_cv_func_freezero": "no",
+    "ac_cv_func_recallocarray": "no",
+    "ac_cv_func_timingsafe_bcmp": "no",
+    "ac_cv_func_b64_ntop": "no",
+    "ac_cv_func_b64_pton": "no",
+    "ac_cv_func_arc4random": "no",
+    "ac_cv_func_arc4random_buf": "no",
+    "ac_cv_func_arc4random_uniform": "no",
+    "ac_cv_func_strtonum": "no",
+    "ac_cv_func_fmt_scaled": "no",
+    "ac_cv_lib_util_fmt_scaled": "no",
+    "ac_cv_have_decl_FMT_SCALED_STRSIZE": "no",
+    "ac_cv_func_readpassphrase": "no",
+    "ac_cv_have_decl_readpassphrase": "no",
+    "ac_cv_func_scan_scaled": "no",
+    "ac_cv_func_strmode": "no",
+    "ac_cv_func_user_from_uid": "no",
+    "ac_cv_func_group_from_gid": "no",
+    "ac_cv_func_uid_from_user": "no",
+    "ac_cv_func_gid_from_group": "no",
+}
 configure_gen = []
 makedepends = ["libressl-devel", "zlib-static"]
 pkgdesc = "OpenBSD Secure Shell"

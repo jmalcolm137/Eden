@@ -164,10 +164,7 @@ def build(self):
         f.write("#include <utf8proc.h>\n")
 
     libcss_src = _rels(self, "libcss/src/**/*.c", ("css_property_parser_gen.c",))
-    libdom_src = _rels(self, "libdom/src/**/*.c") + [
-        "libdom/bindings/hubbub/parser.c",
-        "libdom/bindings/xml/expat_xmlparser.c",
-    ]
+    libdom_src = [*_rels(self, "libdom/src/**/*.c"), "libdom/bindings/hubbub/parser.c", "libdom/bindings/xml/expat_xmlparser.c"]
     libhubbub_src = _rels(self, "libhubbub/src/**/*.c")
     libparserutils_src = _rels(self, "libparserutils/src/**/*.c")
     libnsbmp_src = _rels(self, "libnsbmp/src/*.c")
@@ -286,7 +283,7 @@ def build(self):
         mk.append(f"\t$(CC) $(CFLAGS_{var}) -c -o $@ $<")
         mk.append("")
         mk.append(f"{lib}.a: $({var}_OBJS)")
-        mk.append(f"\t$(AR) rcs $@ $^")
+        mk.append("\t$(AR) rcs $@ $^")
         mk.append("")
 
     mk.append(_emit_objects("NETSURF_OBJS", _objs_tree("netsurf", netsurf_src, "netsurf/")))

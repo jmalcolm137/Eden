@@ -71,7 +71,7 @@ def build(self):
         objs.append(obj)
 
     cc.invoke(
-        _less_sources + ["obj/version.o", "obj/xbuf.o", "obj/lesskey_parse.o"],
+        [*_less_sources, "obj/version.o", "obj/xbuf.o", "obj/lesskey_parse.o"],
         "less",
         flags=_cflags,
         ldflags=["/usr/lib/libcurses.a", "/usr/lib/libterminfo.a"],

@@ -24,7 +24,7 @@ makedepends = [
 pkgdesc = "Xfce burning software"
 license = "GPL-2.0-or-later"
 url = "https://docs.xfce.org/apps/xfburn/start"
-source = f"https://archive.xfce.org/src/apps/xfburn/0.8/xfburn-0.8.0.tar.bz2"
+source = "https://archive.xfce.org/src/apps/xfburn/0.8/xfburn-0.8.0.tar.bz2"
 sha256 = "13a301aebcef27de18f63f8ca10b43bc42f9c1b9865dff1bfb3e97cfd95dd989"
 # upstream tests need a display and a running session bus
 options = ["!check"]

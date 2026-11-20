@@ -51,7 +51,7 @@ def build(self):
         objs.append(obj)
     cc.invoke(
         ["lib/sha512.c"], "obj/sha512.o", obj_file=True,
-        flags=_cflags + ["-DCONFIG_SHA384", "-DCONFIG_SHA512"],
+        flags=[*_cflags, "-DCONFIG_SHA384", "-DCONFIG_SHA512"],
     )
     objs.append("obj/sha512.o")
     cc.invoke(["tools/mkimage.c", *objs], "mkimage", flags=_cflags)

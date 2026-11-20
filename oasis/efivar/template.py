@@ -99,14 +99,14 @@ def build(self):
     )
 
     objs = []
-    for src in ["src/crc32.c"] + _boot_sources:
+    for src in ["src/crc32.c", *_boot_sources]:
         obj = "obj/boot_" + src.replace("/", "_").removesuffix(".c") + ".o"
         cc.invoke([src], obj, obj_file=True, flags=_cflags)
         objs.append(obj)
     self.do("ar", "rcs", "libefiboot.a", *objs)
 
     objs = []
-    for src in ["src/crc32.c"] + _var_sources + ["guid-symbols.c"]:
+    for src in ["src/crc32.c", *_var_sources, "guid-symbols.c"]:
         obj = "obj/var_" + src.replace("/", "_").removesuffix(".c") + ".o"
         cc.invoke([src], obj, obj_file=True, flags=_cflags)
         objs.append(obj)

@@ -29,7 +29,7 @@ makedepends = [
 pkgdesc = "Xfce clipboard manager app and panel plugin"
 license = "GPL-2.0-or-later"
 url = "https://docs.xfce.org/panel-plugins/xfce4-clipman-plugin/start"
-source = f"https://archive.xfce.org/src/panel-plugins/xfce4-clipman-plugin/1.7/xfce4-clipman-plugin-1.7.0.tar.xz"
+source = "https://archive.xfce.org/src/panel-plugins/xfce4-clipman-plugin/1.7/xfce4-clipman-plugin-1.7.0.tar.xz"
 sha256 = "903302c3070a951d44ee17a84fa3cf21d36c6787678af8fbfc79e469fd00cb46"
 # upstream tests need a display and a running session bus
 options = ["!check", "etcfiles"]

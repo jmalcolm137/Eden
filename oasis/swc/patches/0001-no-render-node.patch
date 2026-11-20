@@ -1,0 +1,16 @@
+--- a/libswc/drm.c	2026-11-20 01:13:04.969393403 -0700
++++ b/libswc/drm.c	2026-11-20 01:13:04.977467418 -0700
+@@ -270,8 +270,11 @@
+ 
+ 	drm.path = drmGetRenderDeviceNameFromFd(swc.drm->fd);
+ 	if (!drm.path) {
+-		ERROR("Could not determine render node path\n");
+-		goto error1;
++		/* Devices without a render node (e.g. bochs, or VMSVGA
++		 * without 3D) can still be driven through the primary node. */
++		drm.path = strdup(primary);
++		if (!drm.path)
++			goto error1;
+ 	}
+ 
+ 	if (!(swc.drm->context = wld_drm_create_context(swc.drm->fd))) {

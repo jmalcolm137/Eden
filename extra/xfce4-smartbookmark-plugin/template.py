@@ -16,7 +16,7 @@ makedepends = [
 pkgdesc = "Xfce browser search panel plugin"
 license = "GPL-2.0-or-later"
 url = "https://docs.xfce.org/panel-plugins/xfce4-smartbookmark-plugin/start"
-source = f"https://archive.xfce.org/src/panel-plugins/xfce4-smartbookmark-plugin/0.6/xfce4-smartbookmark-plugin-0.6.0.tar.xz"
+source = "https://archive.xfce.org/src/panel-plugins/xfce4-smartbookmark-plugin/0.6/xfce4-smartbookmark-plugin-0.6.0.tar.xz"
 sha256 = "d8a619dcad703071f7fcda538cc34154f9952cf4ec0816df23a56e98e3cc05d8"
 # upstream tests need a display and a running session bus
 options = ["!check"]

@@ -37,7 +37,7 @@ makedepends = [
 pkgdesc = "Xfce desktop session"
 license = "GPL-2.0-or-later"
 url = "https://docs.xfce.org/xfce/xfce4-session/start"
-source = f"https://archive.xfce.org/src/xfce/xfce4-session/4.21/xfce4-session-4.21.2.tar.xz"
+source = "https://archive.xfce.org/src/xfce/xfce4-session/4.21/xfce4-session-4.21.2.tar.xz"
 sha256 = "1809216cb1c658cba50c56b70bcdc1bd073bd357980a4dc335d442eb559bf18a"
 # upstream tests need a display and a running session bus
 options = ["!check", "etcfiles"]

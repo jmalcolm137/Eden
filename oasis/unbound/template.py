@@ -17,7 +17,7 @@ url = "https://nlnetlabs.nl/projects/unbound"
 source = f"https://nlnetlabs.nl/downloads/unbound/unbound-{pkgver}.tar.gz"
 sha256 = "56b4ceed33639522000fd96775576ddf8782bb3617610715d7f1e777c5ec1dbf"
 # no test suite in the Oasis recipe
-options = ["etcfiles", "!lto", "!check"]
+options = ["etcfiles", "!lto", "!check", "!scanpkgconf"]
 
 
 def post_install(self):

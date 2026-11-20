@@ -32,7 +32,7 @@ makedepends = [
 pkgdesc = "Xfce notification daemon"
 license = "GPL-2.0-only"
 url = "https://docs.xfce.org/apps/xfce4-notifyd/start"
-source = f"https://archive.xfce.org/src/apps/xfce4-notifyd/0.9/xfce4-notifyd-0.9.7.tar.bz2"
+source = "https://archive.xfce.org/src/apps/xfce4-notifyd/0.9/xfce4-notifyd-0.9.7.tar.bz2"
 sha256 = "170d18fd5f40cce823ffc7ae3d7e21644007c3f45808ab4835f0401d21b3516a"
 # upstream tests need a display and a running session bus
 options = ["!check", "etcfiles"]

@@ -18,7 +18,7 @@ makedepends = [
 pkgdesc = "Xfce CPU governor and frequency panel plugin"
 license = "GPL-2.0-or-later"
 url = "https://docs.xfce.org/panel-plugins/xfce4-cpufreq-plugin/start"
-source = f"https://archive.xfce.org/src/panel-plugins/xfce4-cpufreq-plugin/1.3/xfce4-cpufreq-plugin-1.3.0.tar.xz"
+source = "https://archive.xfce.org/src/panel-plugins/xfce4-cpufreq-plugin/1.3/xfce4-cpufreq-plugin-1.3.0.tar.xz"
 sha256 = "baa5b90f72e8c262777f1e246acae125af489e2c168a5f7f890d9d2b5567ec20"
 # upstream tests need a display and a running session bus
 options = ["!check"]

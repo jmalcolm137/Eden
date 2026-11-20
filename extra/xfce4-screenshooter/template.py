@@ -29,7 +29,7 @@ makedepends = [
 pkgdesc = "Xfce screenshot app"
 license = "GPL-2.0-or-later"
 url = "https://docs.xfce.org/apps/xfce4-screenshooter/start"
-source = f"https://archive.xfce.org/src/apps/xfce4-screenshooter/1.11/xfce4-screenshooter-1.11.3.tar.xz"
+source = "https://archive.xfce.org/src/apps/xfce4-screenshooter/1.11/xfce4-screenshooter-1.11.3.tar.xz"
 sha256 = "1f6a14f7d1b0c440f31e24a8cc4fe2996185357fa786f0c2cdfe564ef673a710"
 # upstream tests need a display and a running session bus
 options = ["!check"]

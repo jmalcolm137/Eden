@@ -16,3 +16,6 @@ __pycache__
 void-*.tar.xz
 /bootstrap.log
 /testrepo2
+/oasis-root
+/*.iso
+/oasis-iso

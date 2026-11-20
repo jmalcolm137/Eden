@@ -26,7 +26,7 @@ makedepends = [
 pkgdesc = "Xfce taskbar panel plugin"
 license = "GPL-3.0-or-later"
 url = "https://docs.xfce.org/panel-plugins/xfce4-docklike-plugin/start"
-source = f"https://archive.xfce.org/src/panel-plugins/xfce4-docklike-plugin/0.5/xfce4-docklike-plugin-0.5.1.tar.xz"
+source = "https://archive.xfce.org/src/panel-plugins/xfce4-docklike-plugin/0.5/xfce4-docklike-plugin-0.5.1.tar.xz"
 sha256 = "9d7b355c2be37fb0a73b77b4ed75f092d23c012a67b102c9f847c55ddc3095df"
 # upstream tests need a display and a running session bus
 options = ["!check"]

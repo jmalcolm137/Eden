@@ -20,7 +20,7 @@ makedepends = [
 pkgdesc = "Xfce mail watcher panel plugin"
 license = "GPL-2.0-only"
 url = "https://docs.xfce.org/panel-plugins/xfce4-mailwatch-plugin/start"
-source = f"https://archive.xfce.org/src/panel-plugins/xfce4-mailwatch-plugin/1.4/xfce4-mailwatch-plugin-1.4.0.tar.xz"
+source = "https://archive.xfce.org/src/panel-plugins/xfce4-mailwatch-plugin/1.4/xfce4-mailwatch-plugin-1.4.0.tar.xz"
 sha256 = "5c211025db1096663fa6b8cc41213464a6d71f24e76326499d857ff81ea3861f"
 # upstream tests need a display and a running session bus
 options = ["!check"]

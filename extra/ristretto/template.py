@@ -26,7 +26,7 @@ makedepends = [
 pkgdesc = "Xfce image viewer"
 license = "GPL-2.0-or-later"
 url = "https://docs.xfce.org/apps/ristretto/start"
-source = f"https://archive.xfce.org/src/apps/ristretto/0.14/ristretto-0.14.0.tar.xz"
+source = "https://archive.xfce.org/src/apps/ristretto/0.14/ristretto-0.14.0.tar.xz"
 sha256 = "502cf1577de14b38132dc89e56884c5e10f86f6a028d8dde379a8839110fda55"
 # upstream tests need a display and a running session bus
 options = ["!check"]

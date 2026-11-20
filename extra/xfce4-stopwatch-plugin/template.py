@@ -18,7 +18,7 @@ makedepends = [
 pkgdesc = "Xfce stopwatch panel plugin"
 license = "BSD-2-Clause"
 url = "https://docs.xfce.org/panel-plugins/xfce4-stopwatch-plugin/start"
-source = f"https://archive.xfce.org/src/panel-plugins/xfce4-stopwatch-plugin/0.6/xfce4-stopwatch-plugin-0.6.0.tar.xz"
+source = "https://archive.xfce.org/src/panel-plugins/xfce4-stopwatch-plugin/0.6/xfce4-stopwatch-plugin-0.6.0.tar.xz"
 sha256 = "9be4825f6dc3b5227ba3c71b345da4159ac3364f659784b57845bb06cf31ef43"
 # upstream tests need a display and a running session bus
 options = ["!check"]

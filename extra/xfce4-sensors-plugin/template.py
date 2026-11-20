@@ -26,7 +26,7 @@ makedepends = [
 pkgdesc = "Xfce hardware sensors panel plugin"
 license = "GPL-2.0-or-later"
 url = "https://docs.xfce.org/panel-plugins/xfce4-sensors-plugin/start"
-source = f"https://archive.xfce.org/src/panel-plugins/xfce4-sensors-plugin/1.5/xfce4-sensors-plugin-1.5.0.tar.xz"
+source = "https://archive.xfce.org/src/panel-plugins/xfce4-sensors-plugin/1.5/xfce4-sensors-plugin-1.5.0.tar.xz"
 sha256 = "840442b87fdddcd8595bd9f83ea8b81f771fe296bb9d2abf0e1979e208727ae9"
 # upstream tests need a display and a running session bus
 options = ["!check"]

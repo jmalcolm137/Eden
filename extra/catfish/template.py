@@ -31,7 +31,7 @@ depends = [
 pkgdesc = "Xfce file search tool"
 license = "GPL-2.0-or-later"
 url = "https://docs.xfce.org/apps/catfish/start"
-source = f"https://archive.xfce.org/src/apps/catfish/4.20/catfish-4.20.1.tar.xz"
+source = "https://archive.xfce.org/src/apps/catfish/4.20/catfish-4.20.1.tar.xz"
 sha256 = "fe00d45b163cf86b4c85ebdd23a73d53aa55bc97ba3f691a248ec403d4ade62b"
 # upstream tests need a display and a running session bus
 options = ["!check"]

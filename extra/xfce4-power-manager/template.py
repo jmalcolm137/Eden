@@ -35,7 +35,7 @@ depends = [
 pkgdesc = "Xfce power manager"
 license = "GPL-2.0-only"
 url = "https://docs.xfce.org/xfce/xfce4-power-manager/start"
-source = f"https://archive.xfce.org/src/xfce/xfce4-power-manager/4.21/xfce4-power-manager-4.21.1.tar.xz"
+source = "https://archive.xfce.org/src/xfce/xfce4-power-manager/4.21/xfce4-power-manager-4.21.1.tar.xz"
 sha256 = "bb89be7b1be431b29e765e2c632e98fb20a688e495e4ef18495bd70c1524767a"
 # upstream tests need a display and a running session bus
 options = ["!check", "etcfiles"]

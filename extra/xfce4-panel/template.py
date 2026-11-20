@@ -39,7 +39,7 @@ makedepends = [
 pkgdesc = "Xfce panel"
 license = "GPL-2.0-or-later AND LGPL-2.1-or-later"
 url = "https://docs.xfce.org/xfce/xfce4-panel/start"
-source = f"https://archive.xfce.org/src/xfce/xfce4-panel/4.21/xfce4-panel-4.21.3.tar.xz"
+source = "https://archive.xfce.org/src/xfce/xfce4-panel/4.21/xfce4-panel-4.21.3.tar.xz"
 sha256 = "daa277162735e024552586dac0df24bf9e0ed3fdcaa3bc4210b97c0679013db3"
 # upstream tests need a display and a running session bus
 options = ["!check", "etcfiles"]

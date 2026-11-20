@@ -27,7 +27,7 @@ makedepends = [
 pkgdesc = "Xfce application launcher panel plugin"
 license = "GPL-2.0-or-later"
 url = "https://docs.xfce.org/panel-plugins/xfce4-whiskermenu-plugin/start"
-source = f"https://archive.xfce.org/src/panel-plugins/xfce4-whiskermenu-plugin/2.10/xfce4-whiskermenu-plugin-2.10.1.tar.xz"
+source = "https://archive.xfce.org/src/panel-plugins/xfce4-whiskermenu-plugin/2.10/xfce4-whiskermenu-plugin-2.10.1.tar.xz"
 sha256 = "8b5a777a5d9df1f1c39b109ba8b2d045cb2cc02c41a9a297aa00dcb2a4520530"
 # upstream tests need a display and a running session bus
 options = ["!check"]

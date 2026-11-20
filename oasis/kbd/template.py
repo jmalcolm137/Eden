@@ -78,7 +78,7 @@ def build(self):
 
     libs = [lib for lib, _ in _libs]
     for name, _sect, _subst in _tools:
-        cc.invoke([f"src/{name}.c"] + libs, name, flags=_cflags)
+        cc.invoke([f"src/{name}.c", *libs], name, flags=_cflags)
 
 
 def install(self):

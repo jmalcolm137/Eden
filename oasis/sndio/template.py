@@ -106,17 +106,17 @@ def build(self):
         ("libsndio/sio.c", "obj/sio.o"),
         ("libsndio/sio_alsa.c", "obj/sio_alsa.o"),
     ):
-        cc.invoke([src], obj, obj_file=True, flags=_cflags + ["-DUSE_ALSA"])
+        cc.invoke([src], obj, obj_file=True, flags=[*_cflags, "-DUSE_ALSA"])
         sobjs.append(obj)
 
     cc.invoke(
-        sobjs + ["libsndio.a"],
+        [*sobjs, "libsndio.a"],
         "out/sndiod",
         flags=_cflags,
         ldflags=["/usr/lib/libtinyalsa.a"],
     )
     cc.invoke(["sndioctl/sndioctl.c", "libsndio.a"], "out/sndioctl", flags=_cflags)
-    cc.invoke(_aucat_sources + ["libsndio.a"], "out/aucat", flags=_cflags)
+    cc.invoke([*_aucat_sources, "libsndio.a"], "out/aucat", flags=_cflags)
 
 
 def install(self):

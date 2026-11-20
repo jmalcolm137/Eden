@@ -1,6 +1,6 @@
 pkgname = "swc"
 pkgver = "0_git20200101"
-pkgrel = 2
+pkgrel = 3
 # Oasis pkg/swc/src
 _commit = "19893a5ca3239082b904a04fdb9ac7c3a1fb62e2"
 makedepends = [

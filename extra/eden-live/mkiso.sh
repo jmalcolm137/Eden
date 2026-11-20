@@ -21,6 +21,9 @@ for t in mksquashfs zstd mkfs.vfat mmd mcopy; do
     }
 done
 
+# boot menu / kernel command line (net.ifnames=0 keeps eth0 stable)
+install -Dm644 "$here/../boot/limine.conf" "$iso/boot/limine/limine.conf"
+
 # 1. root filesystem helpers
 [ -x "$root/usr/bin/sinit" ] || {
     echo "missing $root/usr/bin/sinit (install the sinit package first)" >&2

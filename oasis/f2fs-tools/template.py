@@ -52,7 +52,7 @@ def build(self):
         ],
         "mkfs.f2fs",
         flags=_cflags,
-        ldflags=["/usr/lib/libuuid.a"],
+        ldflags=["/usr/lib/libuuid.so"],
     )
     cc.invoke(
         [

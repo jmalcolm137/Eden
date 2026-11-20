@@ -95,14 +95,14 @@ def build(self):
     cc = compiler.C(self)
     self.mkdir("obj", parents=True)
     objs = []
-    for src in _libbsd + ["arc4random/arc4random.c"]:
+    for src in [*_libbsd, "arc4random/arc4random.c"]:
         obj = "obj/" + src.replace("/", "_") + ".o"
         cc.invoke([src], obj, obj_file=True, flags=_cflags)
         objs.append(obj)
     self.do("ar", "rcs", "libbsd.a", *objs)
 
     def exe(name, srcs, flags=None):
-        cc.invoke(srcs + ["libbsd.a"], name, flags=_cflags + (flags or []))
+        cc.invoke([*srcs, "libbsd.a"], name, flags=_cflags + (flags or []))
 
     exe("diff", [
         "usr.bin/diff/diff.c", "usr.bin/diff/diffdir.c",
@@ -166,7 +166,7 @@ def build(self):
         "usr.bin/nc/netcat.c", "usr.bin/nc/atomicio.c",
         "usr.bin/nc/socks.c", "/usr/lib/libtls.a", "/usr/lib/libbearssl.a",
         "-lpthread", "libbsd.a",
-    ], "nc", flags=_cflags + ["-D_GNU_SOURCE"])
+    ], "nc", flags=[*_cflags, "-D_GNU_SOURCE"])
 
 
 def install(self):

@@ -1,6 +1,6 @@
 pkgname = "base-files"
 pkgver = "1.0"
-pkgrel = 5
+pkgrel = 6
 pkgdesc = "Minimal base filesystem and account files for the bldroot"
 license = "custom:meta"
 url = "https://oasislinux.org"
@@ -66,6 +66,15 @@ def install(self):
     self.install_file(self.files_path / "etc/passwd", "etc")
     self.install_file(self.files_path / "etc/group", "etc")
     self.install_file(self.files_path / "etc/kshrc", "etc")
+
+    # distribution identity
+    self.install_file(self.files_path / "lib/os-release", "usr/lib")
+    self.install_link("etc/os-release", "../usr/lib/os-release")
+    self.install_file(self.files_path / "lsb-release", "etc")
+    self.install_file(
+        self.files_path / "lsb_release", "usr/bin", mode=0o755
+    )
+    self.install_file(self.files_path / "share/issue", "etc")
 
     (self.destdir / "root").chmod(0o750)
     (self.destdir / "tmp").chmod(0o1777)

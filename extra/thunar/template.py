@@ -36,7 +36,7 @@ makedepends = [
 pkgdesc = "Xfce file manager"
 license = "GPL-2.0-or-later AND LGPL-2.0-or-later"
 url = "https://docs.xfce.org/xfce/thunar/start"
-source = f"https://archive.xfce.org/src/xfce/thunar/4.21/thunar-4.21.7.tar.xz"
+source = "https://archive.xfce.org/src/xfce/thunar/4.21/thunar-4.21.7.tar.xz"
 sha256 = "fcb196b2f89cbcb8a3f5130fa9a1a11bc49d66a6403bc91aff7676648d95d51f"
 # upstream tests need a display and a running session bus
 options = ["!check", "etcfiles"]

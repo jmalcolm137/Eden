@@ -1,13 +1,13 @@
 pkgname = "cproc"
 pkgver = "0_git20260528"
-pkgrel = 0
+pkgrel = 2
 # Oasis pkg/cproc/src
 _commit = "6e8426cba04bb95952355e3967b749b47037c7c2"
 archs = ["aarch64", "riscv64", "x86_64"]
 build_style = "makefile"
 # cproc's driver needs a preprocessor, QBE, an assembler and a linker;
-# clang supplies the preprocessor/assembler, lld the linker.
-depends = ["clang", "lld", "musl-devel", "qbe"]
+# mcpp preprocesses and GNU binutils assemble/link (no clang/llvm).
+depends = ["binutils", "mcpp", "musl-devel", "musl-devel-static", "qbe"]
 pkgdesc = "C11 compiler using the QBE compiler backend"
 license = "ISC AND MIT AND Unlicense"
 url = "https://git.sr.ht/~mcf/cproc"

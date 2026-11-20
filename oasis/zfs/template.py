@@ -107,10 +107,7 @@ def build(self):
         "libshare.a", "libzutil.a", "libefi.a", "libspl.a", "libtpool.a",
         "libavl.a",
     ]
-    link = ["-Wl,--start-group"] + group + [
-        "-Wl,--end-group", "-lbearssl", "-lz", "-luuid", "-lblkid",
-        "-ltirpc", "-lpthread", "-lm", "-ldl",
-    ]
+    link = ["-Wl,--start-group", *group, "-Wl,--end-group", "-lbearssl", "-lz", "-luuid", "-lblkid", "-ltirpc", "-lpthread", "-lm", "-ldl"]
 
     cc.invoke([
         "cmd/zed/zed.c", "cmd/zed/zed_conf.c", "cmd/zed/zed_disk_event.c",

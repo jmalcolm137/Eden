@@ -12,9 +12,7 @@ configure_args = [
     "--enable-shared",
     "--disable-static",
     "--enable-libdav1d",
-    "--enable-libass",
     "--enable-libopus",
-    "--enable-alsa",
     "--enable-openssl",
     "--enable-libdrm",
     "--disable-libv4l2",
@@ -44,7 +42,7 @@ url = "https://ffmpeg.org"
 source = f"{url}/releases/ffmpeg-{pkgver}.tar.xz"
 sha256 = "8646515b638a3ad303e23af6a3587734447cb8fc0a0c064ecdb8e95c4fd8b389"
 # no test suite in the Oasis recipe
-options = ["!check"]
+options = ["!check", "!lto"]
 
 
 def configure(self):
@@ -58,9 +56,7 @@ def configure(self):
         "--enable-shared",
         "--disable-static",
         "--enable-libdav1d",
-        "--enable-libass",
-        "--enable-libopus",
-        "--enable-alsa",
+            "--enable-libopus",
         "--enable-openssl",
         "--enable-libdrm",
         "--disable-libv4l2",

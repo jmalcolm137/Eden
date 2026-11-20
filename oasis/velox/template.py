@@ -1,6 +1,6 @@
 pkgname = "velox"
 pkgver = "0_git20201110"
-pkgrel = 2
+pkgrel = 3
 # Oasis pkg/velox/src
 _commit = "2ae5e99dfcccfc10f98b3e1a697201db4a8676f8"
 hostmakedepends = ["wayland-progs"]
@@ -77,7 +77,7 @@ def build(self):
     self.mkdir("obj", parents=True)
 
     objs = []
-    for src in _sources + ["protocol/velox-protocol.c"]:
+    for src in [*_sources, "protocol/velox-protocol.c"]:
         obj = "obj/" + src.rsplit("/", 1)[-1].removesuffix(".c") + ".o"
         cc.invoke([src], obj, obj_file=True, flags=flags)
         objs.append(obj)
@@ -90,6 +90,8 @@ def build(self):
             "-static-pie",
             "-lswc",
             "/usr/lib/libwayland-server.a",
+            "/usr/lib/libpixman-1.a",
+            "/usr/lib/libpng16.a",
             "-lm",
             "-ldl",
             "-lpthread",
@@ -112,6 +114,8 @@ def build(self):
             "-static-pie",
             "-lswc",
             "/usr/lib/libwayland-client.a",
+            "/usr/lib/libpixman-1.a",
+            "/usr/lib/libpng16.a",
             "-lm",
             "-ldl",
             "-lpthread",

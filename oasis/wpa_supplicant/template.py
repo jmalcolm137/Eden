@@ -115,7 +115,7 @@ def build(self):
     self.do("ar", "rcs", "libcommon.a", *objs)
 
     cc.invoke(
-        _wpa_sources + ["libcommon.a"],
+        [*_wpa_sources, "libcommon.a"],
         "out/wpa_supplicant",
         flags=_cflags,
         ldflags=[
@@ -128,7 +128,7 @@ def build(self):
         ],
     )
     cc.invoke(
-        _wpa_cli_sources + ["libcommon.a"],
+        [*_wpa_cli_sources, "libcommon.a"],
         "wpa_cli",
         flags=_cflags,
         ldflags=["-lpthread"],

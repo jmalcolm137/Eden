@@ -20,7 +20,7 @@ makedepends = [
 pkgdesc = "Thunar volume manager extension"
 license = "GPL-2.0-only"
 url = "https://docs.xfce.org/xfce/thunar/thunar-volman"
-source = f"https://archive.xfce.org/src/xfce/thunar-volman/4.20/thunar-volman-4.20.0.tar.bz2"
+source = "https://archive.xfce.org/src/xfce/thunar-volman/4.20/thunar-volman-4.20.0.tar.bz2"
 sha256 = "b0dad852959b515b8fbfd1ed552e362340347d26d5246e7f1b973027131eb1da"
 # upstream tests need a display and a running session bus
 options = ["!check"]

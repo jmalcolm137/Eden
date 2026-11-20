@@ -31,7 +31,7 @@ makedepends = [
 pkgdesc = "Xfce implementation of the thumbnail management D-Bus spec"
 license = "GPL-2.0-or-later"
 url = "https://docs.xfce.org/xfce/tumbler/start"
-source = f"https://archive.xfce.org/src/xfce/tumbler/4.21/tumbler-4.21.1.tar.xz"
+source = "https://archive.xfce.org/src/xfce/tumbler/4.21/tumbler-4.21.1.tar.xz"
 sha256 = "0f499f79a2a7ee49726a433584dd8a680d514101b72bd1b003360611ce1dc244"
 # upstream tests need a display and a running session bus
 options = ["!check", "etcfiles"]

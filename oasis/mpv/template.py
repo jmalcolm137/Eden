@@ -6,6 +6,12 @@ makedepends = [
     "ffmpeg-devel", "libass-devel", "libplacebo-devel", "linux-headers",
     "zlib-static",
 ]
+depends = ["ffmpeg"]
+ignore_shlibs = [
+    "libavcodec.so.61", "libavdevice.so.61", "libavfilter.so.10",
+    "libavformat.so.61", "libavutil.so.59", "libswresample.so.5",
+    "libswscale.so.8",
+]
 pkgdesc = "Media player"
 license = "GPL-2.0-or-later"
 url = "https://mpv.io"
@@ -225,7 +231,9 @@ def build(self):
         ["osdep/main-fn-unix.c", *_sources], "mpv", flags=_cflags,
         ldflags=[
             "-lavcodec", "-lavdevice", "-lavfilter", "-lavformat",
-            "-lavutil", "-lswresample", "-lswscale", "-lplacebo", "-lass", "-lz", "-lpthread",
+            "-lavutil", "-lswresample", "-lswscale", "-lplacebo", "-lass",
+            "-lharfbuzz", "-lfribidi", "-lfontconfig", "-lfreetype", "-lexpat",
+            "-lpng16", "-lz", "-lpthread",
             "-lm", "-ldl",
         ],
     )
