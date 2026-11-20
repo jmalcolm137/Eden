@@ -1,4 +1,4 @@
-pkgname = "gm4"
+pkgname = "gnu-m4"
 pkgver = "1.4.20"
 pkgrel = 0
 build_style = "gnu_configure"
@@ -18,4 +18,5 @@ def post_install(self):
     # expose GNU m4 through the GNU tools drop-in directory as well
     self.install_dir("usr/gnulib")
     self.install_link("usr/gnulib/m4", "../bin/gm4")
+
     self.install_license("COPYING")

@@ -1,6 +1,6 @@
 pkgname = "xfwl4"
 pkgver = "4.21.1"
-pkgrel = 0
+pkgrel = 6
 # extra/smithay carries this source; use it instead of the git dependency
 # (keep the version in sync with extra/smithay)
 _smithay_version = "0.7.0"

@@ -1,0 +1,22 @@
+pkgname = "libxdmcp"
+pkgver = "1.1.5"
+pkgrel = 0
+build_style = "gnu_configure"
+configure_env = {"M4": "/usr/bin/gm4"}
+hostmakedepends = ["automake", "libtool", "pkgconf", "xorg-util-macros"]
+makedepends = ["xorgproto"]
+pkgdesc = "X Display Manager Control Protocol library"
+license = "MIT"
+url = "https://xorg.freedesktop.org"
+source = f"https://xorg.freedesktop.org/releases/individual/lib/libXdmcp-{pkgver}.tar.gz"
+sha256 = "31a7abc4f129dcf6f27ae912c3eedcb94d25ad2e8f317f69df6eda0bc4e4f2f3"
+# upstream test suites need a full X session
+options = ["!check"]
+
+
+def post_install(self):
+    self.install_license("COPYING")
+
+
+@subpackage("libxdmcp-devel")
+def _(self): return self.default_devel()
