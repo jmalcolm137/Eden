@@ -4,6 +4,7 @@ pkgrel = 0
 archs = ["x86_64"]
 hostmakedepends = ["cargo-bootstrap", "git", "pkgconf", "rust"]
 makedepends = [
+    "clang-libs",
     "libinput-devel",
     "libxkbcommon-devel",
     "llvm-devel",

@@ -1,6 +1,6 @@
 pkgname = "libffi"
 pkgver = "3.3"
-pkgrel = 0
+pkgrel = 1
 # Oasis pkg/libffi/src
 _commit = "5dcb741f1544c5e18c9dbf96aeb8b61cc556a616"
 pkgdesc = "Foreign function interface library from Oasis"
@@ -68,6 +68,7 @@ def build(self):
     objs = []
     flags = [
         "-Wall",
+        "-fPIC",
         "-Wno-deprecated-declarations",
         "-DHAVE_CONFIG_H",
         "-I.",
@@ -82,10 +83,20 @@ def build(self):
         objs.append(obj)
 
     self.do("ar", "rcs", "libffi.a", *objs)
+    self.do(
+        "clang",
+        "-shared",
+        "-Wl,-soname,libffi.so.8",
+        "-o",
+        "libffi.so.8.1.0",
+        *objs,
+    )
 
 
 def install(self):
     self.install_file("libffi.a", "usr/lib")
+    self.install_file("libffi.so.8.1.0", "usr/lib", mode=0o755)
+    self.install_link("usr/lib/libffi.so.8", "libffi.so.8.1.0")
     self.install_file("include/ffi.h", "usr/include")
     self.install_file("include/ffitarget.h", "usr/include")
     self.install_license("LICENSE")
