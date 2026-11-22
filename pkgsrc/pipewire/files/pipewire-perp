@@ -1,0 +1,20 @@
+#!/bin/sh
+# Start a per-user perp instance for the PipeWire session daemons.
+# This replaces the systemd user units/socket activation.
+set -e
+
+: "${XDG_RUNTIME_DIR:=/run/user/$(id -u)}"
+base="$XDG_RUNTIME_DIR/perp"
+mkdir -p "$base"
+
+for svc in pipewire pipewire-pulse; do
+    src="/usr/share/pipewire/perp/$svc"
+    [ -f "$src/rc.main" ] || continue
+    rm -rf "$base/$svc"
+    mkdir -p "$base/$svc"
+    cp "$src/rc.main" "$base/$svc/rc.main"
+    chmod 755 "$base/$svc/rc.main"
+    chmod 1755 "$base/$svc"
+done
+
+exec perpd "$base"

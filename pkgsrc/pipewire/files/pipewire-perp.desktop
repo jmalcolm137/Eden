@@ -1,0 +1,7 @@
+[Desktop Entry]
+Type=Application
+Name=PipeWire
+Comment=Start PipeWire under perp
+Exec=/usr/bin/pipewire-perp
+OnlyShowIn=COSMIC;
+NoDisplay=true

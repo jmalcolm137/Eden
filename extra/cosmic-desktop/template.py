@@ -30,7 +30,9 @@ depends = [
     "cosmic-workspaces",
     "dbus",
     "libseat-progs",
+    "pipewire",
     "udev",
+    "xdg-desktop-portal",
     "xdg-desktop-portal-cosmic",
 ]
 pkgdesc = "COSMIC desktop environment"

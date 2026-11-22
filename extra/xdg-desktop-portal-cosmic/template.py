@@ -14,7 +14,7 @@ makedepends = [
     "pipewire-devel",
     "wayland-devel",
 ]
-depends = ["cosmic-icons"]
+depends = ["cosmic-icons", "xdg-desktop-portal"]
 pkgdesc = "Xdg-desktop-portal implementation for COSMIC"
 license = "GPL-3.0-only"
 url = "https://github.com/pop-os/xdg-desktop-portal-cosmic"
