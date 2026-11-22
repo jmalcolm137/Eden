@@ -95,7 +95,7 @@ fakeroot flex fortify-headers git gmake gnu-m4 gperf gsed kmod libatomic-
 chimera libcap libedit libffi8 libressl libtls-bearssl linux-headers linux-
 kernel linux-personality llvm llvm-bootstrap lz4 mandoc muon musl musl-bsd-
 headers musl-fts musl-obstack nasm netbsd-curses oksh openbsd perl pigz
-pkgconf python samurai sbase ubase ugetopt unzip xz zlib-static zstd
+pkgconf python samurai sbase ubase ugetopt unzip xz zlib zstd
 ```
 
 ### oasis templates (192)
@@ -129,7 +129,7 @@ protocols wireguard-tools wl9 wld wld-devel wpa_supplicant x509cert x509cert-
 devel x509cert-devel-static xkeyboard-config yt-dlp zfs
 ```
 
-### pkgsrc templates (186)
+### pkgsrc templates (187)
 
 ```
 adwaita-icon-theme adwaita-icon-theme-legacy atk atk-devel bash bison brotli
@@ -141,7 +141,7 @@ gstreamer gstreamer-devel gstreamer-progs gtar gtk+3 gtk+3-devel gtk-layer-
 shell gtk-layer-shell-devel harfbuzz harfbuzz-devel hicolor-icon-theme
 hicolor-icon-theme-devel htop hwdata hwdata-devel hwdata-net hwdata-pci
 hwdata-pnp hwdata-usb icu icu-devel icu-progs isl iso-codes json-c json-c-
-devel krb5 krb5-devel libburn libburn-devel libburn-progs libcanberra
+devel just krb5 krb5-devel libburn libburn-devel libburn-progs libcanberra
 libcanberra-devel libcurl libcurl-devel libdisplay-info libdisplay-info-devel
 libepoxy libepoxy-devel libexif libexif-devel libfontenc libfontenc-devel
 libglvnd libglvnd-devel libgtop libgtop-devel libgudev libgudev-devel libisofs
@@ -165,33 +165,34 @@ macros xorgproto xserver-xorg-protocol xtrans xwayland xwayland-devel zlib-
 shared
 ```
 
-### extra templates (110)
+### extra templates (117)
 
 ```
-antigravity-cli catfish dbus-glib dbus-glib-devel exo exo-devel fast_float
-garcon garcon-devel gigolo gobject-introspection gobject-introspection-devel
-gobject-introspection-libs gspell gspell-devel gtksourceview4
-gtksourceview4-devel libnma libnma-devel libsecret libsecret-devel libsoup3
-libsoup3-devel libxfce4ui libxfce4ui-devel libxfce4util libxfce4util-devel
-libxfce4windowing libxfce4windowing-devel mesa mesa-devel mesa-gbm-devel mesa-
-gbm-libs mesa-libgallium mousepad network-manager-applet opencode parole
-python-dbus python-gobject python-mako python-markdown python-markupsafe
-python-packaging python-pexpect python-ptyprocess python-pyyaml python-
-setuptools ristretto smithay thunar thunar-archive-plugin thunar-devel thunar-
-media-tags-plugin thunar-vcs-plugin thunar-volman tumbler tumbler-devel vte-
-gtk3 vte-gtk3-devel xfburn xfce4-appfinder xfce4-battery-plugin
-xfce4-calculator-plugin xfce4-clipman-plugin xfce4-cpufreq-plugin
-xfce4-cpugraph-plugin xfce4-desktop xfce4-dev-tools xfce4-dict xfce4-diskperf-
-plugin xfce4-docklike-plugin xfce4-eyes-plugin xfce4-fsguard-plugin
-xfce4-generic-slider xfce4-genmon-plugin xfce4-goodies xfce4-mailwatch-plugin
-xfce4-mount-plugin xfce4-netload-plugin xfce4-notes-plugin xfce4-notifyd
-xfce4-panel xfce4-panel-devel xfce4-panel-profiles xfce4-places-plugin
-xfce4-power-manager xfce4-pulseaudio-plugin xfce4-screenshooter xfce4-sensors-
-plugin xfce4-session xfce4-session-devel xfce4-settings xfce4-smartbookmark-
-plugin xfce4-stopwatch-plugin xfce4-systemload-plugin xfce4-taskmanager
-xfce4-terminal xfce4-time-out-plugin xfce4-timer-plugin xfce4-verve-plugin
-xfce4-wavelan-plugin xfce4-weather-plugin xfce4-whiskermenu-plugin xfconf
-xfconf-devel xfconfd-lite xfdesktop xfwl4 xfwm4-themes
+antigravity-cli catfish dbus-glib dbus-glib-devel dotnet exo exo-devel
+fast_float garcon garcon-devel gigolo gleam gobject-introspection gobject-
+introspection-devel gobject-introspection-libs goose goose-extension goose-
+samples gspell gspell-devel gtksourceview4 gtksourceview4-devel libnma libnma-
+devel libsecret libsecret-devel libsoup3 libsoup3-devel libucontext libxfce4ui
+libxfce4ui-devel libxfce4util libxfce4util-devel libxfce4windowing
+libxfce4windowing-devel mesa mesa-devel mesa-gbm-devel mesa-gbm-libs mesa-
+libgallium mousepad network-manager-applet opencode parole python-dbus python-
+gobject python-mako python-markdown python-markupsafe python-packaging python-
+pexpect python-ptyprocess python-pyyaml python-setuptools ristretto smithay
+thunar thunar-archive-plugin thunar-devel thunar-media-tags-plugin thunar-vcs-
+plugin thunar-volman tumbler tumbler-devel vte-gtk3 vte-gtk3-devel xfburn
+xfce4-appfinder xfce4-battery-plugin xfce4-calculator-plugin xfce4-clipman-
+plugin xfce4-cpufreq-plugin xfce4-cpugraph-plugin xfce4-desktop xfce4-dev-
+tools xfce4-dict xfce4-diskperf-plugin xfce4-docklike-plugin xfce4-eyes-plugin
+xfce4-fsguard-plugin xfce4-generic-slider xfce4-genmon-plugin xfce4-goodies
+xfce4-mailwatch-plugin xfce4-mount-plugin xfce4-netload-plugin xfce4-notes-
+plugin xfce4-notifyd xfce4-panel xfce4-panel-devel xfce4-panel-profiles
+xfce4-places-plugin xfce4-power-manager xfce4-pulseaudio-plugin
+xfce4-screenshooter xfce4-sensors-plugin xfce4-session xfce4-session-devel
+xfce4-settings xfce4-smartbookmark-plugin xfce4-stopwatch-plugin
+xfce4-systemload-plugin xfce4-taskmanager xfce4-terminal xfce4-time-out-plugin
+xfce4-timer-plugin xfce4-verve-plugin xfce4-wavelan-plugin xfce4-weather-
+plugin xfce4-whiskermenu-plugin xfconf xfconf-devel xfconfd-lite xfdesktop
+xfwl4 xfwm4-themes zig
 ```
 
 ## Current bldroot
@@ -207,7 +208,7 @@ libatomic-chimera libatomic-chimera-devel libcxx libcxxabi libcxxabi-devel
 libcxx-devel libedit libffi8 libunwind libunwind-devel lld llvm
 llvm-binutils llvm-libs llvm-linker-tools llvm-runtime lz4 muon musl
 musl-devel musl-ldso musl-progs netbsd-curses oksh patch pigz pkgconf
-samurai sbase ubase xz zlib-static zstd zstd-progs
+samurai sbase ubase xz zlib zstd zstd-progs
 ```
 
 The stage-0 root itself is installed from the published Eden repositories,
@@ -399,7 +400,7 @@ libhubbub, libnsbmp, libnsgif, libnsutils, libparserutils, libsvgtiny, and
 libwapcaplet, and applies the Oasis patches to them. The system libraries it
 needs are also Oasis ports: `curl`, `expat`, `freetype`, `libffi`,
 `libjpeg-turbo`, `libpng`, `libxkbcommon`, `pixman`, `utf8proc`, `wayland`,
-and `zlib-static`. The `netsurf` binary is static-pie linked: the bundled
+and `zlib`. The `netsurf` binary is static-pie linked: the bundled
 libraries and all of the listed system libraries are linked from their static
 archives. At runtime it also needs the Adobe Source fonts (packaged as
 `adobe-source-fonts`), xkeyboard-config data, and a Wayland compositor.

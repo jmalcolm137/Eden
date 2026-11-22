@@ -58,6 +58,7 @@ isl
 iso-codes
 json-c
 json-c-devel
+just
 krb5
 krb5-devel
 libburn
