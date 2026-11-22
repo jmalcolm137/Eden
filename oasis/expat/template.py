@@ -1,6 +1,6 @@
 pkgname = "expat"
 pkgver = "2.6.2"
-pkgrel = 0
+pkgrel = 1
 # Oasis pkg/expat/src
 _commit = "fa75b96546c069d17b8f80d91e0f4ef0cde3790d"
 pkgdesc = "XML parser library from Oasis"
@@ -27,7 +27,7 @@ def build(self):
 
     cc = compiler.C(self)
     objs = []
-    flags = ["-std=c99", "-Wall", "-DHAVE_EXPAT_CONFIG_H", "-I."]
+    flags = ["-std=c99", "-Wall", "-fPIC", "-DHAVE_EXPAT_CONFIG_H", "-I."]
     self.mkdir("obj", parents=True)
 
     for src in _sources:
@@ -36,10 +36,20 @@ def build(self):
         objs.append(obj)
 
     self.do("ar", "rcs", "libexpat.a", *objs)
+    self.do(
+        "clang",
+        "-shared",
+        "-Wl,-soname,libexpat.so.1",
+        "-o",
+        "libexpat.so.1.9.0",
+        *objs,
+    )
 
 
 def install(self):
     self.install_file("libexpat.a", "usr/lib")
+    self.install_file("libexpat.so.1.9.0", "usr/lib", mode=0o755)
+    self.install_link("usr/lib/libexpat.so.1", "libexpat.so.1.9.0")
     self.install_file("expat/lib/expat.h", "usr/include")
     self.install_file("expat/lib/expat_external.h", "usr/include")
     self.install_license("COPYING")

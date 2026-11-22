@@ -1,0 +1,44 @@
+#!/bin/sh
+# Perp replacement for cosmic-session.target / cosmic-comp.service.
+#
+# The session runs as a normal user and cosmic-session supervises its own
+# children (compositor, panel, applets).  Perp only owns the life cycle of the
+# whole session, which is what the systemd user target did upstream.
+
+[ "$1" = reset ] && exit 0
+
+# The compositor needs the seat daemon and udev-classified input devices.
+i=0
+while [ ! -S /run/seatd.sock ] && [ "$i" -lt 10 ]; do
+    sleep 1
+    i=$((i + 1))
+done
+
+i=0
+while [ ! -e /run/udev/ready ] && [ "$i" -lt 15 ]; do
+    sleep 1
+    i=$((i + 1))
+done
+
+# Override with COSMIC_USER when the desktop belongs to another account.
+user=${COSMIC_USER:-action}
+
+passwd=$(awk -F: -v u="$user" '$1 == u { print $3 ":" $6 }' /etc/passwd)
+uid=${passwd%%:*}
+home=${passwd#*:}
+[ -n "$uid" ] || uid=1000
+[ -n "$home" ] || home=/home/$user
+
+export HOME="$home"
+export USER="$user"
+export LOGNAME="$user"
+export SHELL=/bin/sh
+export XDG_RUNTIME_DIR="/run/user/$uid"
+
+mkdir -p "$XDG_RUNTIME_DIR"
+if ! chown "$user:$user" "$XDG_RUNTIME_DIR" 2>/dev/null; then
+    chown "$uid" "$XDG_RUNTIME_DIR" 2>/dev/null || true
+fi
+chmod 700 "$XDG_RUNTIME_DIR"
+
+exec /usr/bin/runuid "$user" /usr/bin/start-cosmic

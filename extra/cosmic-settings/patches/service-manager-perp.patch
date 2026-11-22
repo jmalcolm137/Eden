@@ -1,0 +1,113 @@
+--- a/cosmic-settings/src/service_manager.rs
++++ b/cosmic-settings/src/service_manager.rs
+@@ -290,6 +290,66 @@
+     }
+ }
+ 
++/// perp implementation of ServiceManager.
++#[cfg(feature = "perp")]
++pub struct PerpServiceManager {
++    service_name: String,
++}
++
++#[cfg(feature = "perp")]
++impl PerpServiceManager {
++    pub fn new(service_name: impl Into<String>) -> Self {
++        Self {
++            service_name: service_name.into(),
++        }
++    }
++
++    fn service_dir(&self) -> std::path::PathBuf {
++        std::path::Path::new("/etc/perp").join(&self.service_name)
++    }
++}
++
++#[cfg(feature = "perp")]
++impl ServiceManager for PerpServiceManager {
++    fn is_enabled(&self) -> bool {
++        use std::os::unix::fs::PermissionsExt;
++        self.service_dir()
++            .metadata()
++            .map(|metadata| metadata.permissions().mode() & 0o1000 != 0)
++            .unwrap_or(false)
++    }
++
++    fn is_active(&self) -> bool {
++        std::process::Command::new("perpok")
++            .args(["-b", "/etc/perp", &self.service_name])
++            .status()
++            .map(|status| status.success())
++            .unwrap_or(false)
++    }
++
++    fn activate(&self) -> Pin<Box<dyn Future<Output = ()> + Send>> {
++        let service = self.service_name.clone();
++        Box::pin(async move {
++            run_pkexec_command(
++                &["perpctl", "-b", "/etc/perp", "A", &service],
++                "perpctl activate",
++                &service,
++            )
++            .await;
++        })
++    }
++
++    fn enable(&self) -> Pin<Box<dyn Future<Output = ()> + Send>> {
++        // Activating a perp service also sets its sticky bit, the marker
++        // perpd uses for services that should be started on boot.
++        self.activate()
++    }
++
++    fn is_installed(&self) -> bool {
++        self.service_dir().join("rc.main").exists()
++    }
++}
++
+ /// Detect the running service manager and create a manager for the named service.
+ ///
+ /// Checks runtime directories (`/run/systemd/system`, `/run/openrc`) to determine
+@@ -317,12 +377,22 @@
+         }
+     }
+ 
++    #[cfg(feature = "perp")]
++    {
++        if std::path::Path::new("/etc/perp").exists() {
++            tracing::debug!("Detected perp service manager via /etc/perp");
++            return Ok(Box::new(PerpServiceManager::new(service_name)));
++        }
++    }
++
+     {
+         let mut checked = Vec::new();
+         #[cfg(feature = "systemd")]
+         checked.push("systemd (/run/systemd/system)");
+         #[cfg(feature = "openrc")]
+         checked.push("openrc (/run/openrc)");
++        #[cfg(feature = "perp")]
++        checked.push("perp (/etc/perp)");
+ 
+         Err(format!(
+             "Could not detect a running service manager. Checked for: {}. \
+--- a/cosmic-settings/Cargo.toml
++++ b/cosmic-settings/Cargo.toml
+@@ -117,6 +117,7 @@
+ gettext = ["dep:gettext-rs"]
+ systemd = []
+ openrc = []
++perp = []
+ 
+ # Default features for Linux
+ linux = [
+--- a/cosmic-settings/src/main.rs
++++ b/cosmic-settings/src/main.rs
+@@ -7,7 +7,7 @@
+ #![allow(clippy::cast_lossless)]
+ #![allow(clippy::too_many_lines)]
+ 
+-#[cfg(not(any(feature = "systemd", feature = "openrc")))]
++#[cfg(not(any(feature = "systemd", feature = "openrc", feature = "perp")))]
+ compile_error!(
+     "At least one service manager feature must be enabled. \
+      Enable 'systemd' or 'openrc' for bluetooth service management."
