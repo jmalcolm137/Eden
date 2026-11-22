@@ -7,8 +7,9 @@ set -e
 base="$XDG_RUNTIME_DIR/perp"
 mkdir -p "$base"
 
-for svc in pipewire pipewire-pulse; do
+for svc in pipewire pipewire-pulse wireplumber; do
     src="/usr/share/pipewire/perp/$svc"
+    [ -f "$src/rc.main" ] || src="/usr/share/wireplumber/perp/$svc"
     [ -f "$src/rc.main" ] || continue
     rm -rf "$base/$svc"
     mkdir -p "$base/$svc"

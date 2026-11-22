@@ -32,6 +32,7 @@ depends = [
     "libseat-progs",
     "pipewire",
     "udev",
+    "wireplumber",
     "xdg-desktop-portal",
     "xdg-desktop-portal-cosmic",
 ]

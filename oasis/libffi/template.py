@@ -1,6 +1,6 @@
 pkgname = "libffi"
 pkgver = "3.3"
-pkgrel = 1
+pkgrel = 2
 # Oasis pkg/libffi/src
 _commit = "5dcb741f1544c5e18c9dbf96aeb8b61cc556a616"
 pkgdesc = "Foreign function interface library from Oasis"
@@ -99,4 +99,5 @@ def install(self):
     self.install_link("usr/lib/libffi.so.8", "libffi.so.8.1.0")
     self.install_file("include/ffi.h", "usr/include")
     self.install_file("include/ffitarget.h", "usr/include")
+    self.install_file(self.files_path / "libffi.pc", "usr/lib/pkgconfig")
     self.install_license("LICENSE")

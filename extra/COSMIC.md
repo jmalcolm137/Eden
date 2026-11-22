@@ -70,7 +70,7 @@ Session:
 cosmic-session cosmic-comp cosmic-panel cosmic-applets
 cosmic-launcher cosmic-app-library cosmic-workspaces cosmic-osd
 cosmic-notifications cosmic-bg cosmic-idle
-cosmic-settings cosmic-settings-daemon cosmic-randr xdg-desktop-portal
+cosmic-settings cosmic-settings-daemon cosmic-randr xdg-desktop-portal wireplumber
 ```
 
 Applications:
