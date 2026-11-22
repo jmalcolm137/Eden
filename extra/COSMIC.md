@@ -35,6 +35,8 @@ port is:
 | systemd scopes for launched apps | `cosmic-session`'s own launch-pad process manager |
 | logind seat/VT handling | `seatd` plus `libseat`; `cosmic-comp` is built without the `logind` feature |
 | journald logging | tracing subscriber on stderr |
+| PipeWire systemd user socket activation | per-user perp service via `pipewire-perp` and the COSMIC autostart entry |
+| portal/user units | D-Bus activation; units are not installed |
 
 The `systemd` and `logind` Cargo features are disabled when building
 `cosmic-session` and `cosmic-comp`, so the binaries do not try to talk to
@@ -68,7 +70,7 @@ Session:
 cosmic-session cosmic-comp cosmic-panel cosmic-applets
 cosmic-launcher cosmic-app-library cosmic-workspaces cosmic-osd
 cosmic-notifications cosmic-bg cosmic-idle
-cosmic-settings cosmic-settings-daemon cosmic-randr
+cosmic-settings cosmic-settings-daemon cosmic-randr xdg-desktop-portal
 ```
 
 Applications:
