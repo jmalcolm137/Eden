@@ -29,11 +29,13 @@ gmp-cxx
 gmp-devel
 gnutls
 gnutls-devel
+grep
 gst-plugins-base
 gst-plugins-base-devel
 gstreamer
 gstreamer-devel
 gstreamer-progs
+gtar
 gtk+3
 gtk+3-devel
 gtk-layer-shell
@@ -52,9 +54,12 @@ hwdata-usb
 icu
 icu-devel
 icu-progs
+isl
 iso-codes
 json-c
 json-c-devel
+krb5
+krb5-devel
 libburn
 libburn-devel
 libburn-progs
@@ -135,6 +140,8 @@ linux-firmware-nvidia
 linux-firmware-radeon
 meson-real
 mkinitcpio
+mpcomplex
+mpfr
 mtools
 nettle
 nettle-devel
@@ -145,8 +152,11 @@ networkmanager-libs
 nghttp2
 nghttp2-devel
 nodejs
+openssl
+openssl-progs
 pango
 pango-devel
+patchelf
 pcre2
 pcre2-devel
 polkit

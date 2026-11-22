@@ -1,0 +1,49 @@
+<UsageData>
+  <CreatedByRid>linux-musl-x64</CreatedByRid>
+  <ProjectDirectories>
+    <Dir>src/arcade</Dir>
+    <Dir>src/aspnetcore</Dir>
+    <Dir>src/cecil</Dir>
+    <Dir>src/command-line-api</Dir>
+    <Dir>src/deployment-tools</Dir>
+    <Dir>src/diagnostics</Dir>
+    <Dir>src/dotnet</Dir>
+    <Dir>src/efcore</Dir>
+    <Dir>src/emsdk</Dir>
+    <Dir>src/fsharp</Dir>
+    <Dir>src/msbuild</Dir>
+    <Dir>src/nuget-client</Dir>
+    <Dir>src/razor</Dir>
+    <Dir>src/roslyn</Dir>
+    <Dir>src/runtime</Dir>
+    <Dir>src/scenario-tests</Dir>
+    <Dir>src/sdk</Dir>
+    <Dir>src/source-build-assets</Dir>
+    <Dir>src/sourcelink</Dir>
+    <Dir>src/symreader</Dir>
+    <Dir>src/templating</Dir>
+    <Dir>src/vstest</Dir>
+    <Dir>src/windowsdesktop</Dir>
+    <Dir>src/winforms</Dir>
+    <Dir>src/wpf</Dir>
+    <Dir>src/xdt</Dir>
+    <Dir>eng/tools/tasks/</Dir>
+    <Dir>artifacts/obj/</Dir>
+    <Dir></Dir>
+  </ProjectDirectories>
+  <Usages>
+    <Usage Id="Microsoft.Build.Framework" Version="18.0.11" />
+    <Usage Id="Microsoft.Build.Tasks.Core" Version="18.0.11" />
+    <Usage Id="Microsoft.Build.Utilities.Core" Version="18.0.11" />
+    <Usage Id="Microsoft.Extensions.FileSystemGlobbing" Version="10.0.12" />
+    <Usage Id="Microsoft.NET.StringTools" Version="18.0.11" />
+    <Usage Id="System.CodeDom" Version="10.0.12" />
+    <Usage Id="System.Configuration.ConfigurationManager" Version="10.0.12" />
+    <Usage Id="System.Diagnostics.EventLog" Version="10.0.12" />
+    <Usage Id="System.Formats.Nrbf" Version="10.0.12" />
+    <Usage Id="System.Resources.Extensions" Version="10.0.12" />
+    <Usage Id="System.Security.Cryptography.Pkcs" Version="10.0.12" />
+    <Usage Id="System.Security.Cryptography.ProtectedData" Version="10.0.12" />
+    <Usage Id="System.Security.Cryptography.Xml" Version="10.0.12" />
+  </Usages>
+</UsageData>

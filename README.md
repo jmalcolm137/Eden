@@ -129,38 +129,40 @@ protocols wireguard-tools wl9 wld wld-devel wpa_supplicant x509cert x509cert-
 devel x509cert-devel-static xkeyboard-config yt-dlp zfs
 ```
 
-### pkgsrc templates (176)
+### pkgsrc templates (186)
 
 ```
 adwaita-icon-theme adwaita-icon-theme-legacy atk atk-devel bash bison brotli
 brotli-devel brotli-progs cairo cairo-devel cargo-bootstrap dbus dbus-devel
 dbus-libs enchant2 enchant2-devel enchant2-progs font-util font-util-devel
 gdk-pixbuf gdk-pixbuf-devel glib glib-devel glib-networking gmp gmp-cxx gmp-
-devel gnutls gnutls-devel gst-plugins-base gst-plugins-base-devel gstreamer
-gstreamer-devel gstreamer-progs gtk+3 gtk+3-devel gtk-layer-shell gtk-layer-
-shell-devel harfbuzz harfbuzz-devel hicolor-icon-theme hicolor-icon-theme-
-devel htop hwdata hwdata-devel hwdata-net hwdata-pci hwdata-pnp hwdata-usb icu
-icu-devel icu-progs iso-codes json-c json-c-devel libburn libburn-devel
-libburn-progs libcanberra libcanberra-devel libcurl libcurl-devel libdisplay-
-info libdisplay-info-devel libepoxy libepoxy-devel libexif libexif-devel
-libfontenc libfontenc-devel libglvnd libglvnd-devel libgtop libgtop-devel
-libgudev libgudev-devel libisofs libisofs-devel libndp libndp-devel libnotify
-libnotify-devel libogg libogg-devel libpsl libpsl-devel libpulse libpulse-
-devel libseat libseat-devel libseat-progs libsndfile libsndfile-devel libssh2
-libssh2-devel libtasn1 libtasn1-devel libtasn1-progs libtirpc libtirpc-devel
-libuuid libuuid-devel libvorbis libvorbis-devel libx11 libx11-devel libxau
-libxau-devel libxcb libxcb-devel libxcvt libxcvt-devel libxcvt-progs libxdmcp
-libxdmcp-devel libxfont2 libxfont2-devel libxkbfile libxkbfile-devel
-libxshmfence libxshmfence-devel libxslt libxslt-devel libxslt-progs libyaml
-libyaml-devel limine linux-firmware linux-firmware-amdgpu linux-firmware-
-broadcom linux-firmware-intel linux-firmware-nvidia linux-firmware-radeon
-meson-real mkinitcpio mtools nettle nettle-devel nettle-progs networkmanager
-networkmanager-devel networkmanager-libs nghttp2 nghttp2-devel nodejs pango
-pango-devel pcre2 pcre2-devel polkit polkit-devel polkit-libs pulseaudio
-pulseaudio-progs ripgrep rust rust-bootstrap shared-mime-info sqlite sqlite-
-devel taglib taglib-devel upower upower-devel upower-libs uutils-coreutils
-uutils-findutils xcbproto xorg-util-macros xorgproto xserver-xorg-protocol
-xtrans xwayland xwayland-devel zlib-shared
+devel gnutls gnutls-devel grep gst-plugins-base gst-plugins-base-devel
+gstreamer gstreamer-devel gstreamer-progs gtar gtk+3 gtk+3-devel gtk-layer-
+shell gtk-layer-shell-devel harfbuzz harfbuzz-devel hicolor-icon-theme
+hicolor-icon-theme-devel htop hwdata hwdata-devel hwdata-net hwdata-pci
+hwdata-pnp hwdata-usb icu icu-devel icu-progs isl iso-codes json-c json-c-
+devel krb5 krb5-devel libburn libburn-devel libburn-progs libcanberra
+libcanberra-devel libcurl libcurl-devel libdisplay-info libdisplay-info-devel
+libepoxy libepoxy-devel libexif libexif-devel libfontenc libfontenc-devel
+libglvnd libglvnd-devel libgtop libgtop-devel libgudev libgudev-devel libisofs
+libisofs-devel libndp libndp-devel libnotify libnotify-devel libogg libogg-
+devel libpsl libpsl-devel libpulse libpulse-devel libseat libseat-devel
+libseat-progs libsndfile libsndfile-devel libssh2 libssh2-devel libtasn1
+libtasn1-devel libtasn1-progs libtirpc libtirpc-devel libuuid libuuid-devel
+libvorbis libvorbis-devel libx11 libx11-devel libxau libxau-devel libxcb
+libxcb-devel libxcvt libxcvt-devel libxcvt-progs libxdmcp libxdmcp-devel
+libxfont2 libxfont2-devel libxkbfile libxkbfile-devel libxshmfence
+libxshmfence-devel libxslt libxslt-devel libxslt-progs libyaml libyaml-devel
+limine linux-firmware linux-firmware-amdgpu linux-firmware-broadcom linux-
+firmware-intel linux-firmware-nvidia linux-firmware-radeon meson-real
+mkinitcpio mpcomplex mpfr mtools nettle nettle-devel nettle-progs
+networkmanager networkmanager-devel networkmanager-libs nghttp2 nghttp2-devel
+nodejs openssl openssl-progs pango pango-devel patchelf pcre2 pcre2-devel
+polkit polkit-devel polkit-libs pulseaudio pulseaudio-progs ripgrep rust rust-
+bootstrap shared-mime-info sqlite sqlite-devel taglib taglib-devel upower
+upower-devel upower-libs uutils-coreutils uutils-findutils xcbproto xorg-util-
+macros xorgproto xserver-xorg-protocol xtrans xwayland xwayland-devel zlib-
+shared
 ```
 
 ### extra templates (110)
