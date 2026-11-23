@@ -1,0 +1,48 @@
+# Turn off things we do not need.
+ac_add_options --disable-bootstrap
+ac_add_options --disable-cargo-incremental
+ac_add_options --disable-crashreporter
+ac_add_options --disable-debug
+ac_add_options --disable-debug-symbols
+ac_add_options --disable-install-strip
+ac_add_options --disable-jemalloc
+ac_add_options --disable-lto
+ac_add_options --disable-strip
+ac_add_options --disable-tests
+ac_add_options --disable-updater
+
+# Eden features.
+ac_add_options --enable-alsa
+ac_add_options --enable-dbus
+ac_add_options --enable-default-toolkit=cairo-gtk3-wayland-only
+ac_add_options --enable-hardening
+ac_add_options --enable-linker=lld
+ac_add_options --enable-official-branding
+ac_add_options --enable-optimize="-O2"
+ac_add_options --enable-packed-relative-relocs
+ac_add_options --enable-pulseaudio
+ac_add_options --enable-release
+
+# Reuse the distribution libraries.
+ac_add_options --enable-system-pixman
+ac_add_options --with-system-ffi
+ac_add_options --with-system-icu
+ac_add_options --with-system-jpeg
+ac_add_options --with-system-pipewire
+ac_add_options --with-system-zlib
+
+# Eden has no X11, no wireless-tools and no WASI SDK.
+ac_add_options --disable-necko-wifi
+ac_add_options --without-wasm-sandboxed-libraries
+ac_add_options --allow-addon-sideload
+ac_add_options --prefix=/usr
+ac_add_options --with-distribution-id=org.edenlinux
+ac_add_options --with-libclang-path=/usr/lib
+ac_add_options --with-unsigned-addon-scopes=app,system
+ac_add_options --host=@TRIPLET@
+ac_add_options --target=@TRIPLET@
+
+mk_add_options MOZ_OBJDIR=@OBJDIR@
+# cbuild builds with -j10; unified C++ files need well over a gigabyte of
+# memory each, so keep the Firefox build itself at four jobs.
+mk_add_options MOZ_MAKE_FLAGS="-j4"

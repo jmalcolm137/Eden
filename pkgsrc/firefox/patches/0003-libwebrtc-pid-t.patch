@@ -1,0 +1,15 @@
+desktop_capturer.h uses pid_t without including <sys/types.h>; musl does not
+provide the type through its other headers.
+
+diff --git a/third_party/libwebrtc/modules/desktop_capture/desktop_capturer.h b/third_party/libwebrtc/modules/desktop_capture/desktop_capturer.h
+index 9b1efa0..81c9cab 100644
+--- a/third_party/libwebrtc/modules/desktop_capture/desktop_capturer.h
++++ b/third_party/libwebrtc/modules/desktop_capture/desktop_capturer.h
+@@ -11,6 +11,7 @@
+ #ifndef MODULES_DESKTOP_CAPTURE_DESKTOP_CAPTURER_H_
+ #define MODULES_DESKTOP_CAPTURE_DESKTOP_CAPTURER_H_
+ 
++#include <sys/types.h>
+ #include <cstddef>
+ #include <cstdint>
+ #include <memory>

@@ -1,0 +1,26 @@
+Use the compiler visibility flags with clang and libc++, like Chimera does.
+Mozilla's default on Linux is to include config/gcc_hidden.h, whose hidden
+visibility pragma conflicts with libc++'s default-visibility annotations
+("visibility does not match previous declaration") and hides std:: symbols
+from the linker.
+
+diff --git a/build/moz.configure/toolchain.configure b/build/moz.configure/toolchain.configure
+index 7e1270f..f0d0088 100644
+--- a/build/moz.configure/toolchain.configure
++++ b/build/moz.configure/toolchain.configure
+@@ -2375,10 +2375,12 @@ set_define(
+ set_define("_LIBCPP_REMOVE_TRANSITIVE_INCLUDES", True, when=using_libcxx)
+ 
+ 
+-@depends(target, build_environment)
+-def visibility_flags(target, env):
++@depends(target, build_environment, c_compiler)
++def visibility_flags(target, env, c_compiler):
+     if target.os != "WINNT":
+-        if target.kernel in ("Darwin", "FreeBSD", "OpenBSD"):
++        if target.kernel in ("Darwin", "FreeBSD", "OpenBSD") or (
++            c_compiler.type == "clang" and c_compiler.version >= "17.0.0"
++        ):
+             return ("-fvisibility=hidden", "-fvisibility-inlines-hidden")
+         return (
+             "-I%s/system_wrappers" % os.path.join(env.dist),

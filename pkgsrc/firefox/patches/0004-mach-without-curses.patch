@@ -1,0 +1,28 @@
+Eden's Python has no _curses module, so blessed cannot be imported and mach
+fails at startup.  Fall back to plain logging; the terminal UI is optional.
+diff --git a/python/mach/mach/logging.py b/python/mach/mach/logging.py
+index b96907d..fd94732 100644
+--- a/python/mach/mach/logging.py
++++ b/python/mach/mach/logging.py
+@@ -12,7 +12,11 @@ import os
+ import sys
+ import time
+ 
+-import blessed
++try:
++    import blessed
++except ImportError:
++    # Eden's Python is built without the _curses module
++    blessed = None
+ from mozbuild.buildversion import mozilla_build_version
+ from mozfile import json
+ from packaging.version import Version
+@@ -54,6 +58,8 @@ if IS_WINDOWS:
+ 
+ 
+ def enable_blessed():
++    if blessed is None:
++        return False
+     # Only Windows has issues with enabling blessed
+     # and interpreting ANSI escape sequences
+     if not IS_WINDOWS:
