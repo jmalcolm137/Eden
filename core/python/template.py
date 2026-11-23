@@ -1,7 +1,7 @@
 pkgname = "python"
 pkgver = "3.15.2"
 _majver = pkgver[: pkgver.rfind(".")]
-pkgrel = 0
+pkgrel = 1
 # x86_64 only for the initial source-bootstrap toolchain; other
 # architectures can be restored once this path is working.
 archs = ["x86_64"]
@@ -51,6 +51,7 @@ makedepends = [
     "libffi8-devel",
     "libressl-devel",
     "linux-headers",
+    "sqlite-devel",
     "xz-devel",
     "zlib",
     "zstd-devel",
