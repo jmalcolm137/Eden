@@ -129,70 +129,77 @@ protocols wireguard-tools wl9 wld wld-devel wpa_supplicant x509cert x509cert-
 devel x509cert-devel-static xkeyboard-config yt-dlp zfs
 ```
 
-### pkgsrc templates (187)
+### pkgsrc templates (202)
 
 ```
 adwaita-icon-theme adwaita-icon-theme-legacy atk atk-devel bash bison brotli
-brotli-devel brotli-progs cairo cairo-devel cargo-bootstrap dbus dbus-devel
-dbus-libs enchant2 enchant2-devel enchant2-progs font-util font-util-devel
-gdk-pixbuf gdk-pixbuf-devel glib glib-devel glib-networking gmp gmp-cxx gmp-
-devel gnutls gnutls-devel grep gst-plugins-base gst-plugins-base-devel
-gstreamer gstreamer-devel gstreamer-progs gtar gtk+3 gtk+3-devel gtk-layer-
-shell gtk-layer-shell-devel harfbuzz harfbuzz-devel hicolor-icon-theme
-hicolor-icon-theme-devel htop hwdata hwdata-devel hwdata-net hwdata-pci
-hwdata-pnp hwdata-usb icu icu-devel icu-progs isl iso-codes json-c json-c-
-devel just krb5 krb5-devel libburn libburn-devel libburn-progs libcanberra
-libcanberra-devel libcurl libcurl-devel libdisplay-info libdisplay-info-devel
-libepoxy libepoxy-devel libexif libexif-devel libfontenc libfontenc-devel
-libglvnd libglvnd-devel libgtop libgtop-devel libgudev libgudev-devel libisofs
-libisofs-devel libndp libndp-devel libnotify libnotify-devel libogg libogg-
-devel libpsl libpsl-devel libpulse libpulse-devel libseat libseat-devel
-libseat-progs libsndfile libsndfile-devel libssh2 libssh2-devel libtasn1
-libtasn1-devel libtasn1-progs libtirpc libtirpc-devel libuuid libuuid-devel
-libvorbis libvorbis-devel libx11 libx11-devel libxau libxau-devel libxcb
-libxcb-devel libxcvt libxcvt-devel libxcvt-progs libxdmcp libxdmcp-devel
-libxfont2 libxfont2-devel libxkbfile libxkbfile-devel libxshmfence
-libxshmfence-devel libxslt libxslt-devel libxslt-progs libyaml libyaml-devel
-limine linux-firmware linux-firmware-amdgpu linux-firmware-broadcom linux-
-firmware-intel linux-firmware-nvidia linux-firmware-radeon meson-real
-mkinitcpio mpcomplex mpfr mtools nettle nettle-devel nettle-progs
+brotli-devel brotli-progs cairo cairo-devel cargo-bootstrap cbindgen dbus
+dbus-devel dbus-libs enchant2 enchant2-devel enchant2-progs firefox font-util
+font-util-devel fuse3 fuse3-devel gdk-pixbuf gdk-pixbuf-devel glib glib-devel
+glib-networking gmp gmp-cxx gmp-devel gnutls gnutls-devel grep gst-plugins-
+base gst-plugins-base-devel gstreamer gstreamer-devel gstreamer-progs gtar
+gtk+3 gtk+3-devel gtk-layer-shell gtk-layer-shell-devel harfbuzz harfbuzz-
+devel hicolor-icon-theme hicolor-icon-theme-devel htop hwdata hwdata-devel
+hwdata-net hwdata-pci hwdata-pnp hwdata-usb icu icu-devel icu-progs isl iso-
+codes json-c json-c-devel json-glib json-glib-devel just krb5 krb5-devel
+libburn libburn-devel libburn-progs libcanberra libcanberra-devel libcurl
+libcurl-devel libdisplay-info libdisplay-info-devel libepoxy libepoxy-devel
+libexif libexif-devel libfontenc libfontenc-devel libglvnd libglvnd-devel
+libgtop libgtop-devel libgudev libgudev-devel libisofs libisofs-devel libjpeg-
+turbo libjpeg-turbo-devel libjpeg-turbo-progs libndp libndp-devel libnotify
+libnotify-devel libogg libogg-devel libpsl libpsl-devel libpulse libpulse-
+devel libseat libseat-devel libseat-progs libsndfile libsndfile-devel libssh2
+libssh2-devel libtasn1 libtasn1-devel libtasn1-progs libtirpc libtirpc-devel
+libuuid libuuid-devel libvorbis libvorbis-devel libx11 libx11-devel libxau
+libxau-devel libxcb libxcb-devel libxcvt libxcvt-devel libxcvt-progs libxdmcp
+libxdmcp-devel libxfont2 libxfont2-devel libxkbfile libxkbfile-devel
+libxshmfence libxshmfence-devel libxslt libxslt-devel libxslt-progs libyaml
+libyaml-devel limine linux-firmware linux-firmware-amdgpu linux-firmware-
+broadcom linux-firmware-intel linux-firmware-nvidia linux-firmware-radeon
+meson-real mkinitcpio mpcomplex mpfr mtools nettle nettle-devel nettle-progs
 networkmanager networkmanager-devel networkmanager-libs nghttp2 nghttp2-devel
-nodejs openssl openssl-progs pango pango-devel patchelf pcre2 pcre2-devel
-polkit polkit-devel polkit-libs pulseaudio pulseaudio-progs ripgrep rust rust-
-bootstrap shared-mime-info sqlite sqlite-devel taglib taglib-devel upower
-upower-devel upower-libs uutils-coreutils uutils-findutils xcbproto xorg-util-
+nodejs oniguruma oniguruma-devel openssl openssl-progs pango pango-devel
+patchelf pcre2 pcre2-devel pipewire pipewire-devel polkit polkit-devel polkit-
+libs pop-launcher pulseaudio pulseaudio-progs ripgrep rust rust-bootstrap
+shared-mime-info sqlite sqlite-devel taglib taglib-devel upower upower-devel
+upower-libs uutils-coreutils uutils-findutils wireplumber xcbproto xorg-util-
 macros xorgproto xserver-xorg-protocol xtrans xwayland xwayland-devel zlib-
 shared
 ```
 
-### extra templates (117)
+### extra templates (140)
 
 ```
-antigravity-cli catfish dbus-glib dbus-glib-devel dotnet exo exo-devel
-fast_float garcon garcon-devel gigolo gleam gobject-introspection gobject-
-introspection-devel gobject-introspection-libs goose goose-extension goose-
-samples gspell gspell-devel gtksourceview4 gtksourceview4-devel libnma libnma-
-devel libsecret libsecret-devel libsoup3 libsoup3-devel libucontext libxfce4ui
-libxfce4ui-devel libxfce4util libxfce4util-devel libxfce4windowing
-libxfce4windowing-devel mesa mesa-devel mesa-gbm-devel mesa-gbm-libs mesa-
-libgallium mousepad network-manager-applet opencode parole python-dbus python-
-gobject python-mako python-markdown python-markupsafe python-packaging python-
-pexpect python-ptyprocess python-pyyaml python-setuptools ristretto smithay
-thunar thunar-archive-plugin thunar-devel thunar-media-tags-plugin thunar-vcs-
-plugin thunar-volman tumbler tumbler-devel vte-gtk3 vte-gtk3-devel xfburn
-xfce4-appfinder xfce4-battery-plugin xfce4-calculator-plugin xfce4-clipman-
-plugin xfce4-cpufreq-plugin xfce4-cpugraph-plugin xfce4-desktop xfce4-dev-
-tools xfce4-dict xfce4-diskperf-plugin xfce4-docklike-plugin xfce4-eyes-plugin
-xfce4-fsguard-plugin xfce4-generic-slider xfce4-genmon-plugin xfce4-goodies
-xfce4-mailwatch-plugin xfce4-mount-plugin xfce4-netload-plugin xfce4-notes-
-plugin xfce4-notifyd xfce4-panel xfce4-panel-devel xfce4-panel-profiles
-xfce4-places-plugin xfce4-power-manager xfce4-pulseaudio-plugin
-xfce4-screenshooter xfce4-sensors-plugin xfce4-session xfce4-session-devel
-xfce4-settings xfce4-smartbookmark-plugin xfce4-stopwatch-plugin
+antigravity-cli catfish cosmic-app-library cosmic-applets cosmic-bg cosmic-
+comp cosmic-desktop cosmic-edit cosmic-files cosmic-icons cosmic-idle cosmic-
+launcher cosmic-monitor cosmic-notifications cosmic-osd cosmic-panel cosmic-
+player cosmic-randr cosmic-screenshot cosmic-session cosmic-settings cosmic-
+settings-daemon cosmic-sound-theme cosmic-store cosmic-term cosmic-viewer
+cosmic-wallpapers cosmic-workspaces dbus-glib dbus-glib-devel dotnet exo exo-
+devel fast_float garcon garcon-devel gigolo gobject-introspection gobject-
+introspection-devel gobject-introspection-libs gspell gspell-devel
+gtksourceview4 gtksourceview4-devel libnma libnma-devel libsecret libsecret-
+devel libsoup3 libsoup3-devel libucontext libxfce4ui libxfce4ui-devel
+libxfce4util libxfce4util-devel libxfce4windowing libxfce4windowing-devel mesa
+mesa-devel mesa-gbm-devel mesa-gbm-libs mesa-libgallium mousepad network-
+manager-applet opencode parole python-dbus python-gobject python-mako python-
+markdown python-markupsafe python-packaging python-pexpect python-ptyprocess
+python-pyyaml python-setuptools ristretto smithay thunar thunar-archive-plugin
+thunar-devel thunar-media-tags-plugin thunar-vcs-plugin thunar-volman tumbler
+tumbler-devel vte-gtk3 vte-gtk3-devel xdg-desktop-portal xdg-desktop-portal-
+cosmic xfburn xfce4-appfinder xfce4-battery-plugin xfce4-calculator-plugin
+xfce4-clipman-plugin xfce4-cpufreq-plugin xfce4-cpugraph-plugin xfce4-desktop
+xfce4-dev-tools xfce4-dict xfce4-diskperf-plugin xfce4-docklike-plugin
+xfce4-eyes-plugin xfce4-fsguard-plugin xfce4-generic-slider xfce4-genmon-
+plugin xfce4-goodies xfce4-mailwatch-plugin xfce4-mount-plugin xfce4-netload-
+plugin xfce4-notes-plugin xfce4-notifyd xfce4-panel xfce4-panel-devel
+xfce4-panel-profiles xfce4-places-plugin xfce4-power-manager xfce4-pulseaudio-
+plugin xfce4-screenshooter xfce4-sensors-plugin xfce4-session xfce4-session-
+devel xfce4-settings xfce4-smartbookmark-plugin xfce4-stopwatch-plugin
 xfce4-systemload-plugin xfce4-taskmanager xfce4-terminal xfce4-time-out-plugin
 xfce4-timer-plugin xfce4-verve-plugin xfce4-wavelan-plugin xfce4-weather-
 plugin xfce4-whiskermenu-plugin xfconf xfconf-devel xfconfd-lite xfdesktop
-xfwl4 xfwm4-themes zig
+xfwl4 xfwm4-themes
 ```
 
 ## Current bldroot

@@ -11,14 +11,18 @@ brotli-progs
 cairo
 cairo-devel
 cargo-bootstrap
+cbindgen
 dbus
 dbus-devel
 dbus-libs
 enchant2
 enchant2-devel
 enchant2-progs
+firefox
 font-util
 font-util-devel
+fuse3
+fuse3-devel
 gdk-pixbuf
 gdk-pixbuf-devel
 glib
@@ -58,6 +62,8 @@ isl
 iso-codes
 json-c
 json-c-devel
+json-glib
+json-glib-devel
 just
 krb5
 krb5-devel
@@ -84,6 +90,9 @@ libgudev
 libgudev-devel
 libisofs
 libisofs-devel
+libjpeg-turbo
+libjpeg-turbo-devel
+libjpeg-turbo-progs
 libndp
 libndp-devel
 libnotify
@@ -153,6 +162,8 @@ networkmanager-libs
 nghttp2
 nghttp2-devel
 nodejs
+oniguruma
+oniguruma-devel
 openssl
 openssl-progs
 pango
@@ -160,9 +171,12 @@ pango-devel
 patchelf
 pcre2
 pcre2-devel
+pipewire
+pipewire-devel
 polkit
 polkit-devel
 polkit-libs
+pop-launcher
 pulseaudio
 pulseaudio-progs
 ripgrep
@@ -178,6 +192,7 @@ upower-devel
 upower-libs
 uutils-coreutils
 uutils-findutils
+wireplumber
 xcbproto
 xorg-util-macros
 xorgproto
