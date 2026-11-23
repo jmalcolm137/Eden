@@ -54,7 +54,7 @@ makedepends = [
     "llvm-devel",
     "wayland-devel",
     "wayland-protocols",
-    "zlib-static",
+    "zlib",
     "zstd-devel",
 ]
 depends = ["libglvnd"]

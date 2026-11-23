@@ -49,9 +49,9 @@ hostmakedepends = [
     "pkgconf",
     "python",
     "samurai",
-    "zlib-static",
+    "zlib",
 ]
-makedepends = ["libatomic-chimera-devel", "zlib-static"]
+makedepends = ["libatomic-chimera-devel", "zlib"]
 depends = [
     self.with_pkgver("llvm-libs"),
     self.with_pkgver("llvm-binutils"),
@@ -112,7 +112,7 @@ if self.stage > 0:
         "libffi8-devel",
         "zstd-devel",
         "zstd-devel-static",
-        "zlib-static",
+        "zlib",
     ]
     # enable LTO except on riscv where it's broken
     # also use llvm-bootstrap

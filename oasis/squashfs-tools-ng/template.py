@@ -1,7 +1,7 @@
 pkgname = "squashfs-tools-ng"
 pkgver = "1.1.3"
 pkgrel = 0
-makedepends = ["zlib-static", "zstd", "zstd-devel", "zstd-devel-static"]
+makedepends = ["zlib", "zstd", "zstd-devel", "zstd-devel-static"]
 pkgdesc = "Tools and libraries for squashfs filesystems"
 license = "GPL-3.0-or-later"
 url = "https://github.com/AgentD/squashfs-tools-ng"

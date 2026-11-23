@@ -27,7 +27,7 @@ makedepends = [
     "wayland-protocols",
     "wld",
     "wld-devel",
-    "zlib-static",
+    "zlib",
 ]
 pkgdesc = "Simple terminal emulator"
 license = "MIT"

@@ -4,7 +4,7 @@ pkgrel = 0
 _commit = "02254b92dd237f03aa0a151c2a68778c4ea848f9"
 makedepends = [
     "ffmpeg-devel", "libass-devel", "libplacebo-devel", "linux-headers",
-    "zlib-static",
+    "zlib",
 ]
 depends = ["ffmpeg"]
 ignore_shlibs = [

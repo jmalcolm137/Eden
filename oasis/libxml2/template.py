@@ -16,7 +16,7 @@ configure_args = [
 ]
 configure_gen = []
 hostmakedepends = ["pkgconf"]
-makedepends = ["zlib-static"]
+makedepends = ["zlib"]
 pkgdesc = "XML parsing library"
 license = "MIT"
 url = "http://www.xmlsoft.org"

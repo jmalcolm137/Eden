@@ -11,7 +11,7 @@ configure_args = [
 ]
 make_check_env = {"APK_CONFIG": "/dev/null"}
 hostmakedepends = ["muon", "samurai", "pkgconf"]
-makedepends = ["bearssl-devel", "zlib-static"]
+makedepends = ["bearssl-devel", "zlib"]
 pkgdesc = "Alpine package manager with BearSSL"
 license = "GPL-2.0-only"
 url = "http://git.alpinelinux.org/cgit/apk-tools"

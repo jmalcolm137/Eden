@@ -27,7 +27,7 @@ hostmakedepends = [
     "libevent-devel-static",
     "libressl-devel",
     "linux-headers",
-    "zlib-static",
+    "zlib",
 ]
 pkgdesc = "BitTorrent client"
 license = "GPL-2.0-or-later"

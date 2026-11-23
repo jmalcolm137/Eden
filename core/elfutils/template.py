@@ -20,7 +20,7 @@ configure_env = {
 }
 configure_gen = []
 hostmakedepends = ["pkgconf"]
-makedepends = ["argp-standalone", "musl-bsd-headers", "zlib-static"]
+makedepends = ["argp-standalone", "musl-bsd-headers", "zlib"]
 pkgdesc = "ELF handling library from elfutils"
 license = "GPL-3.0-or-later OR LGPL-3.0-or-later"
 url = "https://sourceware.org/elfutils"

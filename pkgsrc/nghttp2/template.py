@@ -10,7 +10,7 @@ configure_args = [
 ]
 configure_gen = []
 hostmakedepends = ["pkgconf"]
-makedepends = ["zlib-static"]
+makedepends = ["zlib"]
 pkgdesc = "HTTP/2 C library"
 license = "MIT"
 url = "https://nghttp2.org"

@@ -52,7 +52,7 @@ makedepends = [
     "libressl-devel",
     "linux-headers",
     "xz-devel",
-    "zlib-static",
+    "zlib",
     "zstd-devel",
 ]
 depends = [self.with_pkgver("python-meta")]

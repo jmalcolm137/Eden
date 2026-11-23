@@ -6,7 +6,7 @@ configure_args = ["--with-encodingsdir=/usr/share/fonts/encodings"]
 # cycle with mkfontscale
 configure_gen = []
 hostmakedepends = ["pkgconf"]
-makedepends = ["xorgproto", "zlib-static"]
+makedepends = ["xorgproto", "zlib"]
 pkgdesc = "Fontenc Library from X.org"
 license = "MIT"
 url = "https://xorg.freedesktop.org"

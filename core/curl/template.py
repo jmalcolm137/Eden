@@ -10,7 +10,7 @@ makedepends = [
     "libunwind-devel-static",
     "linux-headers",
     "musl-devel-static",
-    "zlib-static",
+    "zlib",
 ]
 pkgdesc = "URL transfer library and tool from Oasis"
 license = "curl"

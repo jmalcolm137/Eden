@@ -24,7 +24,7 @@ makedepends = [
     "libtasn1-devel",
     "linux-headers",
     "nettle-devel",
-    "zlib-static",
+    "zlib",
 ]
 pkgdesc = "GNU TLS library"
 license = "LGPL-2.1-or-later"

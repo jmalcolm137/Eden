@@ -8,7 +8,7 @@ configure_args = [
     "-DBUILD_TESTING=OFF",
 ]
 hostmakedepends = ["cmake", "meson-real", "pkgconf"]
-makedepends = ["zlib-static"]
+makedepends = ["zlib"]
 pkgdesc = "Audio metadata library"
 license = "LGPL-2.1-or-later OR MPL-1.1"
 url = "https://taglib.org"

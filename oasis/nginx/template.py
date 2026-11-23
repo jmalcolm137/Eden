@@ -27,7 +27,7 @@ makedepends = [
     "linux-headers",
     "pcre-devel",
     "pcre-devel-static",
-    "zlib-static",
+    "zlib",
 ]
 pkgdesc = "HTTP and reverse proxy server"
 license = "BSD-2-Clause"

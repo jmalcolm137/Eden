@@ -8,7 +8,7 @@ hostmakedepends = ["perl", "pkgconf"]
 makedepends = [
     "libatomic-chimera-devel-static",
     "musl-devel-static",
-    "zlib-static",
+    "zlib",
 ]
 pkgdesc = "OpenBSD TLS and cryptography library"
 license = "OpenSSL"

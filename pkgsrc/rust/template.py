@@ -16,14 +16,14 @@ hostmakedepends = [
     "pkgconf",
     "python",
     "rust-bootstrap",
-    "zlib-static",
+    "zlib",
     "zstd-devel",
 ]
 makedepends = [
     "libffi8-devel",
     "libressl-devel",
     "llvm-devel",
-    "zlib-static",
+    "zlib",
     "zstd-devel",
 ]
 depends = ["clang", "libressl", "musl-devel", "zlib-shared"]

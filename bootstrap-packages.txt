@@ -67,5 +67,5 @@ ubase
 ugetopt
 unzip
 xz
-zlib-static
+zlib
 zstd

@@ -14,7 +14,7 @@ configure_args = [
     "-Dzshcompletiondir=no",
 ]
 hostmakedepends = ["muon", "pkgconf", "samurai"]
-makedepends = ["xz-devel", "zlib-static", "zstd-devel"]
+makedepends = ["xz-devel", "zlib", "zstd-devel"]
 depends = ["ubase"]
 pkgdesc = "Linux kernel module handling"
 license = "GPL-2.0-or-later AND LGPL-2.1-or-later"

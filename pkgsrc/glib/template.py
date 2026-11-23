@@ -28,7 +28,7 @@ hostmakedepends = [
 makedepends = [
     "libffi8-devel",
     "pcre2-devel",
-    "zlib-static",
+    "zlib",
 ]
 depends = ["python"]
 triggers = ["/usr/lib/gio/modules", "/usr/share/glib-2.0/schemas"]

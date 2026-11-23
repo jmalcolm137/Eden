@@ -25,7 +25,7 @@ makedepends = [
     "libpsl-devel",
     "nghttp2-devel",
     "sqlite-devel",
-    "zlib-static",
+    "zlib",
 ]
 pkgdesc = "HTTP client/server library for GNOME"
 license = "LGPL-2.0-or-later"

@@ -33,7 +33,7 @@ configure_env = {
     "ac_cv_func_gid_from_group": "no",
 }
 configure_gen = []
-makedepends = ["libressl-devel", "zlib-static"]
+makedepends = ["libressl-devel", "zlib"]
 pkgdesc = "OpenBSD Secure Shell"
 license = "ISC"
 url = "https://www.openssh.com"

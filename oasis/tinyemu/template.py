@@ -1,7 +1,7 @@
 pkgname = "tinyemu"
 pkgver = "20191221"
 pkgrel = 2
-makedepends = ["bearssl-devel-static", "curl", "linux-headers", "zlib-static"]
+makedepends = ["bearssl-devel-static", "curl", "linux-headers", "zlib"]
 pkgdesc = "Tiny emulator for x86 and RISC-V"
 license = "MIT"
 url = "https://bellard.org/tinyemu"

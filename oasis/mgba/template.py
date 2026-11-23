@@ -18,7 +18,7 @@ configure_args = [
     "-DUSE_LZMA=OFF",
 ]
 hostmakedepends = ["cmake"]
-makedepends = ["libpng-devel", "libpng-devel-static", "zlib-static"]
+makedepends = ["libpng-devel", "libpng-devel-static", "zlib"]
 pkgdesc = "Game Boy Advance emulator"
 license = "MPL-2.0"
 url = "https://mgba.io"

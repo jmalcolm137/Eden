@@ -6,7 +6,7 @@ makedepends = [
     "libatomic-chimera-devel-static",
     "libunwind-devel-static",
     "musl-devel-static",
-    "zlib-static",
+    "zlib",
 ]
 pkgdesc = "Parallel gzip, also providing gzip/gunzip/zcat"
 license = "Zlib"

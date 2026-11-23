@@ -9,7 +9,7 @@ configure_args = [
 ]
 configure_gen = []
 hostmakedepends = ["libtool", "pkgconf"]
-makedepends = ["libressl-devel", "zlib-static"]
+makedepends = ["libressl-devel", "zlib"]
 depends = ["libressl", "zlib-shared"]
 pkgdesc = "Client-side C library implementing the SSH2 protocol"
 license = "BSD-3-Clause"

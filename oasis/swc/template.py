@@ -36,7 +36,7 @@ makedepends = [
     "wayland-protocols",
     "wld",
     "wld-devel",
-    "zlib-static",
+    "zlib",
 ]
 pkgdesc = "Wayland compositor library"
 license = "MIT"

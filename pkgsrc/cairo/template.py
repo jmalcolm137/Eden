@@ -31,7 +31,7 @@ makedepends = [
     "glib-devel",
     "libpng-devel",
     "pixman-devel",
-    "zlib-static",
+    "zlib",
 ]
 pkgdesc = "2D graphics library"
 license = "LGPL-2.1-or-later OR MPL-1.1"

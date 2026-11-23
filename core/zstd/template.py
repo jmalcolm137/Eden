@@ -7,7 +7,7 @@ makedepends = [
     "lz4-devel",
     "musl-devel-static",
     "xz-devel",
-    "zlib-static",
+    "zlib",
 ]
 renames = ["libzstd"]
 pkgdesc = "Zstd compression utilities"

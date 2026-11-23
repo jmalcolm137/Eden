@@ -18,7 +18,7 @@ hostmakedepends = [
     "samurai",
 ]
 makedepends = [
-    "zlib-static",
+    "zlib",
 ]
 pkgdesc = "Font rendering engine"
 license = "FTL OR GPL-2.0-or-later"

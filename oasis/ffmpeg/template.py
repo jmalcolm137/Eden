@@ -34,7 +34,7 @@ makedepends = [
     "nasm",
     "opus-devel",
     "opus-devel-static",
-    "zlib-static",
+    "zlib",
 ]
 pkgdesc = "Multimedia framework"
 license = "GPL-2.0-or-later"

@@ -12,7 +12,7 @@ makedepends = [
     "libatomic-chimera-devel-static",
     "libunwind-devel-static",
     "musl-devel-static",
-    "zlib-static",
+    "zlib",
 ]
 pkgdesc = "File type identification utility"
 license = "BSD-2-Clause"

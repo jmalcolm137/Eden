@@ -10,7 +10,7 @@ makedepends = [
     "libatomic-chimera-devel-static",
     "libunwind-devel-static",
     "musl-devel-static",
-    "zlib-static",
+    "zlib",
 ]
 pkgdesc = "Fast, scalable, distributed revision control system"
 license = "GPL-2.0-only"

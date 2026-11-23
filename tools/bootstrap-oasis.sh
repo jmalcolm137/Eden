@@ -52,7 +52,7 @@ for p in \
     gsed \
     ubase \
     ca-certificates \
-    zlib-static \
+    zlib \
     xz \
     bzip2 \
     lz4 \

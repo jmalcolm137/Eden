@@ -21,7 +21,7 @@ makedepends = [
     "gnutls-devel",
     "libpsl-devel",
     "nghttp2-devel",
-    "zlib-static",
+    "zlib",
 ]
 depends = ["gnutls", "zlib-shared"]
 pkgdesc = "Command line tool and library for URL transfers"

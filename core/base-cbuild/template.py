@@ -40,7 +40,7 @@ depends = [
     "sbase",
     "ubase",
     "xz",
-    "zlib-static",
+    "zlib",
     "zstd",
     self.with_pkgver("base-cbuild-progs"),
 ]

@@ -25,7 +25,7 @@ hostmakedepends = [
     "wayland-devel",
     "wayland-devel-static",
     "wayland-progs",
-    "zlib-static",
+    "zlib",
 ]
 depends = ["adobe-source-fonts"]
 pkgdesc = "Small web browser from Oasis"
