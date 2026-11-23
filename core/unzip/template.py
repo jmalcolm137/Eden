@@ -18,6 +18,8 @@ license = "Info-ZIP"
 url = "http://infozip.sf.net"
 source = "$(SOURCEFORGE_SITE)/infozip/unzip60.tar.gz"
 sha256 = "036d96991646d0449ed0aa952e4fbe21b476ce994abc276e49d30e686708bd37"
+# unzip 6.0 uses printf formats that trip -Werror=format-security
+hardening = ["!format"]
 # Oasis config.h enables bzip2, Unicode and large-file support
 # no test target; upstream's suite needs a different source layout
 options = ["!check"]
