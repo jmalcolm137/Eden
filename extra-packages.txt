@@ -41,6 +41,9 @@ gnu-compat
 gobject-introspection
 gobject-introspection-devel
 gobject-introspection-libs
+goose
+goose-extension
+goose-samples
 gspell
 gspell-devel
 gtksourceview4
