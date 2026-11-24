@@ -167,7 +167,7 @@ macros xorgproto xserver-xorg-protocol xtrans xwayland xwayland-devel zlib-
 shared
 ```
 
-### extra templates (145)
+### extra templates (146)
 
 ```
 antigravity-cli catfish cosmic-app-library cosmic-applets cosmic-bg cosmic-
@@ -200,7 +200,7 @@ xfce4-settings xfce4-smartbookmark-plugin xfce4-stopwatch-plugin
 xfce4-systemload-plugin xfce4-taskmanager xfce4-terminal xfce4-time-out-plugin
 xfce4-timer-plugin xfce4-verve-plugin xfce4-wavelan-plugin xfce4-weather-
 plugin xfce4-whiskermenu-plugin xfconf xfconf-devel xfconfd-lite xfdesktop
-xfwl4 xfwm4-themes
+xfwl4 xfwm4-themes zig
 ```
 
 ## Current bldroot

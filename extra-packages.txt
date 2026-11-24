@@ -144,3 +144,4 @@ xfconfd-lite
 xfdesktop
 xfwl4
 xfwm4-themes
+zig
