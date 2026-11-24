@@ -1,12 +1,12 @@
 pkgname = "uutils-coreutils"
-pkgver = "0.12.0"
-pkgrel = 1
+pkgver = "0.13.0"
+pkgrel = 0
 hostmakedepends = ["cargo-bootstrap", "rust"]
 pkgdesc = "Cross-platform Rust rewrite of the GNU coreutils"
 license = "MIT"
 url = "https://uutils.github.io/coreutils"
 source = f"https://github.com/uutils/coreutils/archive/refs/tags/{pkgver}.tar.gz"
-sha256 = "4fb327655cb4ffcbf2f16550cf9234079ffe839692f7aa1a6eda104af684e122"
+sha256 = "5830c023555ea8e98505e8cfb09524d3097f427c5e58ef197a943e6cb73af9b0"
 # tests take a long time and need special harnesses
 options = ["!check"]
 
