@@ -36,6 +36,7 @@ fast_float
 garcon
 garcon-devel
 gigolo
+gnu-compat
 gobject-introspection
 gobject-introspection-devel
 gobject-introspection-libs

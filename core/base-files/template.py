@@ -48,8 +48,8 @@ def install(self):
     self.install_link("sbin", "usr/bin")
     self.install_link("usr/sbin", "bin")
 
-    # GNU tool compatibility entries; profile.path puts this right after
-    # /usr/local/bin, so login shells prefer GNU make/sed
+    # gnu-compat installs the GNU tool names here; profile.path puts this
+    # right after /usr/local/bin, so login shells prefer them
     self.install_dir("usr/gnubin")
 
     self.install_dir("etc/profile.d")

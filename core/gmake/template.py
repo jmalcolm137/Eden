@@ -1,6 +1,6 @@
 pkgname = "gmake"
 pkgver = "4.4.1"
-pkgrel = 6
+pkgrel = 7
 build_style = "gnu_configure"
 configure_args = ["--without-guile"]
 configure_gen = []
@@ -18,8 +18,6 @@ options = ["!check", "bootstrap"]
 
 def post_install(self):
     # GNU make installs itself as bin/make; expose it only as gmake so the
-    # Oasis sbase make can remain /usr/bin/make.
+    # Oasis sbase make can remain /usr/bin/make.  The /usr/gnubin name is
+    # provided by gnu-compat.
     self.rename("usr/bin/make", "usr/bin/gmake", relative=False)
-    # ...and through the /usr/gnubin drop-in directory
-    self.install_dir("usr/gnubin")
-    self.install_link("usr/gnubin/make", "../bin/gmake")

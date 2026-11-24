@@ -1,6 +1,6 @@
 pkgname = "gnu-m4"
 pkgver = "1.4.20"
-pkgrel = 1
+pkgrel = 2
 build_style = "gnu_configure"
 # the OpenBSD userland already provides /usr/bin/m4; install GNU m4 as gm4
 configure_args = ["--program-prefix=g"]
@@ -15,8 +15,5 @@ options = ["!check", "bootstrap"]
 
 
 def post_install(self):
-    # expose GNU m4 through the GNU tools drop-in directory as well
-    self.install_dir("usr/gnubin")
-    self.install_link("usr/gnubin/m4", "../bin/gm4")
-
+    # the /usr/gnubin/m4 name is provided by gnu-compat
     self.install_license("COPYING")

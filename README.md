@@ -45,7 +45,7 @@ cbuild does not directly build and install software. Instead, it builds binary p
 
 It is possible to build all packages from source and to install them locally but apk defaults to retrieving packages from the cloud.
 
-Are the "suckless" utilies too limiting? `apk add gnu-compat` installs a fully GNU compatible userland.
+Are the "suckless" utilities too limiting? `apk add gnu-compat` installs a fully GNU compatible userland.
 
 Do you need more advanced development capabilities?
 
@@ -167,7 +167,7 @@ macros xorgproto xserver-xorg-protocol xtrans xwayland xwayland-devel zlib-
 shared
 ```
 
-### extra templates (140)
+### extra templates (141)
 
 ```
 antigravity-cli catfish cosmic-app-library cosmic-applets cosmic-bg cosmic-
@@ -176,8 +176,8 @@ launcher cosmic-monitor cosmic-notifications cosmic-osd cosmic-panel cosmic-
 player cosmic-randr cosmic-screenshot cosmic-session cosmic-settings cosmic-
 settings-daemon cosmic-sound-theme cosmic-store cosmic-term cosmic-viewer
 cosmic-wallpapers cosmic-workspaces dbus-glib dbus-glib-devel dotnet exo exo-
-devel fast_float garcon garcon-devel gigolo gobject-introspection gobject-
-introspection-devel gobject-introspection-libs gspell gspell-devel
+devel fast_float garcon garcon-devel gigolo gnu-compat gobject-introspection
+gobject-introspection-devel gobject-introspection-libs gspell gspell-devel
 gtksourceview4 gtksourceview4-devel libnma libnma-devel libsecret libsecret-
 devel libsoup3 libsoup3-devel libucontext libxfce4ui libxfce4ui-devel
 libxfce4util libxfce4util-devel libxfce4windowing libxfce4windowing-devel mesa
@@ -265,7 +265,7 @@ only for packages that consume them.
 | make | Oasis `make`, Chimera `gmake` | cbuild uses gmake explicitly; `/usr/bin/make` stays sbase |
 | tar | Chimera bsdtar | sbase tar does not auto-decompress `.gz`/`.xz`/`.zst` |
 | strings/getconf | Chimera llvm-binutils/musl | same packages provide required strip/objcopy and musl ABI |
-| grep/sed/diff/patch | sbase sed, GNU gsed/diff/patch, pkgsrc GNU grep | `/usr/bin/sed` stays sbase; GNU sed is packaged as `gsed` (autoconf's `AC_PROG_SED` picks it up) and also linked at `/usr/gnubin/sed`. GNU diff/patch are required. GNU grep is kept for reliability; sbase grep passes the test in isolation |
+| grep/sed/diff/patch | sbase sed, GNU gsed/diff/patch, pkgsrc GNU grep | `/usr/bin/sed` stays sbase; GNU sed is packaged as `gsed` (autoconf's `AC_PROG_SED` picks it up); `gnu-compat` links it at `/usr/gnubin/sed`. GNU diff/patch are required. GNU grep is kept for reliability; sbase grep passes the test in isolation |
 | OpenSSL | **removed** | apk-tools uses BearSSL; Python and cbuild keygen use LibreSSL from core |
 | ncurses | **removed** | libedit is rebuilt against static Oasis netbsd-curses, so it no longer links `libncursesw.so.6`; the bldroot carries no ncurses |
 
@@ -281,7 +281,7 @@ only for packages that consume them.
 | `etc/build_profiles/` | architecture profiles |
 | `etc/apk/` | Eden repo config and local public key |
 | `etc/config.ini` | local config (`categories = core oasis pkgsrc extra`, Eden mirror) |
-| `/usr/gnubin` (installed) | GNU tool alternatives (`make`, `sed`); `/etc/profile` puts it after `/usr/local/bin` and before `/usr/bin` |
+| `/usr/gnubin` | GNU tool names (`make`, `sed`, `m4`, and the uutils coreutils/findutils applets) installed by `gnu-compat`; `/etc/profile` puts it after `/usr/local/bin` and before `/usr/bin` |
 | `tools/bootstrap-oasis.sh` | build environment in a temporary stage-0 root |
 | `tools/sync-engine.sh` | refresh engine/profiles/repo config from cports |
 | `tools/verify-bootstrap-closure.sh` | verify templates, composition, patches |
