@@ -70,6 +70,7 @@ mousepad
 network-manager-applet
 opencode
 parole
+podman
 python-dbus
 python-gobject
 python-mako
