@@ -12,6 +12,9 @@ cairo
 cairo-devel
 cargo-bootstrap
 cbindgen
+conmon
+crun
+crun-devel
 dbus
 dbus-devel
 dbus-libs
@@ -35,6 +38,7 @@ gnutls
 gnutls-devel
 go
 go-bootstrap
+go-md2man
 grep
 gst-plugins-base
 gst-plugins-base-devel
@@ -108,6 +112,9 @@ libpulse-devel
 libseat
 libseat-devel
 libseat-progs
+libseccomp
+libseccomp-devel
+libseccomp-progs
 libsndfile
 libsndfile-devel
 libssh2
