@@ -129,19 +129,19 @@ protocols wireguard-tools wl9 wld wld-devel wpa_supplicant x509cert x509cert-
 devel x509cert-devel-static xkeyboard-config yt-dlp zfs
 ```
 
-### pkgsrc templates (202)
+### pkgsrc templates (204)
 
 ```
 adwaita-icon-theme adwaita-icon-theme-legacy atk atk-devel bash bison brotli
 brotli-devel brotli-progs cairo cairo-devel cargo-bootstrap cbindgen dbus
 dbus-devel dbus-libs enchant2 enchant2-devel enchant2-progs firefox font-util
 font-util-devel fuse3 fuse3-devel gdk-pixbuf gdk-pixbuf-devel glib glib-devel
-glib-networking gmp gmp-cxx gmp-devel gnutls gnutls-devel grep gst-plugins-
-base gst-plugins-base-devel gstreamer gstreamer-devel gstreamer-progs gtar
-gtk+3 gtk+3-devel gtk-layer-shell gtk-layer-shell-devel harfbuzz harfbuzz-
-devel hicolor-icon-theme hicolor-icon-theme-devel htop hwdata hwdata-devel
-hwdata-net hwdata-pci hwdata-pnp hwdata-usb icu icu-devel icu-progs isl iso-
-codes json-c json-c-devel json-glib json-glib-devel just krb5 krb5-devel
+glib-networking gmp gmp-cxx gmp-devel gnutls gnutls-devel go go-bootstrap grep
+gst-plugins-base gst-plugins-base-devel gstreamer gstreamer-devel gstreamer-
+progs gtar gtk+3 gtk+3-devel gtk-layer-shell gtk-layer-shell-devel harfbuzz
+harfbuzz-devel hicolor-icon-theme hicolor-icon-theme-devel htop hwdata hwdata-
+devel hwdata-net hwdata-pci hwdata-pnp hwdata-usb icu icu-devel icu-progs isl
+iso-codes json-c json-c-devel json-glib json-glib-devel just krb5 krb5-devel
 libburn libburn-devel libburn-progs libcanberra libcanberra-devel libcurl
 libcurl-devel libdisplay-info libdisplay-info-devel libepoxy libepoxy-devel
 libexif libexif-devel libfontenc libfontenc-devel libglvnd libglvnd-devel
@@ -167,7 +167,7 @@ macros xorgproto xserver-xorg-protocol xtrans xwayland xwayland-devel zlib-
 shared
 ```
 
-### extra templates (146)
+### extra templates (148)
 
 ```
 antigravity-cli catfish cosmic-app-library cosmic-applets cosmic-bg cosmic-
@@ -200,7 +200,7 @@ xfce4-settings xfce4-smartbookmark-plugin xfce4-stopwatch-plugin
 xfce4-systemload-plugin xfce4-taskmanager xfce4-terminal xfce4-time-out-plugin
 xfce4-timer-plugin xfce4-verve-plugin xfce4-wavelan-plugin xfce4-weather-
 plugin xfce4-whiskermenu-plugin xfconf xfconf-devel xfconfd-lite xfdesktop
-xfwl4 xfwm4-themes zig
+xfwl4 xfwm4-themes xlib-wayland xlib-wayland-devel zig
 ```
 
 ## Current bldroot

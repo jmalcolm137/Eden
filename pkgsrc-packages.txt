@@ -33,6 +33,8 @@ gmp-cxx
 gmp-devel
 gnutls
 gnutls-devel
+go
+go-bootstrap
 grep
 gst-plugins-base
 gst-plugins-base-devel
