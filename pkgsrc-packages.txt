@@ -1,4 +1,5 @@
 # pkgsrc repository: pkgsrc-ported packages not belonging in core or oasis.
+aardvark-dns
 adwaita-icon-theme
 adwaita-icon-theme-legacy
 atk
@@ -162,6 +163,7 @@ mkinitcpio
 mpcomplex
 mpfr
 mtools
+netavark
 nettle
 nettle-devel
 nettle-progs
@@ -186,6 +188,7 @@ polkit
 polkit-devel
 polkit-libs
 pop-launcher
+protoc-bootstrap
 pulseaudio
 pulseaudio-progs
 ripgrep
