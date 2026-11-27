@@ -129,7 +129,7 @@ protocols wireguard-tools wl9 wld wld-devel wpa_supplicant x509cert x509cert-
 devel x509cert-devel-static xkeyboard-config yt-dlp zfs
 ```
 
-### pkgsrc templates (214)
+### pkgsrc templates (215)
 
 ```
 aardvark-dns adwaita-icon-theme adwaita-icon-theme-legacy atk atk-devel bash
@@ -161,15 +161,15 @@ firmware-intel linux-firmware-nvidia linux-firmware-radeon meson-real
 mkinitcpio mpcomplex mpfr mtools netavark nettle nettle-devel nettle-progs
 networkmanager networkmanager-devel networkmanager-libs nghttp2 nghttp2-devel
 nodejs oniguruma oniguruma-devel openssl openssl-progs pango pango-devel
-patchelf pcre2 pcre2-devel pipewire pipewire-devel polkit polkit-devel polkit-
-libs pop-launcher protoc-bootstrap pulseaudio pulseaudio-progs ripgrep rust
-rust-bootstrap shared-mime-info sqlite sqlite-devel taglib taglib-devel upower
-upower-devel upower-libs uutils-coreutils uutils-findutils wireplumber
+patchelf pcre2 pcre2-devel pipewire pipewire-devel podman polkit polkit-devel
+polkit-libs pop-launcher protoc-bootstrap pulseaudio pulseaudio-progs ripgrep
+rust rust-bootstrap shared-mime-info sqlite sqlite-devel taglib taglib-devel
+upower upower-devel upower-libs uutils-coreutils uutils-findutils wireplumber
 xcbproto xorg-util-macros xorgproto xserver-xorg-protocol xtrans xwayland
 xwayland-devel zlib-shared
 ```
 
-### extra templates (147)
+### extra templates (146)
 
 ```
 antigravity-cli catfish cosmic-app-library cosmic-applets cosmic-bg cosmic-
@@ -185,20 +185,20 @@ gtksourceview4-devel libnma libnma-devel libsecret libsecret-devel libsoup3
 libsoup3-devel libucontext libxfce4ui libxfce4ui-devel libxfce4util
 libxfce4util-devel libxfce4windowing libxfce4windowing-devel mesa mesa-devel
 mesa-gbm-devel mesa-gbm-libs mesa-libgallium mousepad network-manager-applet
-opencode parole podman python-dbus python-gobject python-mako python-markdown
-python-markupsafe python-packaging python-pexpect python-ptyprocess python-
-pyyaml python-setuptools ristretto smithay thunar thunar-archive-plugin
-thunar-devel thunar-media-tags-plugin thunar-vcs-plugin thunar-volman tumbler
-tumbler-devel vte-gtk3 vte-gtk3-devel xdg-desktop-portal xdg-desktop-portal-
-cosmic xfburn xfce4-appfinder xfce4-battery-plugin xfce4-calculator-plugin
-xfce4-clipman-plugin xfce4-cpufreq-plugin xfce4-cpugraph-plugin xfce4-desktop
-xfce4-dev-tools xfce4-dict xfce4-diskperf-plugin xfce4-docklike-plugin
-xfce4-eyes-plugin xfce4-fsguard-plugin xfce4-generic-slider xfce4-genmon-
-plugin xfce4-goodies xfce4-mailwatch-plugin xfce4-mount-plugin xfce4-netload-
-plugin xfce4-notes-plugin xfce4-notifyd xfce4-panel xfce4-panel-devel
-xfce4-panel-profiles xfce4-places-plugin xfce4-power-manager xfce4-pulseaudio-
-plugin xfce4-screenshooter xfce4-sensors-plugin xfce4-session xfce4-session-
-devel xfce4-settings xfce4-smartbookmark-plugin xfce4-stopwatch-plugin
+opencode parole python-dbus python-gobject python-mako python-markdown python-
+markupsafe python-packaging python-pexpect python-ptyprocess python-pyyaml
+python-setuptools ristretto smithay thunar thunar-archive-plugin thunar-devel
+thunar-media-tags-plugin thunar-vcs-plugin thunar-volman tumbler tumbler-devel
+vte-gtk3 vte-gtk3-devel xdg-desktop-portal xdg-desktop-portal-cosmic xfburn
+xfce4-appfinder xfce4-battery-plugin xfce4-calculator-plugin xfce4-clipman-
+plugin xfce4-cpufreq-plugin xfce4-cpugraph-plugin xfce4-desktop xfce4-dev-
+tools xfce4-dict xfce4-diskperf-plugin xfce4-docklike-plugin xfce4-eyes-plugin
+xfce4-fsguard-plugin xfce4-generic-slider xfce4-genmon-plugin xfce4-goodies
+xfce4-mailwatch-plugin xfce4-mount-plugin xfce4-netload-plugin xfce4-notes-
+plugin xfce4-notifyd xfce4-panel xfce4-panel-devel xfce4-panel-profiles
+xfce4-places-plugin xfce4-power-manager xfce4-pulseaudio-plugin
+xfce4-screenshooter xfce4-sensors-plugin xfce4-session xfce4-session-devel
+xfce4-settings xfce4-smartbookmark-plugin xfce4-stopwatch-plugin
 xfce4-systemload-plugin xfce4-taskmanager xfce4-terminal xfce4-time-out-plugin
 xfce4-timer-plugin xfce4-verve-plugin xfce4-wavelan-plugin xfce4-weather-
 plugin xfce4-whiskermenu-plugin xfconf xfconf-devel xfconfd-lite xfdesktop
