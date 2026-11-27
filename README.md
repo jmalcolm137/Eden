@@ -169,7 +169,7 @@ xcbproto xorg-util-macros xorgproto xserver-xorg-protocol xtrans xwayland
 xwayland-devel zlib-shared
 ```
 
-### extra templates (146)
+### extra templates (147)
 
 ```
 antigravity-cli catfish cosmic-app-library cosmic-applets cosmic-bg cosmic-
@@ -177,8 +177,8 @@ comp cosmic-desktop cosmic-edit cosmic-files cosmic-icons cosmic-idle cosmic-
 launcher cosmic-monitor cosmic-notifications cosmic-osd cosmic-panel cosmic-
 player cosmic-randr cosmic-screenshot cosmic-session cosmic-settings cosmic-
 settings-daemon cosmic-sound-theme cosmic-store cosmic-term cosmic-viewer
-cosmic-wallpapers cosmic-workspaces dbus-glib dbus-glib-devel dotnet exo exo-
-devel fast_float garcon garcon-devel gigolo gleam gnu-compat gobject-
+cosmic-wallpapers cosmic-workspaces dbus-glib dbus-glib-devel distrobox dotnet
+exo exo-devel fast_float garcon garcon-devel gigolo gleam gnu-compat gobject-
 introspection gobject-introspection-devel gobject-introspection-libs goose
 goose-extension goose-samples gspell gspell-devel gtksourceview4
 gtksourceview4-devel libnma libnma-devel libsecret libsecret-devel libsoup3

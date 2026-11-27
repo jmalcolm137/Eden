@@ -29,6 +29,7 @@ cosmic-wallpapers
 cosmic-workspaces
 dbus-glib
 dbus-glib-devel
+distrobox
 dotnet
 exo
 exo-devel
